@@ -1,0 +1,16 @@
+:root {
+    --dark-accent-color: #472183;
+    --header-background: #f1f6f5;
+    --light-accent-color: #82c3ec;
+    --icon-color: #4b56d2;
+    --text-color: #505050;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+}
