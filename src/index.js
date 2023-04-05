@@ -22,7 +22,7 @@ function addTask(task) {
 
 // Create form for inputing task
 function createForm() {
-    const main = document.getElementById('main');
+    const main = document.getElementById('main');    
     const taskForm = document.createElement('form');
     taskForm.setAttribute('id', 'new-task');
     taskForm.setAttribute('action', '');
@@ -34,7 +34,7 @@ function createForm() {
     submit.innerText = 'Add Task';
     taskForm.appendChild(submit);
     taskForm.addEventListener('submit', getTaskData);    
-    main.appendChild(taskForm);
+    taskSection.appendChild(taskForm);
 
     function createField(key) {
         const fieldDiv = document.createElement('div');
@@ -65,6 +65,7 @@ function getTaskData(event) {
     const newTask = new Task(taskName, taskDesc, taskDate, taskPriority, taskComplete);
     addTask(newTask);
     updateTaskList();
+    taskData.reset();
     event.preventDefault();
 }
 
@@ -94,9 +95,22 @@ function addTaskToUL(task) {
     }
 }
 
-// Load DOM elements
+// Load page main
 document.body.appendChild(main());
 const mainDiv = document.getElementById('main');
-mainDiv.appendChild(taskList);
+
+// Create basic page layout
+const header = document.createElement('div');
+header.setAttribute('id', 'header');
+mainDiv.appendChild(header);
+const sidebar = document.createElement('div');
+sidebar.setAttribute('id', 'sidebar');
+mainDiv.appendChild(sidebar);
+const taskSection = document.createElement('div');
+taskSection.setAttribute('id', 'task-section');
+mainDiv.appendChild(taskSection);
+
+
+taskSection.appendChild(taskList);
 createForm();
 
