@@ -2,7 +2,7 @@ import './style.css';
 import Task from './modules/task';
 
 // Instantiate a dummy task
-const blank = new Task('name', 'desc', 'date', 'priority', 'complete');
+const blank = new Task('name', 'desc', 'date', 'priority', 'project', 'complete');
 
 // Create task array
 const tasks = [];
@@ -34,7 +34,7 @@ function createForm() {
     submit.innerText = 'Add Task';
     taskForm.appendChild(submit);
     taskForm.addEventListener('submit', getTaskData);    
-    taskSection.appendChild(taskForm);
+    taskList.appendChild(taskForm);
 
     function createField(key) {
         const fieldDiv = document.createElement('div');
@@ -61,8 +61,9 @@ function getTaskData(event) {
     const taskDesc = formData.get('description');
     const taskDate = formData.get('dueDate');
     const taskPriority = formData.get('priority');
+    const taskProject = formData.get('project');
     const taskComplete = formData.get('complete');
-    const newTask = new Task(taskName, taskDesc, taskDate, taskPriority, taskComplete);
+    const newTask = new Task(taskName, taskDesc, taskDate, taskPriority, taskProject, taskComplete);
     addTask(newTask);
     updateTaskList();
     taskData.reset();
@@ -74,7 +75,6 @@ const taskList = document.createElement('div');
 taskList.setAttribute('id', 'task-list');
 const taskUL = document.createElement('ul');
 taskUL.setAttribute('id', 'task-ul');
-taskList.appendChild(taskUL);
 
 // Populate taskUL
 function updateTaskList() {
@@ -110,7 +110,20 @@ const taskSection = document.createElement('div');
 taskSection.setAttribute('id', 'task-section');
 mainDiv.appendChild(taskSection);
 
+// Display main section
+const taskWrapper = document.createElement('div');
+taskWrapper.setAttribute('id', 'task-wrapper');
+taskSection.appendChild(taskWrapper);
+const rightBumper = document.createElement('div');
+taskWrapper.appendChild(rightBumper);
+const listTitle = document.createElement('div');
+listTitle.setAttribute('id', 'list-title');
+listTitle.innerText = 'Inbox';
+taskList.appendChild(listTitle);
+listTitle.after(taskUL);
+taskWrapper.appendChild(taskList);
+const leftBumper = document.createElement('div');
+taskWrapper.appendChild(leftBumper);
 
-taskSection.appendChild(taskList);
 createForm();
 
