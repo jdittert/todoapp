@@ -68,23 +68,45 @@ listTitle.after(taskUL);
 
 // Add items to task list
 function updateTaskList() {
+    const incomplete = tasks.filter(isIncomplete);
     taskUL.innerText = '';
-    tasks.forEach(task => addTaskToUL(task));
+    if (incomplete.length !== 0) {
+        incomplete.forEach(task => addTaskToUL(task));
+    } else {
+        taskUL.innerText = 'All caught up!'
+    };
+
+    function isIncomplete(task) {
+        if (task.complete === 'yes') {
+            return false;        
+        };
+        return true;
+    };
 }
 
 function addTaskToUL(task) {
     const taskItem = document.createElement('li');
     taskItem.classList.add('task-item');
+    
     // Top row
     const itemTop = document.createElement('div');
     itemTop.classList.add('item-top');
     itemTop.innerText = `${task.name}`;
     taskItem.appendChild(itemTop);
+
+    const completeButton = document.createElement('button');
+    completeButton.setAttribute('data-index', `${tasks.indexOf(task)}`);
+    completeButton.classList.add('complete-button');
+    completeButton.innerText = 'Complete';
+    completeButton.addEventListener('click', completeTask);
+    itemTop.appendChild(completeButton);
+
     // Bottom row
     const itemBottom = document.createElement('div');
     itemBottom.classList.add('item-bottom');
     itemBottom.innerText = `${task.dueDate}`;
     taskItem.appendChild(itemBottom);
+    
     // Append to ul
     taskUL.appendChild(taskItem);
 }
@@ -92,6 +114,12 @@ function addTaskToUL(task) {
 // Create task function
 function addTask(task) {
     tasks.push(task);
+}
+
+function completeTask(event) {
+    const taskIndex = event.currentTarget.dataset.index;
+    tasks[taskIndex].complete = 'yes';
+    updateTaskList();
 }
 
 // Create form for inputing task

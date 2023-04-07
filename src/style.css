@@ -4,6 +4,7 @@
     --light-accent-color: #82c3ec;
     --icon-color: #4b56d2;
     --text-color: #505050;
+    --hover-color: white;
 }
 
 * {
@@ -38,7 +39,7 @@ main {
 
 #task-section {
     grid-area: 2 / 2 / 3 / 3;
-    background: var(--header-background);
+    background: var(--light-accent-color);
     color: var(--text-color);
     padding: .5rem;
 }
@@ -47,6 +48,13 @@ main {
     display: grid;
     grid-template-columns: 15% 70% 15%;
     justify-content: center;
+}
+
+#task-list {
+    background-color: var(--header-background);
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 2px 2px 2px 2px gray;
 }
 
 .form-field {
@@ -63,13 +71,31 @@ li {
     list-style: none;    
     margin: 0;
     padding:0;
-    gap: 8px;
+}
+
+.task-item:hover {
+    background-color: var(--hover-color);
 }
 
 #list-title {
     font-size: 1.5rem;
+    font-weight: bold;
     color: black;
-    margin-bottom: .25rem;
+    margin-bottom: .5rem;
+    border-bottom: 2px solid black;
+}
+
+.item-top {
+    display: flex;
+    justify-content: space-between;
+    color: black;
+    font-size: 1.2rem;
+}
+
+.complete-button {
+    border-radius: 4px;
+    background-color: var(--icon-color);
+    color: white;
 }
 
 .task-item {
