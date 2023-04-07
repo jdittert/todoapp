@@ -49,7 +49,25 @@ main {
     justify-content: center;
 }
 
+#task-list {
+    
+}
+
+.form-field {
+    display: block;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
 li {
+    list-style: none;
     display: flex;
+    margin: 0;
+    padding:0;
+    gap: 8px;
 }
 

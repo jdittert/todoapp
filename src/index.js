@@ -1,4 +1,5 @@
 import './style.css';
+import { startCase } from 'lodash';
 import Task from './modules/task';
 
 // Instantiate a dummy task
@@ -6,6 +7,12 @@ const blank = new Task('name', 'desc', 'date', 'priority', 'project', 'complete'
 
 // Create task array
 const tasks = [];
+
+// Prepopulate with test tasks
+const taskOne = new Task('To Do App', 'code for Odin Project', '4/12/23', 'high', 'Odin Project', 'no');
+tasks.push(taskOne);
+const taskTwo = new Task('Lunch', 'eat some healthy food', '4/7/23', 'low', 'life', 'no');
+tasks.push(taskTwo);
 
 // Create main
 function main() {
@@ -41,7 +48,7 @@ function createForm() {
         fieldDiv.classList.add('form-field');
         const fieldLabel = document.createElement('label');
         fieldLabel.setAttribute('for', `${key}`);
-        fieldLabel.innerText = `${key}`;
+        fieldLabel.innerText = _.startCase(`${key}`);
         fieldDiv.appendChild(fieldLabel);
         const field = document.createElement('input');
         field.setAttribute('id', `${key}`);
@@ -125,5 +132,6 @@ taskWrapper.appendChild(taskList);
 const leftBumper = document.createElement('div');
 taskWrapper.appendChild(leftBumper);
 
+updateTaskList();
 createForm();
 

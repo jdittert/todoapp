@@ -2,7 +2,7 @@
   "name": "todoapp",
   "version": "1.0.0",
   "description": "Odin Project To-Do App",
-  "main": "index.js",  
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack",
@@ -13,6 +13,7 @@
   "devDependencies": {
     "css-loader": "^6.7.3",
     "date-fns": "^2.29.3",
+    "lodash": "^4.17.21",
     "style-loader": "^3.3.2",
     "webpack": "^5.77.0",
     "webpack-cli": "^5.0.1"
