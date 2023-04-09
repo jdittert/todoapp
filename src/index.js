@@ -1,3 +1,4 @@
+/* eslint-disable no-use-before-define */
 import './style.css';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { startCase } from 'lodash';
@@ -6,8 +7,18 @@ import Task from './modules/task';
 // Instantiate a dummy task
 const blank = new Task('name', 'desc', 'date', 'priority', 'project', 'complete');
 
-// Create task array
+// Create task and project arrays
 const tasks = [];
+const projects = ['inbox', 'today']
+
+// Update project array
+function updateProjects() {
+    tasks.forEach(task => {
+        if (!projects.includes(`${task.project.toLowerCase()}`)) {
+            projects.push(`${task.project.toLowerCase()}`);
+        }
+    })
+}
 
 // Prepopulate with test tasks
 const taskOne = new Task('To Do App', 'code for Odin Project', '4/12/23', 'high', 'Odin Project', 'no');
@@ -35,6 +46,18 @@ mainDiv.appendChild(header);
 const sidebar = document.createElement('div');
 sidebar.setAttribute('id', 'sidebar');
 mainDiv.appendChild(sidebar);
+
+// Add projects to sidebar
+function updateSidebar() {
+    projects.forEach(project => addToSidebar(project));
+
+    function addToSidebar(project) {
+        const projectNameDiv = document.createElement('div')
+        projectNameDiv.setAttribute('id', `${project}`);
+        projectNameDiv.innerText = _.startCase(`${project}`);
+        sidebar.appendChild(projectNameDiv);
+    }
+};
 
 // Create task section
 const taskSection = document.createElement('div');
@@ -104,11 +127,33 @@ function addTaskToUL(task) {
     // Bottom row
     const itemBottom = document.createElement('div');
     itemBottom.classList.add('item-bottom');
-    itemBottom.innerText = `${task.dueDate}`;
+    const dueDateDiv = document.createElement('div');
+    dueDateDiv.innerText = `${task.dueDate}`;
+    itemBottom.appendChild(dueDateDiv);
+    const projectDiv = document.createElement('div');
+    projectDiv.innerText = `Project: ${task.project}`;
+    itemBottom.appendChild(projectDiv);
     taskItem.appendChild(itemBottom);
     
     // Append to ul
     taskUL.appendChild(taskItem);
+}
+
+// Create button for adding a new task
+const newTaskButtonDiv = document.createElement('div');
+newTaskButtonDiv.setAttribute('id', 'new-task-button-div');
+taskList.appendChild(newTaskButtonDiv);
+const newTaskButton = document.createElement('button');
+newTaskButton.setAttribute('id', 'new-task-button');
+newTaskButton.classList.add('form-button');
+newTaskButton.innerText = 'New Task';
+newTaskButton.addEventListener('click', showForm);
+newTaskButtonDiv.appendChild(newTaskButton);
+
+function showForm() {
+    const taskFormDiv = document.getElementById('task-form-div');
+    taskFormDiv.classList.remove('hide');
+    newTaskButtonDiv.classList.add('hide');
 }
 
 // Create task function
@@ -116,6 +161,7 @@ function addTask(task) {
     tasks.push(task);
 }
 
+// Complete task function
 function completeTask(event) {
     const taskIndex = event.currentTarget.dataset.index;
     tasks[taskIndex].complete = 'yes';
@@ -123,7 +169,11 @@ function completeTask(event) {
 }
 
 // Create form for inputing task
-function createForm() {  
+function createForm() {
+    const taskFormDiv = document.createElement('div');
+    taskFormDiv.setAttribute('id', 'task-form-div');
+    taskFormDiv.classList.add('hide');
+    taskList.appendChild(taskFormDiv);
     const taskForm = document.createElement('form');
     taskForm.setAttribute('id', 'new-task');
     taskForm.setAttribute('action', '');
@@ -135,7 +185,7 @@ function createForm() {
     submit.innerText = 'Add Task';
     taskForm.appendChild(submit);
     taskForm.addEventListener('submit', getTaskData);    
-    taskList.appendChild(taskForm);
+    taskFormDiv.appendChild(taskForm);
 
     function createField(key) {
         const fieldDiv = document.createElement('div');
@@ -157,20 +207,27 @@ function createForm() {
 function getTaskData(event) {
     const taskData = document.getElementById('new-task');
     const formData = new FormData(taskData);
-    console.log(formData);
     const taskName = formData.get('name');
     const taskDesc = formData.get('description');
     const taskDate = formData.get('dueDate');
     const taskPriority = formData.get('priority');
-    const taskProject = formData.get('project');
-    const taskComplete = formData.get('complete');
+    let taskProject = formData.get('project');
+    if (!taskProject) {
+        taskProject = 'Inbox';
+    }
+    const taskComplete = 'no';
     const newTask = new Task(taskName, taskDesc, taskDate, taskPriority, taskProject, taskComplete);
     addTask(newTask);
     updateTaskList();
     taskData.reset();
+    const taskFormDiv = document.getElementById('task-form-div');
+    taskFormDiv.classList.add('hide');
+    newTaskButtonDiv.classList.remove('hide');
     event.preventDefault();
 }
 
+updateProjects();
+updateSidebar();
 updateTaskList();
 createForm();
 

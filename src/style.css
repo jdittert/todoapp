@@ -11,14 +11,20 @@
     box-sizing: border-box;
 }
 
+@font-face {
+    font-family: 'Noto Sans';
+    src: url('./fonts/NotoSans-Regular.ttf');
+}
+
 body {
     padding: 0;
     margin: 0;
+    font-family: 'Noto Sans';
 }
 
 main {
     display: grid;
-    grid-template-columns: min-content 1fr;
+    grid-template-columns: auto 1fr;
     grid-template-rows: min-content 1fr;
     min-height: 100vh;
 }
@@ -34,7 +40,10 @@ main {
     background-color: var(--dark-accent-color);
     color: white;
     grid-area: 2 / 1 / 3 / 2;
-    min-width: 200px;
+    font-size: 2rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: .25rem;
 }
 
 #task-section {
@@ -75,6 +84,8 @@ li {
 
 .task-item:hover {
     background-color: var(--hover-color);
+    border-left: 4px solid var(--icon-color);
+    padding-left: 8px;
 }
 
 #list-title {
@@ -85,21 +96,31 @@ li {
     border-bottom: 2px solid black;
 }
 
-.item-top {
+.item-top, .item-bottom {
     display: flex;
     justify-content: space-between;
+}
+
+.item-top {
     color: black;
     font-size: 1.2rem;
+    margin-bottom: .25rem;
 }
 
 .complete-button {
-    border-radius: 4px;
+    border-radius: 6px;
     background-color: var(--icon-color);
     color: white;
+    font-family: 'Noto Sans';
+    box-shadow: 2px 2px 2px 2px gray;
 }
 
 .task-item {
     border-bottom: 1px solid var(--text-color);
     margin-bottom: .25rem;
+}
+
+.hide {
+    display: none;
 }
 
