@@ -49,6 +49,7 @@ mainDiv.appendChild(sidebar);
 
 // Add projects to sidebar
 function updateSidebar() {
+    sidebar.innerText = '';
     projects.forEach(project => addToSidebar(project));
 
     function addToSidebar(project) {
@@ -170,44 +171,98 @@ function completeTask(event) {
 
 // Create form for inputing task
 function createForm() {
+    // Create hidden div for form
     const taskFormDiv = document.createElement('div');
     taskFormDiv.setAttribute('id', 'task-form-div');
     taskFormDiv.classList.add('hide');
     taskList.appendChild(taskFormDiv);
+
+    // Create actual form
     const taskForm = document.createElement('form');
     taskForm.setAttribute('id', 'new-task');
     taskForm.setAttribute('action', '');
-    const keys = Object.getOwnPropertyNames(blank);
-    keys.forEach(key => createField(key));
+
+    // Create task name field
+    const nameFieldDiv = document.createElement('div');
+    nameFieldDiv.classList.add('form-field');
+    taskForm.appendChild(nameFieldDiv);
+    const taskNameLabel = document.createElement('label');
+    taskNameLabel.setAttribute('for', 'task-name-field');
+    taskNameLabel.innerText = 'Task name';
+    taskNameLabel.classList.add('hide');
+    nameFieldDiv.appendChild(taskNameLabel);
+    const taskName = document.createElement('input');
+    taskName.setAttribute('id', 'task-name-field');
+    taskName.setAttribute('name', 'task-name');
+    taskName.setAttribute('type', 'input');
+    taskName.setAttribute('placeholder', 'Task name');
+    taskName.classList.add('borderless-field');
+    nameFieldDiv.appendChild(taskName);
+
+    // Create description field
+    const descFieldDiv = document.createElement('div');
+    descFieldDiv.classList.add('form-field');
+    taskForm.appendChild(descFieldDiv);
+    const taskDescLabel = document.createElement('label');
+    taskDescLabel.setAttribute('for', 'task-desc-field');
+    taskDescLabel.innerText = 'Task description';
+    taskDescLabel.classList.add('hide');
+    descFieldDiv.appendChild(taskDescLabel);
+    const taskDesc = document.createElement('input');
+    taskDesc.setAttribute('id', 'task-desc-field');
+    taskDesc.setAttribute('name', 'task-desc');
+    taskDesc.setAttribute('type', 'input');
+    taskDesc.setAttribute('placeholder', 'Description');
+    taskDesc.classList.add('borderless-field');
+    descFieldDiv.appendChild(taskDesc);
+
+    // Create div for date and priority buttons
+    const buttonDiv = document.createElement('div');
+    buttonDiv.setAttribute('id', 'form-button-div');
+    taskForm.appendChild(buttonDiv);
+
+    const dateFieldDiv = document.createElement('div');
+    dateFieldDiv.innerText = 'Date';
+    buttonDiv.appendChild(dateFieldDiv);
+
+    const priorityFieldDiv = document.createElement('div');
+    priorityFieldDiv.innerText = 'Priority';
+    buttonDiv.appendChild(priorityFieldDiv);
+
+    // Create div for project, submit, and cancel buttons
+    const formBottom = document.createElement('div');
+    formBottom.setAttribute('id', 'form-bottom');
+    taskForm.appendChild(formBottom);
+
+    const projectFieldDiv = document.createElement('div');
+    projectFieldDiv.innerText = 'Project';
+    formBottom.appendChild(projectFieldDiv);
+
+    const bottomButtons = document.createElement('div');
+    formBottom.appendChild(bottomButtons);
+
+    const cancel = document.createElement('button');
+    cancel.setAttribute('id', 'new-task-cancel');
+    cancel.classList.add('cancel');
+    cancel.innerText = 'Cancel';
+    bottomButtons.appendChild(cancel);
+
     const submit = document.createElement('button');
     submit.setAttribute('id', 'new-task-submit');
     submit.setAttribute('type', 'submit');
+    submit.classList.add('form-button');
     submit.innerText = 'Add Task';
-    taskForm.appendChild(submit);
-    taskForm.addEventListener('submit', getTaskData);    
-    taskFormDiv.appendChild(taskForm);
+    bottomButtons.appendChild(submit);
+    taskForm.addEventListener('submit', getTaskData);
 
-    function createField(key) {
-        const fieldDiv = document.createElement('div');
-        fieldDiv.classList.add('form-field');
-        const fieldLabel = document.createElement('label');
-        fieldLabel.setAttribute('for', `${key}`);
-        fieldLabel.innerText = _.startCase(`${key}`);
-        fieldDiv.appendChild(fieldLabel);
-        const field = document.createElement('input');
-        field.setAttribute('id', `${key}`);
-        field.setAttribute('name', `${key}`);
-        field.setAttribute('type', 'text');
-        fieldDiv.appendChild(field);
-        taskForm.appendChild(fieldDiv);
-    };
+    taskFormDiv.appendChild(taskForm);
 }
 
 // Get form data
 function getTaskData(event) {
     const taskData = document.getElementById('new-task');
     const formData = new FormData(taskData);
-    const taskName = formData.get('name');
+    const taskName = formData.get('task-name');
     const taskDesc = formData.get('description');
     const taskDate = formData.get('dueDate');
     const taskPriority = formData.get('priority');
@@ -219,6 +274,8 @@ function getTaskData(event) {
     const newTask = new Task(taskName, taskDesc, taskDate, taskPriority, taskProject, taskComplete);
     addTask(newTask);
     updateTaskList();
+    updateProjects();
+    updateSidebar();
     taskData.reset();
     const taskFormDiv = document.getElementById('task-form-div');
     taskFormDiv.classList.add('hide');

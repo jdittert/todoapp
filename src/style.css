@@ -66,8 +66,48 @@ main {
     box-shadow: 2px 2px 2px 2px gray;
 }
 
+form {
+    border: 2px solid var(--icon-color);
+    border-radius: 8px;
+    padding: 4px;
+    margin-top: .5rem;
+}
+
 .form-field {
     display: block;
+}
+
+.borderless-field {
+    background-color: var(--header-background);
+    border: none;
+    color: var(--text-color);
+}
+
+.borderless-field:focus {
+    outline: none;
+}
+
+#task-name-field {
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+#form-button-div {
+    display: flex;
+    gap: 4px;
+    justify-content: start;
+}
+
+#form-bottom {
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid var(--icon-color);
+    padding-top: 4px;
+}
+
+#bottom-buttons {
+    display: flex;
+    gap: 4px;    
 }
 
 ul {
@@ -107,7 +147,7 @@ li {
     margin-bottom: .25rem;
 }
 
-.complete-button {
+.complete-button, .form-button {
     border-radius: 6px;
     background-color: var(--icon-color);
     color: white;
