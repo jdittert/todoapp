@@ -1,7 +1,7 @@
 /* eslint-disable no-use-before-define */
 import './style.css';
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { startCase } from 'lodash';
+import { includes, startCase } from 'lodash';
 import Task from './modules/task';
 
 // Create task and project arrays
@@ -127,7 +127,9 @@ function addTaskToUL(task) {
     const itemBottom = document.createElement('div');
     itemBottom.classList.add('item-bottom');
     const dueDateDiv = document.createElement('div');
-    dueDateDiv.innerText = `${task.dueDate}`;
+    if (task.dueDate) {
+        dueDateDiv.innerText = `${task.dueDate}`;
+    };
     itemBottom.appendChild(dueDateDiv);
     const projectDiv = document.createElement('div');
     projectDiv.innerText = `Project: ${task.project}`;
@@ -233,14 +235,23 @@ function createForm() {
     // Priority field
     const priorityFieldDiv = document.createElement('div');
     priorityFieldDiv.setAttribute('id', 'task-priority-div');
+
     const taskPriorityLabel = document.createElement('label');
     taskPriorityLabel.setAttribute('for', 'task-priority-field');
     taskPriorityLabel.innerText = 'Task priority';
     taskPriorityLabel.classList.add('hide');
     priorityFieldDiv.appendChild(taskPriorityLabel);
+
     const taskPriority = document.createElement('select');
     taskPriority.setAttribute('id', 'task-priority-field');
     taskPriority.setAttribute('name', 'task-priority');
+
+    const priorityDefault = document.createElement('option');
+    priorityDefault.innerText = 'Priority';
+    priorityDefault.setAttribute('value', '');
+    priorityDefault.selected = 'true';
+    priorityDefault.disabled = 'true';
+    taskPriority.appendChild(priorityDefault);
     priorities.forEach(priority => {
         const option = document.createElement('option');
         option.setAttribute('value', `${priority}`);
@@ -288,7 +299,10 @@ function getTaskData(event) {
     const taskName = formData.get('task-name');
     const taskDesc = formData.get('description');
     const taskDate = formData.get('dueDate');
-    const taskPriority = formData.get('priority');
+    let taskPriority = formData.get('priority');
+    if (!taskPriority || !priorities.includes(taskPriority)) {
+        taskPriority = 4;
+    }
     let taskProject = formData.get('project');
     if (!taskProject) {
         taskProject = 'Inbox';

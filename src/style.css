@@ -98,6 +98,20 @@ form {
     gap: 12px;
     justify-content: start;
     padding-bottom: 4px;
+    padding-top: 4px;
+}
+
+#task-priority-field {
+    font-family: 'Noto Sans';
+    border: 2px solid var(--light-accent-color);
+    border-radius: 6px;
+    background-color: var(--header-background);
+    color: var(--text-color);
+    font-size: .9rem;
+}
+
+#task-priority-field:focus {
+    outline-color: var(--light-accent-color);
 }
 
 #form-bottom {
