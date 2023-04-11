@@ -2,7 +2,10 @@
 import './style.css';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { includes, startCase } from 'lodash';
+import format from 'date-fns/format';
+import { parse, parseISO } from 'date-fns';
 import Task from './modules/task';
+
 
 // Create task and project arrays
 const tasks = [];
@@ -19,9 +22,9 @@ function updateProjects() {
 }
 
 // Prepopulate with test tasks
-const taskOne = new Task('To Do App', 'code for Odin Project', '4/12/23', 'high', 'Odin Project', 'no');
+const taskOne = new Task('To Do App', 'code for Odin Project', '2023-04-23', 'high', 'Odin Project', 'no');
 tasks.push(taskOne);
-const taskTwo = new Task('Lunch', 'eat some healthy food', '4/7/23', 'low', 'life', 'no');
+const taskTwo = new Task('Lunch', 'eat some healthy food', '2023-04-07', 'low', 'life', 'no');
 tasks.push(taskTwo);
 
 // Create main
@@ -127,9 +130,15 @@ function addTaskToUL(task) {
     const itemBottom = document.createElement('div');
     itemBottom.classList.add('item-bottom');
     const dueDateDiv = document.createElement('div');
-    if (task.dueDate) {
-        dueDateDiv.innerText = `${task.dueDate}`;
+    if (task.dueDate) {      
+        const [year, month, day] = task.dueDate.substr(0, 10).split('-');
+        dueDateDiv.innerText = format(new Date(
+            year,
+            (month - 1),
+            day,
+        ), 'P');               
     };
+
     itemBottom.appendChild(dueDateDiv);
     const projectDiv = document.createElement('div');
     projectDiv.innerText = `Project: ${task.project}`;
@@ -155,6 +164,7 @@ function showForm() {
     const taskFormDiv = document.getElementById('task-form-div');
     taskFormDiv.classList.remove('hide');
     newTaskButtonDiv.classList.add('hide');
+    document.getElementById('task-name-field').focus();
     const dueDate = document.getElementById('task-date-field');
     const today = new Date().toISOString().slice(0, 10);
     dueDate.value = today;
@@ -246,6 +256,7 @@ function createForm() {
     const taskDueDate = document.createElement('input');
     taskDueDate.setAttribute('type', 'date');
     taskDueDate.setAttribute('id', 'task-date-field');
+    taskDueDate.setAttribute('name', 'due-date');
     const today = new Date().toISOString().slice(0, 10);
     taskDueDate.setAttribute('min', `${today}`);
     taskDueDate.value = `${today}`;
@@ -263,7 +274,7 @@ function createForm() {
 
     const taskPriority = document.createElement('select');
     taskPriority.setAttribute('id', 'task-priority-field');
-    taskPriority.setAttribute('name', 'task-priority');
+    taskPriority.setAttribute('name', 'priority');
 
     const priorityDefault = document.createElement('option');
     priorityDefault.innerText = 'Priority';
@@ -297,7 +308,7 @@ function createForm() {
 
     const taskProject = document.createElement('input');
     taskProject.setAttribute('id', 'task-project-field');
-    taskProject.setAttribute('name', 'task-project');
+    taskProject.setAttribute('name', 'project');
     taskProject.setAttribute('type', 'text');
     taskProject.setAttribute('list', 'projects');
     taskProject.setAttribute('autocomplete', 'off');
@@ -343,14 +354,20 @@ function getTaskData(event) {
     const formData = new FormData(taskData);
     const taskName = formData.get('task-name');
     const taskDesc = formData.get('description');
-    const taskDate = formData.get('dueDate');
+    const taskDate = formData.get('due-date');
     let taskPriority = formData.get('priority');
     if (!taskPriority || !priorities.includes(taskPriority)) {
         taskPriority = 4;
     }
     let taskProject = formData.get('project');
     if (!taskProject) {
-        taskProject = 'Inbox';
+        taskProject = 'inbox';
+    }
+    if (taskProject && !projects.includes(taskProject)) {
+        const lowerProject = taskProject.toLowerCase();
+        projects.push(lowerProject);
+        updateProjects();
+        updateSidebar();
     }
     const taskComplete = 'no';
     const newTask = new Task(taskName, taskDesc, taskDate, taskPriority, taskProject, taskComplete);
