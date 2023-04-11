@@ -101,6 +101,15 @@ form {
     padding-top: 4px;
 }
 
+#task-date-field {
+    background-color: var(--header-background);
+    font-family: 'Noto Sans';
+    border: 2px solid var(--light-accent-color);
+    border-radius: 6px;
+    color: var(--text-color);
+    font-size: .9rem;
+}
+
 #task-priority-field {
     font-family: 'Noto Sans';
     border: 2px solid var(--light-accent-color);
@@ -110,8 +119,14 @@ form {
     font-size: .9rem;
 }
 
-#task-priority-field:focus {
+#task-priority-field:focus,
+#task-date-field:focus {
     outline-color: var(--light-accent-color);
+}
+
+#task-priority-field:hover,
+#task-date-field:hover {
+    background-color: white;
 }
 
 #form-bottom {

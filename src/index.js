@@ -155,6 +155,9 @@ function showForm() {
     const taskFormDiv = document.getElementById('task-form-div');
     taskFormDiv.classList.remove('hide');
     newTaskButtonDiv.classList.add('hide');
+    const dueDate = document.getElementById('task-date-field');
+    const today = new Date().toISOString().slice(0, 10);
+    dueDate.value = today;
 }
 
 function hideForm(event) {
@@ -203,6 +206,7 @@ function createForm() {
     taskName.setAttribute('name', 'task-name');
     taskName.setAttribute('type', 'input');
     taskName.setAttribute('placeholder', 'Task name');
+    taskName.setAttribute('autocomplete', 'off');
     taskName.classList.add('borderless-field');
     nameFieldDiv.appendChild(taskName);
 
@@ -220,6 +224,7 @@ function createForm() {
     taskDesc.setAttribute('name', 'task-desc');
     taskDesc.setAttribute('type', 'input');
     taskDesc.setAttribute('placeholder', 'Description');
+    taskDesc.setAttribute('autocomplete', 'off');
     taskDesc.classList.add('borderless-field');
     descFieldDiv.appendChild(taskDesc);
 
@@ -228,9 +233,23 @@ function createForm() {
     buttonDiv.setAttribute('id', 'form-button-div');
     taskForm.appendChild(buttonDiv);
 
+    // Date field
     const dateFieldDiv = document.createElement('div');
-    dateFieldDiv.innerText = 'Date';
     buttonDiv.appendChild(dateFieldDiv);
+
+    const dateFieldLabel = document.createElement('label');
+    dateFieldLabel.setAttribute('for', 'task-date-field');
+    dateFieldLabel.innerText = 'Due date';
+    dateFieldLabel.classList.add('hide');
+    dateFieldDiv.appendChild(dateFieldLabel);
+
+    const taskDueDate = document.createElement('input');
+    taskDueDate.setAttribute('type', 'date');
+    taskDueDate.setAttribute('id', 'task-date-field');
+    const today = new Date().toISOString().slice(0, 10);
+    taskDueDate.setAttribute('min', `${today}`);
+    taskDueDate.value = `${today}`;
+    dateFieldDiv.appendChild(taskDueDate);
 
     // Priority field
     const priorityFieldDiv = document.createElement('div');
