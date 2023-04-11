@@ -4,12 +4,10 @@ import './style.css';
 import { startCase } from 'lodash';
 import Task from './modules/task';
 
-// Instantiate a dummy task
-const blank = new Task('name', 'desc', 'date', 'priority', 'project', 'complete');
-
 // Create task and project arrays
 const tasks = [];
-const projects = ['inbox', 'today']
+const projects = ['inbox', 'today'];
+const priorities = [1, 2, 3, 4];
 
 // Update project array
 function updateProjects() {
@@ -157,6 +155,13 @@ function showForm() {
     newTaskButtonDiv.classList.add('hide');
 }
 
+function hideForm(event) {
+    const taskFormDiv = document.getElementById('task-form-div');
+    taskFormDiv.classList.add('hide');
+    newTaskButtonDiv.classList.remove('hide');
+    event.preventDefault();
+}
+
 // Create task function
 function addTask(task) {
     tasks.push(task);
@@ -225,8 +230,24 @@ function createForm() {
     dateFieldDiv.innerText = 'Date';
     buttonDiv.appendChild(dateFieldDiv);
 
+    // Priority field
     const priorityFieldDiv = document.createElement('div');
-    priorityFieldDiv.innerText = 'Priority';
+    priorityFieldDiv.setAttribute('id', 'task-priority-div');
+    const taskPriorityLabel = document.createElement('label');
+    taskPriorityLabel.setAttribute('for', 'task-priority-field');
+    taskPriorityLabel.innerText = 'Task priority';
+    taskPriorityLabel.classList.add('hide');
+    priorityFieldDiv.appendChild(taskPriorityLabel);
+    const taskPriority = document.createElement('select');
+    taskPriority.setAttribute('id', 'task-priority-field');
+    taskPriority.setAttribute('name', 'task-priority');
+    priorities.forEach(priority => {
+        const option = document.createElement('option');
+        option.setAttribute('value', `${priority}`);
+        option.innerText = `Priority ${priority}`;
+        taskPriority.appendChild(option);
+    });
+    priorityFieldDiv.appendChild(taskPriority);
     buttonDiv.appendChild(priorityFieldDiv);
 
     // Create div for project, submit, and cancel buttons
@@ -239,12 +260,14 @@ function createForm() {
     formBottom.appendChild(projectFieldDiv);
 
     const bottomButtons = document.createElement('div');
+    bottomButtons.setAttribute('id', 'bottom-buttons');
     formBottom.appendChild(bottomButtons);
 
     const cancel = document.createElement('button');
     cancel.setAttribute('id', 'new-task-cancel');
     cancel.classList.add('cancel');
     cancel.innerText = 'Cancel';
+    cancel.addEventListener('click', hideForm);
     bottomButtons.appendChild(cancel);
 
     const submit = document.createElement('button');
