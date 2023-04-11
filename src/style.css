@@ -101,31 +101,26 @@ form {
     padding-top: 4px;
 }
 
-#task-date-field {
+#task-date-field, 
+#task-priority-field,
+#task-project-field {
     background-color: var(--header-background);
     font-family: 'Noto Sans';
     border: 2px solid var(--light-accent-color);
     border-radius: 6px;
-    color: var(--text-color);
-    font-size: .9rem;
-}
-
-#task-priority-field {
-    font-family: 'Noto Sans';
-    border: 2px solid var(--light-accent-color);
-    border-radius: 6px;
-    background-color: var(--header-background);
     color: var(--text-color);
     font-size: .9rem;
 }
 
 #task-priority-field:focus,
-#task-date-field:focus {
+#task-date-field:focus,
+#task-project-field:focus {
     outline-color: var(--light-accent-color);
 }
 
 #task-priority-field:hover,
-#task-date-field:hover {
+#task-date-field:hover,
+#task-project-field:hover {
     background-color: white;
 }
 
@@ -133,7 +128,8 @@ form {
     display: flex;
     justify-content: space-between;
     border-top: 1px solid var(--icon-color);
-    padding-top: 4px;
+    padding-top: 8px;
+    padding-bottom: 8px;
 }
 
 #bottom-buttons {
@@ -144,7 +140,7 @@ form {
 button {
     border-radius: 6px;
     color: white;
-    box-shadow: 2px 2px 2px 2px var(--text-color);
+    box-shadow: 1px 2px 2px 2px var(--text-color);
     font-family: 'Noto Sans';
 }
 

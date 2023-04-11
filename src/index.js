@@ -285,10 +285,36 @@ function createForm() {
     formBottom.setAttribute('id', 'form-bottom');
     taskForm.appendChild(formBottom);
 
+    // Project field
     const projectFieldDiv = document.createElement('div');
-    projectFieldDiv.innerText = 'Project';
     formBottom.appendChild(projectFieldDiv);
 
+    const projectFieldLabel = document.createElement('label');
+    projectFieldLabel.setAttribute('for', 'task-project-field');
+    projectFieldLabel.classList.add('hide');
+    projectFieldLabel.innerText = 'Task project';
+    projectFieldDiv.appendChild(projectFieldLabel);
+
+    const taskProject = document.createElement('input');
+    taskProject.setAttribute('id', 'task-project-field');
+    taskProject.setAttribute('name', 'task-project');
+    taskProject.setAttribute('type', 'text');
+    taskProject.setAttribute('list', 'projects');
+    taskProject.setAttribute('autocomplete', 'off');
+    taskProject.setAttribute('placeholder', 'Project');
+
+    const projectList = document.createElement('datalist');
+    projectList.setAttribute('id', 'projects');
+    projects.forEach(project => {
+        const option = document.createElement('option');
+        option.innerText = _.startCase(project);
+        projectList.appendChild(option);
+    });
+    taskProject.appendChild(projectList);
+
+    projectFieldDiv.appendChild(taskProject);
+
+    // Cancel and Submit Buttons
     const bottomButtons = document.createElement('div');
     bottomButtons.setAttribute('id', 'bottom-buttons');
     formBottom.appendChild(bottomButtons);
