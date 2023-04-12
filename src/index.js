@@ -18,10 +18,11 @@ function updateProjects() {
             projects.push(`${task.project.toLowerCase()}`);
         }
     })
+    console.log(projects);
 }
 
 // Prepopulate with test tasks
-const taskOne = new Task('To Do App', 'code for Odin Project', '2023-04-23', 'high', 'Odin Project', 'no');
+const taskOne = new Task('To Do App', 'code for Odin Project', '2023-04-23', 'high', 'odin project', 'no');
 tasks.push(taskOne);
 const taskTwo = new Task('Lunch', 'eat some healthy food', '2023-04-07', 'low', 'life', 'no');
 tasks.push(taskTwo);
@@ -74,8 +75,12 @@ function updateSidebar() {
     function addToSidebar(project) {
         const projectNameDiv = document.createElement('div')
         projectNameDiv.setAttribute('id', `${project}`);
-        projectNameDiv.innerText = _.startCase(`${project}`);
         sidebar.appendChild(projectNameDiv);
+        const projectButton = document.createElement('button');
+        projectButton.classList.add('project-button');
+        projectButton.innerText = _.startCase(`${project}`);
+        projectButton.addEventListener('click', () => { updateTaskList(project) });
+        projectNameDiv.appendChild(projectButton);
     }
 };
 
@@ -98,10 +103,8 @@ taskWrapper.appendChild(taskList);
 const leftBumper = document.createElement('div');
 taskWrapper.appendChild(leftBumper);
 
-// Load task list title
+// Global list elements
 const listTitle = document.createElement('div');
-listTitle.setAttribute('id', 'list-title');
-listTitle.innerText = 'Inbox';
 taskList.appendChild(listTitle);
 
 // Display task list
@@ -110,8 +113,32 @@ taskUL.setAttribute('id', 'task-ul');
 listTitle.after(taskUL);
 
 // Add items to task list
-function updateTaskList() {
-    const incomplete = tasks.filter(isIncomplete);
+function updateTaskList(project) {
+    // Get tasks for only this project
+    let thisList = [];
+    
+    if (project !== 'inbox') {
+        thisList = tasks.filter(isProject);        
+    } else {
+        thisList = tasks;
+    }
+
+    function isProject(task) {
+        if (task.project === project) {
+            return true;
+        }
+        return false;
+    }
+
+    // List title    
+    listTitle.setAttribute('id', 'list-title');
+    if (project === tasks) {
+        listTitle.innerText = 'Inbox';
+    } else {
+        listTitle.innerText = _.startCase(project)
+    } 
+
+    const incomplete = thisList.filter(isIncomplete);
     taskUL.innerText = '';
     if (incomplete.length !== 0) {
         incomplete.forEach(task => addTaskToUL(task));
@@ -125,7 +152,7 @@ function updateTaskList() {
         };
         return true;
     };
-}
+};
 
 function addTaskToUL(task) {
     const taskItem = document.createElement('li');
@@ -346,14 +373,7 @@ function createForm() {
     // Cancel and Submit Buttons
     const bottomButtons = document.createElement('div');
     bottomButtons.setAttribute('id', 'bottom-buttons');
-    formBottom.appendChild(bottomButtons);
-
-    const cancel = document.createElement('button');
-    cancel.setAttribute('id', 'new-task-cancel');
-    cancel.classList.add('cancel');
-    cancel.innerText = 'Cancel';
-    cancel.addEventListener('click', hideForm);
-    bottomButtons.appendChild(cancel);
+    formBottom.appendChild(bottomButtons);    
 
     const submit = document.createElement('button');
     submit.setAttribute('id', 'new-task-submit');
@@ -362,6 +382,13 @@ function createForm() {
     submit.innerText = 'Add Task';
     bottomButtons.appendChild(submit);
     taskForm.addEventListener('submit', getTaskData);
+
+    const cancel = document.createElement('button');
+    cancel.setAttribute('id', 'new-task-cancel');
+    cancel.classList.add('cancel');
+    cancel.innerText = 'Cancel';
+    cancel.addEventListener('click', hideForm);
+    bottomButtons.appendChild(cancel);
 
     taskFormDiv.appendChild(taskForm);
 }
@@ -390,7 +417,7 @@ function getTaskData(event) {
     const taskComplete = 'no';
     const newTask = new Task(taskName, taskDesc, taskDate, taskPriority, taskProject, taskComplete);
     addTask(newTask);
-    updateTaskList();
+    updateTaskList(taskProject);
     updateProjects();
     updateSidebar();
     taskData.reset();
@@ -402,6 +429,6 @@ function getTaskData(event) {
 
 updateProjects();
 updateSidebar();
-updateTaskList();
+updateTaskList('inbox');
 createForm();
 
