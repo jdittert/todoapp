@@ -3,7 +3,6 @@ import './style.css';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { includes, startCase } from 'lodash';
 import format from 'date-fns/format';
-import { parse, parseISO } from 'date-fns';
 import Task from './modules/task';
 
 
@@ -43,10 +42,29 @@ const header = document.createElement('div');
 header.setAttribute('id', 'header');
 mainDiv.appendChild(header);
 
+// Header content
+const sidebarCollapse = document.createElement('div');
+header.appendChild(sidebarCollapse);
+sidebarCollapse.classList.add('header-icon');
+const menuImage = document.createElement('img');
+menuImage.setAttribute('src', './images/menu.svg');
+sidebarCollapse.appendChild(menuImage);
+
+const appName = document.createElement('div');
+header.appendChild(appName);
+appName.classList.add('brand-name');
+appName.innerText = 'Todoish';
+
 // Create sidebar
 const sidebar = document.createElement('div');
 sidebar.setAttribute('id', 'sidebar');
 mainDiv.appendChild(sidebar);
+
+// Sidebar collapse
+sidebarCollapse.addEventListener('click', toggleSidebar);
+function toggleSidebar() {
+    sidebar.classList.toggle('hide');
+};
 
 // Add projects to sidebar
 function updateSidebar() {

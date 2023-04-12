@@ -1,5 +1,7 @@
 :root {
     --dark-accent-color: #472183;
+    --dark-accent-color-light: #6c4d9c;
+    --dark-accent-color-dark: #391a69;
     --header-background: #f1f6f5;
     --light-accent-color: #82c3ec;
     --cancel-color: #ff4242;
@@ -34,14 +36,34 @@ main {
     grid-area: 1 / 1 / 2 / 3;
     background-color: var(--dark-accent-color);
     color: white;
-    height: 100px;
+    height: min-content;
+    padding: 4px 16px;
+    margin-bottom: 3px;
+    box-shadow: 2px 2px 2px 5px var(--dark-accent-color-dark);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1rem;
+}
+
+.header-icon:hover {
+    background-color: var(--dark-accent-color-light);
+    border-radius: 4px;
+}
+img {
+    width: 30px;
+    height: auto;
+}
+
+.brand-name {
+    font-weight: bold;
 }
 
 #sidebar {
     background-color: var(--dark-accent-color);
     color: white;
     grid-area: 2 / 1 / 3 / 2;
-    font-size: 2rem;
+    font-size: 1.5rem;
     padding-left: 1rem;
     padding-right: 1rem;
     padding-top: .25rem;
