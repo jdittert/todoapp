@@ -4,18 +4,20 @@ import './style.css';
 import { includes, startCase } from 'lodash';
 import format from 'date-fns/format';
 import Task from './modules/task';
-import { isIncomplete, numberOfTasks, tasks, updateProject, updateToday } from './arrays';
+import { isIncomplete, numberOfTasks, tasks, todayTasks, updateProject, updateToday } from './arrays';
 
 
 // Create task and project arrays
-const projects = ['inbox', 'today'];
+const projects = [];
 const priorities = [1, 2, 3, 4];
 
 // Update project array
 function updateProjects() {
     tasks.forEach(task => {
-        if (!projects.includes(`${task.project.toLowerCase()}`)) {
-            projects.push(`${task.project.toLowerCase()}`);
+        if (task.project) {
+            if (!projects.includes(`${task.project.toLowerCase()}`)) {
+                projects.push(`${task.project.toLowerCase()}`);
+            }
         }
     });
 }
@@ -68,82 +70,87 @@ function toggleSidebar() {
     sidebar.classList.toggle('hide');
 };
 
-// Static sidebar categories
-const sidebarStatic = document.createElement('div');
-sidebarStatic.setAttribute('id', 'sidebar-static');
-sidebar.appendChild(sidebarStatic);
-
-// Inbox
-const inboxSide = document.createElement('div');
-inboxSide.setAttribute('id', 'inbox-sidebar');
-sidebarStatic.appendChild(inboxSide);
-const inboxButton = document.createElement('button');
-inboxButton.classList.add('project-button');
-
-const inboxButtonTitle = document.createElement('div');
-inboxButtonTitle.innerText = 'Inbox';
-inboxButton.appendChild(inboxButtonTitle);
-
-const inboxButtonNumber = document.createElement('div');
-const activeInbox = numberOfTasks(tasks);
-inboxButtonNumber.innerText = activeInbox;
-inboxButtonNumber.classList.add('project-button-number');
-inboxButton.appendChild(inboxButtonNumber);
-
-inboxButton.addEventListener('click', () => {updateTaskList(tasks)});
-inboxSide.appendChild(inboxButton);
-
-const todaySide = document.createElement('div');
-todaySide.setAttribute('id', 'today-sidebar');
-sidebarStatic.appendChild(todaySide);
-const todayButton = document.createElement('button');
-todayButton.classList.add('project-button');
-
-const todayList = updateToday();
-
-const todayButtonTitle = document.createElement('div');
-todayButtonTitle.innerText = 'Today';
-todayButton.appendChild(todayButtonTitle);
-
-const todayButtonNumber = document.createElement('div')
-const activeToday = numberOfTasks(todayList);
-todayButtonNumber.classList.add('project-button-number');
-todayButtonNumber.innerText = activeToday;
-todayButton.appendChild(todayButtonNumber);
-
-todayButton.addEventListener('click', () => { updateTaskList(todayList) });
-todaySide.appendChild(todayButton);
-
-// Add projects to sidebar
-const sidebarProjects = document.createElement('div');
-sidebarProjects.setAttribute('id', 'sidebar-projects');
-sidebar.appendChild(sidebarProjects);
-
-const projectsTitle = document.createElement('div');
-projectsTitle.setAttribute('id', 'projects-title');
-sidebarProjects.appendChild(projectsTitle);
-projectsTitle.innerText = 'PROJECTS';
-
-const projectsUL = document.createElement('ul');
-projectsUL.setAttribute('id', 'projects-ul');
-sidebarProjects.appendChild(projectsUL);
-
 function updateSidebar() {
-    projectsUL.innerText = '';
-    projects.forEach(project => addToSidebar(project));
+    // Static sidebar categories
+    sidebar.innerText = '';
+    const sidebarStatic = document.createElement('div');
+    sidebarStatic.setAttribute('id', 'sidebar-static');
+    sidebar.appendChild(sidebarStatic);
 
-    function addToSidebar(project) {
-        const projectNameLI = document.createElement('li')
-        projectNameLI.setAttribute('id', `${project}`);
-        projectsUL.appendChild(projectNameLI);
-        const projectButton = document.createElement('button');
-        projectButton.classList.add('project-button');
-        projectButton.innerText = startCase(`${project}`);
-        const projectList = updateProject(project);
-        projectButton.addEventListener('click', () => { updateTaskList(projectList) });
-        projectNameLI.appendChild(projectButton);
-    }    
+    // Inbox
+    const inboxSide = document.createElement('div');
+    inboxSide.setAttribute('id', 'inbox-sidebar');
+    sidebarStatic.appendChild(inboxSide);
+    const inboxButton = document.createElement('button');
+    inboxButton.classList.add('project-button');
+
+    const inboxButtonTitle = document.createElement('div');
+    inboxButtonTitle.innerText = 'Inbox';
+    inboxButton.appendChild(inboxButtonTitle);
+
+    const inboxButtonNumber = document.createElement('div');
+    const activeInbox = numberOfTasks(tasks);
+    inboxButtonNumber.innerText = activeInbox;
+    inboxButtonNumber.classList.add('project-button-number');
+    inboxButton.appendChild(inboxButtonNumber);
+
+    inboxButton.addEventListener('click', () => {updateTaskList(tasks)});
+    inboxSide.appendChild(inboxButton);
+
+    const todaySide = document.createElement('div');
+    todaySide.setAttribute('id', 'today-sidebar');
+    sidebarStatic.appendChild(todaySide);
+    const todayButton = document.createElement('button');
+    todayButton.classList.add('project-button');
+
+    const todayList = updateToday();
+
+    const todayButtonTitle = document.createElement('div');
+    todayButtonTitle.innerText = 'Today';
+    todayButton.appendChild(todayButtonTitle);
+
+    const todayButtonNumber = document.createElement('div')
+    const activeToday = numberOfTasks(todayList);
+    todayButtonNumber.classList.add('project-button-number');
+    todayButtonNumber.innerText = activeToday;
+    todayButton.appendChild(todayButtonNumber);
+
+    todayButton.addEventListener('click', () => { updateTaskList(todayList) });
+    todaySide.appendChild(todayButton);
+
+    // Add projects to sidebar
+    const sidebarProjects = document.createElement('div');
+    sidebarProjects.setAttribute('id', 'sidebar-projects');
+    sidebar.appendChild(sidebarProjects);
+
+    const projectsTitle = document.createElement('div');
+    projectsTitle.setAttribute('id', 'projects-title');
+    sidebarProjects.appendChild(projectsTitle);
+    projectsTitle.innerText = 'PROJECTS';
+
+    const projectsUL = document.createElement('ul');
+    projectsUL.setAttribute('id', 'projects-ul');
+    sidebarProjects.appendChild(projectsUL);
+
+    function updateSidebarProjects() {
+        projectsUL.innerText = '';
+        projects.forEach(project => addToSidebar(project));
+
+        function addToSidebar(project) {
+            const projectNameLI = document.createElement('li')
+            projectNameLI.setAttribute('id', `${project}`);
+            projectsUL.appendChild(projectNameLI);
+            const projectButton = document.createElement('button');
+            projectButton.classList.add('project-button');
+            projectButton.innerText = startCase(`${project}`);
+            const projectList = updateProject(project);
+            projectButton.addEventListener('click', () => { updateTaskList(projectList) });
+            projectNameLI.appendChild(projectButton);
+        }    
+    };
+    updateSidebarProjects();
 };
+
 
 // Create task section
 const taskSection = document.createElement('div');
@@ -175,9 +182,6 @@ taskUL.setAttribute('id', 'task-ul');
 taskUL.classList.add('task-ul');
 listTitle.after(taskUL);
 
-// Update list title
-
-
 // Add items to task list
 function updateTaskList(taskArray) {    
     if (taskArray) {
@@ -195,7 +199,7 @@ function updateTaskList(taskArray) {
     if (taskArray === tasks || !taskArray) {
         listTitle.innerText = 'Inbox';
     } else {
-        listTitle.innerText = startCase(taskArray);
+        listTitle.innerText = startCase(taskArray[0].project);
     };    
 };
 
@@ -319,18 +323,19 @@ function completeTask(event) {
     const taskIndex = event.currentTarget.dataset.index;
     const completedTask = tasks[taskIndex];
     completedTask.complete = 'yes';
-    refreshPage();
+    const {project} = completedTask;
+    refreshPage(project);
 }
 
 // Refresh page function
-function refreshPage() {
-    const page = document.getElementById('list-title').innerText.toLowerCase();
+function refreshPage(page) {    
     if (page) {
         const newList = updateProject(page);
         updateTaskList(newList);
     } else {
         updateTaskList(tasks);
-    };   
+    };
+    updateSidebar();
 };
 
 // Create form for inputing task
@@ -362,6 +367,7 @@ function createForm() {
     taskName.setAttribute('placeholder', 'Task name');
     taskName.setAttribute('autocomplete', 'off');
     taskName.classList.add('borderless-field');
+    taskName.required = 'true';
     nameFieldDiv.appendChild(taskName);
 
     // Create description field
@@ -402,7 +408,7 @@ function createForm() {
     taskDueDate.setAttribute('id', 'task-date-field');
     taskDueDate.setAttribute('name', 'due-date');
     const today = new Date().toISOString().slice(0, 10);
-    taskDueDate.setAttribute('min', `${today}`);
+    // taskDueDate.setAttribute('min', `${today}`);
     taskDueDate.value = `${today}`;
     dateFieldDiv.appendChild(taskDueDate);
 
@@ -504,11 +510,12 @@ function getTaskData(event) {
     if (!taskPriority || !priorities.includes(taskPriority)) {
         taskPriority = 4;
     }
-    let taskProject = formData.get('project').toLowerCase();
-    if (!taskProject) {
-        taskProject = 'inbox';
-    }
-    if (taskProject && !projects.includes(taskProject)) {
+    const taskProject = formData.get('project').trim().toLowerCase();
+    // if (!taskProject) {
+    //     taskProject = 'inbox';
+    // }
+    console.log(taskProject);
+    if (taskProject && taskProject.length !== 0 && !projects.includes(taskProject)) {
         projects.push(taskProject);
         updateProjects();
         updateSidebar();

@@ -194,6 +194,10 @@ form {
     padding-bottom: 8px;
 }
 
+#new-task-button {
+    margin-top: .5rem;
+}
+
 #bottom-buttons {
     display: flex;
     flex-direction: row-reverse;
