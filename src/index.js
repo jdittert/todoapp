@@ -207,8 +207,32 @@ function addTaskToUL(task) {
     // Top row
     const itemTop = document.createElement('div');
     itemTop.classList.add('item-top');
-    itemTop.innerText = `${task.name}`;
     taskItem.appendChild(itemTop);
+
+    const itemTopLeft = document.createElement('div');
+    itemTopLeft.classList.add('item-top-div');
+    itemTop.appendChild(itemTopLeft);
+
+    const itemTopName = document.createElement('div');
+    itemTopName.innerText = `${task.name}`;
+    itemTopLeft.appendChild(itemTopName);
+
+    const expandIconDiv = document.createElement('div');
+    itemTopLeft.appendChild(expandIconDiv);
+
+    const expandIcon = document.createElement('button');
+    expandIcon.classList.add('task-button');
+    expandIconDiv.appendChild(expandIcon);
+
+    const expandIconImg = document.createElement('img');
+    expandIconImg.setAttribute('src', './images/arrow-expand-down.svg');
+    expandIconImg.setAttribute('alt', 'Expand icon');
+    expandIconImg.classList.add('expand-icon');
+    expandIcon.appendChild(expandIconImg);
+    expandIcon.classList.add('hide');
+
+    taskItem.addEventListener('mouseenter', () => expandIcon.classList.remove('hide'));
+    taskItem.addEventListener('mouseleave', () => expandIcon.classList.add('hide'));
 
     const completeButton = document.createElement('button');
     completeButton.setAttribute('data-index', `${tasks.indexOf(task)}`);
@@ -239,6 +263,19 @@ function addTaskToUL(task) {
     };
     itemBottom.appendChild(projectDiv);
     taskItem.appendChild(itemBottom);
+
+    // Hidden description row
+    const hiddenDesc = document.createElement('div');
+    hiddenDesc.setAttribute('id', `${task.name}-${task.description}`);
+    if (task.description) {
+        hiddenDesc.innerText = `${task.description}`;
+    } else {
+        hiddenDesc.innerText = 'Description';
+    };    
+    hiddenDesc.classList.add('hide');
+    taskItem.appendChild(hiddenDesc);
+
+    expandIcon.addEventListener('click', () => hiddenDesc.classList.toggle('hide'));
     
     // Append to ul
     taskUL.appendChild(taskItem);

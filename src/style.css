@@ -248,6 +248,21 @@ button {
     margin-bottom: .25rem;
 }
 
+.item-top-div {
+    display: flex;
+    justify-content: start;
+    gap: 12px;
+}
+
+.task-button {
+    box-shadow: none;
+}
+
+.expand-icon {
+    height: .75rem;
+    width: auto;
+}
+
 .complete-button, .form-button {    
     background-color: var(--icon-color);   
 }
