@@ -60,7 +60,7 @@ img {
     font-weight: bold;
 }
 
-#sidebar {
+#sidebar {    
     background-color: var(--dark-accent-color);
     color: white;
     grid-area: 2 / 1 / 3 / 2;
@@ -68,13 +68,32 @@ img {
     padding-left: 1rem;
     padding-right: 1rem;
     padding-top: .25rem;
+    gap: 1rem;
 }
 
-#sidebar div:hover {
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+#sidebar ul {
+    margin-top: .5rem;
+    margin-block-start: .5rem;
+    padding-inline-start: 20px;
+}
+
+#sidebar li {
+    font-size: 1rem;
+}
+
+.project-button:hover {
     background-color: var(--dark-accent-color-light);
 }
 
 .project-button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     border: none;
     background-color: transparent;
     padding: 0;
@@ -84,6 +103,10 @@ img {
     box-shadow: none;
     text-align: start;
     width: 100%;
+}
+
+.project-button-number {
+    font-size: 1rem;
 }
 
 #task-section {
@@ -188,13 +211,13 @@ button {
     background-color: var(--cancel-color);
 }
 
-ul {
+.task-ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
 }
 
-li {
+.task-li {
     list-style: none;    
     margin: 0;
     padding:0;

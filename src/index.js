@@ -4,7 +4,7 @@ import './style.css';
 import { includes, startCase } from 'lodash';
 import format from 'date-fns/format';
 import Task from './modules/task';
-import { tasks, todayTasks, updateProject, updateToday } from './arrays';
+import { isIncomplete, numberOfTasks, tasks, updateProject, updateToday } from './arrays';
 
 
 // Create task and project arrays
@@ -58,40 +58,91 @@ appName.innerText = 'Todoish';
 // Create sidebar
 const sidebar = document.createElement('div');
 sidebar.setAttribute('id', 'sidebar');
+sidebar.classList.add('flex-column');
 mainDiv.appendChild(sidebar);
 
 // Sidebar collapse
 sidebarCollapse.addEventListener('click', toggleSidebar);
 function toggleSidebar() {
+    sidebar.classList.toggle('flex-column');
     sidebar.classList.toggle('hide');
 };
 
+// Static sidebar categories
+const sidebarStatic = document.createElement('div');
+sidebarStatic.setAttribute('id', 'sidebar-static');
+sidebar.appendChild(sidebarStatic);
+
+// Inbox
+const inboxSide = document.createElement('div');
+inboxSide.setAttribute('id', 'inbox-sidebar');
+sidebarStatic.appendChild(inboxSide);
+const inboxButton = document.createElement('button');
+inboxButton.classList.add('project-button');
+
+const inboxButtonTitle = document.createElement('div');
+inboxButtonTitle.innerText = 'Inbox';
+inboxButton.appendChild(inboxButtonTitle);
+
+const inboxButtonNumber = document.createElement('div');
+const activeInbox = numberOfTasks(tasks);
+inboxButtonNumber.innerText = activeInbox;
+inboxButtonNumber.classList.add('project-button-number');
+inboxButton.appendChild(inboxButtonNumber);
+
+inboxButton.addEventListener('click', () => {updateTaskList(tasks)});
+inboxSide.appendChild(inboxButton);
+
+const todaySide = document.createElement('div');
+todaySide.setAttribute('id', 'today-sidebar');
+sidebarStatic.appendChild(todaySide);
+const todayButton = document.createElement('button');
+todayButton.classList.add('project-button');
+
+const todayList = updateToday();
+
+const todayButtonTitle = document.createElement('div');
+todayButtonTitle.innerText = 'Today';
+todayButton.appendChild(todayButtonTitle);
+
+const todayButtonNumber = document.createElement('div')
+const activeToday = numberOfTasks(todayList);
+todayButtonNumber.classList.add('project-button-number');
+todayButtonNumber.innerText = activeToday;
+todayButton.appendChild(todayButtonNumber);
+
+todayButton.addEventListener('click', () => { updateTaskList(todayList) });
+todaySide.appendChild(todayButton);
+
 // Add projects to sidebar
+const sidebarProjects = document.createElement('div');
+sidebarProjects.setAttribute('id', 'sidebar-projects');
+sidebar.appendChild(sidebarProjects);
+
+const projectsTitle = document.createElement('div');
+projectsTitle.setAttribute('id', 'projects-title');
+sidebarProjects.appendChild(projectsTitle);
+projectsTitle.innerText = 'PROJECTS';
+
+const projectsUL = document.createElement('ul');
+projectsUL.setAttribute('id', 'projects-ul');
+sidebarProjects.appendChild(projectsUL);
+
 function updateSidebar() {
-    sidebar.innerText = '';
+    projectsUL.innerText = '';
     projects.forEach(project => addToSidebar(project));
 
     function addToSidebar(project) {
-        const projectNameDiv = document.createElement('div')
-        projectNameDiv.setAttribute('id', `${project}`);
-        sidebar.appendChild(projectNameDiv);
+        const projectNameLI = document.createElement('li')
+        projectNameLI.setAttribute('id', `${project}`);
+        projectsUL.appendChild(projectNameLI);
         const projectButton = document.createElement('button');
         projectButton.classList.add('project-button');
         projectButton.innerText = startCase(`${project}`);
         const projectList = updateProject(project);
         projectButton.addEventListener('click', () => { updateTaskList(projectList) });
-        projectNameDiv.appendChild(projectButton);
-    }
-
-    const todayTest = document.createElement('div');
-    todayTest.setAttribute('id', 'today-test');
-    sidebar.appendChild(todayTest);
-    const todayTestButton = document.createElement('button');
-    todayTestButton.classList.add('project-button');
-    todayTestButton.innerText = 'Today Test';
-    const todayList = updateToday();
-    todayTestButton.addEventListener('click', () => { updateTaskList(todayList) });
-    todayTest.appendChild(todayTestButton);
+        projectNameLI.appendChild(projectButton);
+    }    
 };
 
 // Create task section
@@ -121,6 +172,7 @@ taskList.appendChild(listTitle);
 // Display task list
 const taskUL = document.createElement('ul');
 taskUL.setAttribute('id', 'task-ul');
+taskUL.classList.add('task-ul');
 listTitle.after(taskUL);
 
 // Update list title
@@ -144,19 +196,13 @@ function updateTaskList(taskArray) {
         listTitle.innerText = 'Inbox';
     } else {
         listTitle.innerText = startCase(taskArray);
-    };   
-
-    function isIncomplete(task) {
-        if (task.complete === 'yes') {
-            return false;        
-        };
-        return true;
-    };
+    };    
 };
 
 function addTaskToUL(task) {
     const taskItem = document.createElement('li');
     taskItem.classList.add('task-item');
+    taskItem.classList.add('task-li');
     
     // Top row
     const itemTop = document.createElement('div');

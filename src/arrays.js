@@ -28,4 +28,21 @@ export function updateProject(project) {
     };
 
     return projectTasks;
-}
+};
+
+export function isIncomplete(task) {
+    if (task.complete === 'yes') {
+        return false;        
+    };
+    return true;
+};
+
+export function numberOfTasks(array) {
+    if (array) {
+        const incomplete = array.filter(isIncomplete);
+        if (incomplete) return incomplete.length;
+        return '0';
+    }
+        
+    return '0';
+};
