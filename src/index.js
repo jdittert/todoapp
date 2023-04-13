@@ -4,10 +4,10 @@ import './style.css';
 import { includes, startCase } from 'lodash';
 import format from 'date-fns/format';
 import Task from './modules/task';
+import { tasks, todayTasks, updateProject, updateToday } from './arrays';
 
 
 // Create task and project arrays
-const tasks = [];
 const projects = ['inbox', 'today'];
 const priorities = [1, 2, 3, 4];
 
@@ -17,8 +17,7 @@ function updateProjects() {
         if (!projects.includes(`${task.project.toLowerCase()}`)) {
             projects.push(`${task.project.toLowerCase()}`);
         }
-    })
-    console.log(projects);
+    });
 }
 
 // Prepopulate with test tasks
@@ -78,10 +77,21 @@ function updateSidebar() {
         sidebar.appendChild(projectNameDiv);
         const projectButton = document.createElement('button');
         projectButton.classList.add('project-button');
-        projectButton.innerText = _.startCase(`${project}`);
-        projectButton.addEventListener('click', () => { updateTaskList(project) });
+        projectButton.innerText = startCase(`${project}`);
+        const projectList = updateProject(project);
+        projectButton.addEventListener('click', () => { updateTaskList(projectList) });
         projectNameDiv.appendChild(projectButton);
     }
+
+    const todayTest = document.createElement('div');
+    todayTest.setAttribute('id', 'today-test');
+    sidebar.appendChild(todayTest);
+    const todayTestButton = document.createElement('button');
+    todayTestButton.classList.add('project-button');
+    todayTestButton.innerText = 'Today Test';
+    const todayList = updateToday();
+    todayTestButton.addEventListener('click', () => { updateTaskList(todayList) });
+    todayTest.appendChild(todayTestButton);
 };
 
 // Create task section
@@ -105,6 +115,7 @@ taskWrapper.appendChild(leftBumper);
 
 // Global list elements
 const listTitle = document.createElement('div');
+listTitle.setAttribute('id', 'list-title');
 taskList.appendChild(listTitle);
 
 // Display task list
@@ -112,39 +123,28 @@ const taskUL = document.createElement('ul');
 taskUL.setAttribute('id', 'task-ul');
 listTitle.after(taskUL);
 
+// Update list title
+
+
 // Add items to task list
-function updateTaskList(project) {
-    // Get tasks for only this project
-    let thisList = [];
-    
-    if (project !== 'inbox') {
-        thisList = tasks.filter(isProject);        
+function updateTaskList(taskArray) {    
+    if (taskArray) {
+        const incomplete = taskArray.filter(isIncomplete);
+        taskUL.innerText = '';
+        if (incomplete.length !== 0) {
+            incomplete.forEach(task => addTaskToUL(task));
+        } else {
+            taskUL.innerText = 'All caught up!'
+        };
     } else {
-        thisList = tasks;
-    }
-
-    function isProject(task) {
-        if (task.project === project) {
-            return true;
-        }
-        return false;
-    }
-
-    // List title    
-    listTitle.setAttribute('id', 'list-title');
-    if (project === tasks) {
+        taskUL.innerText = 'Add some new tasks!'
+    };
+    
+    if (taskArray === tasks || !taskArray) {
         listTitle.innerText = 'Inbox';
     } else {
-        listTitle.innerText = _.startCase(project)
-    } 
-
-    const incomplete = thisList.filter(isIncomplete);
-    taskUL.innerText = '';
-    if (incomplete.length !== 0) {
-        incomplete.forEach(task => addTaskToUL(task));
-    } else {
-        taskUL.innerText = 'All caught up!'
-    };
+        listTitle.innerText = startCase(taskArray);
+    };   
 
     function isIncomplete(task) {
         if (task.complete === 'yes') {
@@ -186,7 +186,11 @@ function addTaskToUL(task) {
 
     itemBottom.appendChild(dueDateDiv);
     const projectDiv = document.createElement('div');
-    projectDiv.innerText = `Project: ${task.project}`;
+    if (!task.project || task.project === 'inbox') {
+        projectDiv.innerText = 'Inbox';
+    } else {
+        projectDiv.innerText = `Project: ${startCase(task.project)}`;
+    };
     itemBottom.appendChild(projectDiv);
     taskItem.appendChild(itemBottom);
     
@@ -230,9 +234,21 @@ function addTask(task) {
 // Complete task function
 function completeTask(event) {
     const taskIndex = event.currentTarget.dataset.index;
-    tasks[taskIndex].complete = 'yes';
-    updateTaskList();
+    const completedTask = tasks[taskIndex];
+    completedTask.complete = 'yes';
+    refreshPage();
 }
+
+// Refresh page function
+function refreshPage() {
+    const page = document.getElementById('list-title').innerText.toLowerCase();
+    if (page) {
+        const newList = updateProject(page);
+        updateTaskList(newList);
+    } else {
+        updateTaskList(tasks);
+    };   
+};
 
 // Create form for inputing task
 function createForm() {
@@ -363,7 +379,7 @@ function createForm() {
     projectList.setAttribute('id', 'projects');
     projects.forEach(project => {
         const option = document.createElement('option');
-        option.innerText = _.startCase(project);
+        option.innerText = startCase(project);
         projectList.appendChild(option);
     });
     taskProject.appendChild(projectList);
@@ -400,24 +416,24 @@ function getTaskData(event) {
     const taskName = formData.get('task-name');
     const taskDesc = formData.get('description');
     const taskDate = formData.get('due-date');
+    console.log(taskDate);
     let taskPriority = formData.get('priority');
     if (!taskPriority || !priorities.includes(taskPriority)) {
         taskPriority = 4;
     }
-    let taskProject = formData.get('project');
+    let taskProject = formData.get('project').toLowerCase();
     if (!taskProject) {
         taskProject = 'inbox';
     }
     if (taskProject && !projects.includes(taskProject)) {
-        const lowerProject = taskProject.toLowerCase();
-        projects.push(lowerProject);
+        projects.push(taskProject);
         updateProjects();
         updateSidebar();
     }
     const taskComplete = 'no';
     const newTask = new Task(taskName, taskDesc, taskDate, taskPriority, taskProject, taskComplete);
     addTask(newTask);
-    updateTaskList(taskProject);
+    refreshPage();
     updateProjects();
     updateSidebar();
     taskData.reset();
@@ -429,6 +445,6 @@ function getTaskData(event) {
 
 updateProjects();
 updateSidebar();
-updateTaskList('inbox');
+updateTaskList(tasks);
 createForm();
 
