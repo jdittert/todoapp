@@ -205,21 +205,14 @@ function updateTaskList(taskArray, project) {
         taskUL.innerText = 'Add some new tasks!'
     };
 
-    listTitle.innerText = startCase(project);
-    
-    // if (taskArray === tasks || !taskArray) {
-    //     listTitle.innerText = 'Inbox';
-    // } else if (taskArray === todayTasks) {
-    //     listTitle.innerText = 'Today'
-    // } else {
-    //     listTitle.innerText = startCase(taskArray[0].project);
-    // };    
+    listTitle.innerText = startCase(project);  
 };
 
 function addTaskToUL(task) {
     const taskItem = document.createElement('li');
     taskItem.classList.add('task-item');
     taskItem.classList.add('task-li');
+    taskItem.setAttribute('id', `task-${tasks.indexOf(task)}`);
     
     // Top row
     const itemTop = document.createElement('div');
@@ -251,12 +244,32 @@ function addTaskToUL(task) {
     taskItem.addEventListener('mouseenter', () => expandIcon.classList.remove('hide'));
     taskItem.addEventListener('mouseleave', () => expandIcon.classList.add('hide'));
 
+    // Edit Button
+    const editIconDiv = document.createElement('div');
+    itemTopLeft.appendChild(editIconDiv);
+
+    const editIcon = document.createElement('button');
+    editIcon.classList.add('task-button');
+    editIcon.setAttribute('data-index', `${tasks.indexOf(task)}`);
+    editIconDiv.appendChild(editIcon);
+
+    const editIconImg = document.createElement('img');
+    editIconImg.setAttribute('src', './images/pencil.svg');
+    editIconImg.setAttribute('alt', 'Edit icon');
+    editIconImg.classList.add('task-icon');
+    editIcon.appendChild(editIconImg);
+    editIcon.classList.add('hide');
+    
+    taskItem.addEventListener('mouseenter', () => editIcon.classList.remove('hide'));
+    taskItem.addEventListener('mouseleave', () => editIcon.classList.add('hide'));
+
     // Delete button
     const deleteIconDiv = document.createElement('div');
     itemTopLeft.appendChild(deleteIconDiv);
 
     const deleteIcon = document.createElement('button');
     deleteIcon.classList.add('task-button');
+    deleteIcon.classList.add('cancel');
     deleteIconDiv.appendChild(deleteIcon);
     
     const deleteIconImg = document.createElement('img');
@@ -313,6 +326,7 @@ function addTaskToUL(task) {
     taskItem.appendChild(hiddenDesc);
 
     expandIcon.addEventListener('click', () => hiddenDesc.classList.toggle('hide'));
+    editIcon.addEventListener('click', editTask);
     
     // Append to ul
     taskUL.appendChild(taskItem);
@@ -361,6 +375,15 @@ function completeTask(event) {
     refreshPage(page);
 }
 
+// Edit task function
+function editTask(event) {
+    const taskIndex = event.currentTarget.dataset.index;
+    const currentTask = document.getElementById(`task-${taskIndex}`);
+    const editForm = createForm();
+    currentTask.innerText = '';
+    currentTask.appendChild(editForm);
+}
+
 // // Delete task function
 // function deleteTask(event) {
 //     const taskIndex = event.currentTarget.dataset.index;
@@ -378,7 +401,6 @@ function completeTask(event) {
 function refreshPage(page) {    
     if (page && !staticPages.includes(page)) {
         const newList = updateProject(page);
-        console.log(newList);
         if (newList) {updateTaskList(newList, page);
         } else {
         updateTaskList(tasks, 'inbox');
@@ -391,16 +413,17 @@ function refreshPage(page) {
     } else {
         updateTaskList(tasks, 'inbox');
     };
+    taskFormDiv.classList.add('hide');
     updateSidebar();
 };
 
+const taskFormDiv = document.createElement('div');
+taskFormDiv.setAttribute('id', 'task-form-div');
+taskFormDiv.classList.add('hide');
+taskList.appendChild(taskFormDiv);
+
 // Create form for inputing task
-function createForm() {
-    // Create hidden div for form
-    const taskFormDiv = document.createElement('div');
-    taskFormDiv.setAttribute('id', 'task-form-div');
-    taskFormDiv.classList.add('hide');
-    taskList.appendChild(taskFormDiv);
+function createForm() { 
 
     // Create actual form
     const taskForm = document.createElement('form');
@@ -464,7 +487,6 @@ function createForm() {
     taskDueDate.setAttribute('id', 'task-date-field');
     taskDueDate.setAttribute('name', 'due-date');
     const today = new Date().toISOString().slice(0, 10);
-    // taskDueDate.setAttribute('min', `${today}`);
     taskDueDate.value = `${today}`;
     dateFieldDiv.appendChild(taskDueDate);
 
@@ -548,10 +570,17 @@ function createForm() {
     cancel.setAttribute('id', 'new-task-cancel');
     cancel.classList.add('cancel');
     cancel.innerText = 'Cancel';
-    cancel.addEventListener('click', hideForm);
+    const currentPage = listTitle.innerText.toLowerCase();
+    console.log(currentPage);
+    cancel.addEventListener('click', cancelForm);
+
+    function cancelForm() {
+        taskName.required = 'false'
+        refreshPage(currentPage);
+    }
     bottomButtons.appendChild(cancel);
 
-    taskFormDiv.appendChild(taskForm);
+    return taskForm;
 }
 
 // Get form data
@@ -578,7 +607,6 @@ function getTaskData(event) {
     updateProjects();
     updateSidebar();
     taskData.reset();
-    const taskFormDiv = document.getElementById('task-form-div');
     taskFormDiv.classList.add('hide');
     newTaskButtonDiv.classList.remove('hide');
     event.preventDefault();
@@ -587,5 +615,6 @@ function getTaskData(event) {
 updateProjects();
 updateSidebar();
 updateTaskList(tasks, 'inbox');
-createForm();
+const newTaskForm = createForm();
+taskFormDiv.appendChild(newTaskForm);
 
