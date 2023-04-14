@@ -19,7 +19,8 @@ export function updateProject(project) {
     let projectTasks = [];
 
     if (project) {
-        projectTasks = tasks.filter(isProject);
+        const projectAllTasks = tasks.filter(isProject);
+        projectTasks = projectAllTasks.filter(isIncomplete);
     }
 
     function isProject(task) {

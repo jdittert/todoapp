@@ -10,6 +10,7 @@ import { isIncomplete, numberOfTasks, tasks, todayTasks, updateProject, updateTo
 // Create task and project arrays
 const projects = [];
 const priorities = [1, 2, 3, 4];
+const staticPages = ['inbox', 'today'];
 
 // Update project array
 function updateProjects() {
@@ -94,7 +95,7 @@ function updateSidebar() {
     inboxButtonNumber.classList.add('project-button-number');
     inboxButton.appendChild(inboxButtonNumber);
 
-    inboxButton.addEventListener('click', () => {updateTaskList(tasks)});
+    inboxButton.addEventListener('click', () => {updateTaskList(tasks, 'inbox')});
     inboxSide.appendChild(inboxButton);
 
     const todaySide = document.createElement('div');
@@ -115,7 +116,7 @@ function updateSidebar() {
     todayButtonNumber.innerText = activeToday;
     todayButton.appendChild(todayButtonNumber);
 
-    todayButton.addEventListener('click', () => { updateTaskList(todayTasks) });
+    todayButton.addEventListener('click', () => { updateTaskList(todayTasks, 'today') });
     todaySide.appendChild(todayButton);
 
     // Add projects to sidebar
@@ -126,7 +127,7 @@ function updateSidebar() {
     const projectsTitle = document.createElement('div');
     projectsTitle.setAttribute('id', 'projects-title');
     sidebarProjects.appendChild(projectsTitle);
-    projectsTitle.innerText = 'PROJECTS';
+    projectsTitle.innerText = 'Projects';
 
     const projectsUL = document.createElement('ul');
     projectsUL.setAttribute('id', 'projects-ul');
@@ -142,9 +143,17 @@ function updateSidebar() {
             projectsUL.appendChild(projectNameLI);
             const projectButton = document.createElement('button');
             projectButton.classList.add('project-button');
-            projectButton.innerText = startCase(`${project}`);
+            const projectButtonName = document.createElement('div');
+            projectButtonName.innerText = startCase(`${project}`);
+            projectButton.appendChild(projectButtonName);
+
             const projectList = updateProject(project);
-            projectButton.addEventListener('click', () => { updateTaskList(projectList) });
+
+            const projectButtonNumber = document.createElement('div');
+            projectButtonNumber.innerText = numberOfTasks(projectList);
+            projectButton.appendChild(projectButtonNumber);
+
+            projectButton.addEventListener('click', () => { updateTaskList(projectList, project) });
             projectNameLI.appendChild(projectButton);
         }    
     };
@@ -183,8 +192,8 @@ taskUL.classList.add('task-ul');
 listTitle.after(taskUL);
 
 // Add items to task list
-function updateTaskList(taskArray) {    
-    if (taskArray) {
+function updateTaskList(taskArray, project) {
+    if (taskArray && taskArray.length !== 0) {
         const incomplete = taskArray.filter(isIncomplete);
         taskUL.innerText = '';
         if (incomplete.length !== 0) {
@@ -195,14 +204,16 @@ function updateTaskList(taskArray) {
     } else {
         taskUL.innerText = 'Add some new tasks!'
     };
+
+    listTitle.innerText = startCase(project);
     
-    if (taskArray === tasks || !taskArray) {
-        listTitle.innerText = 'Inbox';
-    } else if (taskArray === todayTasks) {
-        listTitle.innerText = 'Today'
-    } else {
-        listTitle.innerText = startCase(taskArray[0].project);
-    };    
+    // if (taskArray === tasks || !taskArray) {
+    //     listTitle.innerText = 'Inbox';
+    // } else if (taskArray === todayTasks) {
+    //     listTitle.innerText = 'Today'
+    // } else {
+    //     listTitle.innerText = startCase(taskArray[0].project);
+    // };    
 };
 
 function addTaskToUL(task) {
@@ -345,8 +356,9 @@ function completeTask(event) {
     const taskIndex = event.currentTarget.dataset.index;
     const completedTask = tasks[taskIndex];
     completedTask.complete = 'yes';
-    const {project} = completedTask;
-    refreshPage(project);
+    const page = listTitle.innerHTML.toLowerCase();
+    console.log(page);
+    refreshPage(page);
 }
 
 // // Delete task function
@@ -364,11 +376,20 @@ function completeTask(event) {
 
 // Refresh page function
 function refreshPage(page) {    
-    if (page) {
+    if (page && !staticPages.includes(page)) {
         const newList = updateProject(page);
-        updateTaskList(newList);
+        console.log(newList);
+        if (newList) {updateTaskList(newList, page);
+        } else {
+        updateTaskList(tasks, 'inbox');
+        };
+    } else if (page === 'inbox') {
+        updateTaskList(tasks, 'inbox');
+    } else if (page === 'today') {
+        updateToday();
+        updateTaskList(todayTasks, 'today');
     } else {
-        updateTaskList(tasks);
+        updateTaskList(tasks, 'inbox');
     };
     updateSidebar();
 };
@@ -565,6 +586,6 @@ function getTaskData(event) {
 
 updateProjects();
 updateSidebar();
-updateTaskList(tasks);
+updateTaskList(tasks, 'inbox');
 createForm();
 

@@ -93,6 +93,7 @@ img {
 .project-button {
     display: flex;
     justify-content: space-between;
+    gap: 32px;
     align-items: center;
     border: none;
     background-color: transparent;
