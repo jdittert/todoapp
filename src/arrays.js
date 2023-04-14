@@ -5,7 +5,9 @@ export const tasks = [];
 export const todayTasks = [];
 
 export function updateToday() {
-    tasks.forEach(task => () => {
+    todayTasks.length = 0;
+    
+    tasks.forEach(task => {
         const today = new Date().toISOString().slice(0, 10);
         if (task.dueDate === today) {
             todayTasks.push(task);

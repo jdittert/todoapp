@@ -103,19 +103,19 @@ function updateSidebar() {
     const todayButton = document.createElement('button');
     todayButton.classList.add('project-button');
 
-    const todayList = updateToday();
+    updateToday();
 
     const todayButtonTitle = document.createElement('div');
     todayButtonTitle.innerText = 'Today';
     todayButton.appendChild(todayButtonTitle);
 
     const todayButtonNumber = document.createElement('div')
-    const activeToday = numberOfTasks(todayList);
+    const activeToday = numberOfTasks(todayTasks);
     todayButtonNumber.classList.add('project-button-number');
     todayButtonNumber.innerText = activeToday;
     todayButton.appendChild(todayButtonNumber);
 
-    todayButton.addEventListener('click', () => { updateTaskList(todayList) });
+    todayButton.addEventListener('click', () => { updateTaskList(todayTasks) });
     todaySide.appendChild(todayButton);
 
     // Add projects to sidebar
@@ -198,6 +198,8 @@ function updateTaskList(taskArray) {
     
     if (taskArray === tasks || !taskArray) {
         listTitle.innerText = 'Inbox';
+    } else if (taskArray === todayTasks) {
+        listTitle.innerText = 'Today'
     } else {
         listTitle.innerText = startCase(taskArray[0].project);
     };    
@@ -231,12 +233,32 @@ function addTaskToUL(task) {
     const expandIconImg = document.createElement('img');
     expandIconImg.setAttribute('src', './images/arrow-expand-down.svg');
     expandIconImg.setAttribute('alt', 'Expand icon');
-    expandIconImg.classList.add('expand-icon');
+    expandIconImg.classList.add('task-icon');
     expandIcon.appendChild(expandIconImg);
     expandIcon.classList.add('hide');
-
+    
     taskItem.addEventListener('mouseenter', () => expandIcon.classList.remove('hide'));
     taskItem.addEventListener('mouseleave', () => expandIcon.classList.add('hide'));
+
+    // Delete button
+    const deleteIconDiv = document.createElement('div');
+    itemTopLeft.appendChild(deleteIconDiv);
+
+    const deleteIcon = document.createElement('button');
+    deleteIcon.classList.add('task-button');
+    deleteIconDiv.appendChild(deleteIcon);
+    
+    const deleteIconImg = document.createElement('img');
+    deleteIconImg.setAttribute('src', './images/trash-can-outline.svg');
+    deleteIconImg.setAttribute('alt', 'Delete icon');
+    deleteIconImg.classList.add('task-icon');
+    deleteIcon.appendChild(deleteIconImg);
+    deleteIcon.setAttribute('data-index', `${tasks.indexOf(task)}`);
+    // deleteIcon.addEventListener('click', deleteTask);
+    deleteIcon.classList.add('hide');
+
+    taskItem.addEventListener('mouseenter', () => deleteIcon.classList.remove('hide'));
+    taskItem.addEventListener('mouseleave', () => deleteIcon.classList.add('hide'));
 
     const completeButton = document.createElement('button');
     completeButton.setAttribute('data-index', `${tasks.indexOf(task)}`);
@@ -326,6 +348,19 @@ function completeTask(event) {
     const {project} = completedTask;
     refreshPage(project);
 }
+
+// // Delete task function
+// function deleteTask(event) {
+//     const taskIndex = event.currentTarget.dataset.index;
+//     console.log(taskIndex);
+//     const deletedTask = tasks[taskIndex];
+//     const {project} = deletedTask;
+//     console.log(project);
+//     if (taskIndex > -1) {
+//         tasks.splice(taskIndex, 1);
+//     };
+//     refreshPage(project);
+// }
 
 // Refresh page function
 function refreshPage(page) {    
@@ -505,16 +540,11 @@ function getTaskData(event) {
     const taskName = formData.get('task-name');
     const taskDesc = formData.get('description');
     const taskDate = formData.get('due-date');
-    console.log(taskDate);
     let taskPriority = formData.get('priority');
     if (!taskPriority || !priorities.includes(taskPriority)) {
         taskPriority = 4;
     }
     const taskProject = formData.get('project').trim().toLowerCase();
-    // if (!taskProject) {
-    //     taskProject = 'inbox';
-    // }
-    console.log(taskProject);
     if (taskProject && taskProject.length !== 0 && !projects.includes(taskProject)) {
         projects.push(taskProject);
         updateProjects();
