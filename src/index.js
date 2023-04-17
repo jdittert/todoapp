@@ -24,7 +24,7 @@ function updateProjects() {
 }
 
 // Prepopulate with test tasks
-const taskOne = new Task('To Do App', 'code for Odin Project', '2023-04-23', 'high', 'odin project', 'no');
+const taskOne = new Task('To Do App', 'code for Odin Project', '2023-04-23', '1', 'odin project', 'no');
 tasks.push(taskOne);
 const taskTwo = new Task('Lunch', 'eat some healthy food', '2023-04-07', 'low', 'life', 'no');
 tasks.push(taskTwo);
@@ -380,9 +380,30 @@ function editTask(event) {
     const taskIndex = event.currentTarget.dataset.index;
     const currentTask = document.getElementById(`task-${taskIndex}`);
     const editForm = createForm();
+    editForm.setAttribute('id', `edit-form-${taskIndex}`);
     currentTask.innerText = '';
     currentTask.appendChild(editForm);
+    preFillForm(taskIndex);
+
+    function preFillForm(index) {
+        const inputs = document.getElementById(`edit-form-${index}`).elements;
+        const inputArray = Array.from(inputs);
+        const task = tasks[index];
+        console.log(task);
+        inputArray[0].value = task.name;
+        if (task.description) inputArray[1].value = task.description;
+        if (task.dueDate) inputArray[2].value = task.dueDate;
+        const editPriorty = editForm.querySelector('select');
+        const editOptions = Array.from(editPriorty.options);
+        console.log(task);
+        if (task.priority && priorities.includes(+`${task.priority}`)) {
+            editOptions[task.priority].selected = 'true';
+        }
+        if (task.project) inputArray[4].value = startCase(task.project);
+    }
 }
+
+
 
 // // Delete task function
 // function deleteTask(event) {
@@ -592,13 +613,15 @@ function getTaskData(event) {
     const taskDate = formData.get('due-date');
     let taskPriority = formData.get('priority');
     if (!taskPriority || !priorities.includes(taskPriority)) {
-        taskPriority = 4;
+        taskPriority = null;
     }
-    const taskProject = formData.get('project').trim().toLowerCase();
+    let taskProject = formData.get('project').trim().toLowerCase();
     if (taskProject && taskProject.length !== 0 && !projects.includes(taskProject)) {
         projects.push(taskProject);
         updateProjects();
         updateSidebar();
+    } else {
+        taskProject = null;
     }
     const taskComplete = 'no';
     const newTask = new Task(taskName, taskDesc, taskDate, taskPriority, taskProject, taskComplete);
