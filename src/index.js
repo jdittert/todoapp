@@ -370,9 +370,7 @@ function completeTask(event) {
     const taskIndex = event.currentTarget.dataset.index;
     const completedTask = tasks[taskIndex];
     completedTask.complete = 'yes';
-    const page = listTitle.innerHTML.toLowerCase();
-    console.log(page);
-    refreshPage(page);
+    refreshPage();
 }
 
 // Edit task function
@@ -430,16 +428,17 @@ function editTask(event) {
 // }
 
 // Refresh page function
-function refreshPage(page) {    
-    if (page && !staticPages.includes(page)) {
-        const newList = updateProject(page);
-        if (newList) {updateTaskList(newList, page);
+function refreshPage() {
+    const currentPage = listTitle.innerText.toLowerCase();  
+    if (currentPage && !staticPages.includes(currentPage)) {
+        const newList = updateProject(currentPage);
+        if (newList) {updateTaskList(newList, currentPage);
         } else {
         updateTaskList(tasks, 'inbox');
         };
-    } else if (page === 'inbox') {
+    } else if (currentPage === 'inbox') {
         updateTaskList(tasks, 'inbox');
-    } else if (page === 'today') {
+    } else if (currentPage === 'today') {
         updateToday();
         updateTaskList(todayTasks, 'today');
     } else {
@@ -626,7 +625,6 @@ function createForm(position) {
     cancel.setAttribute('id', `new-task-cancel-${position}`);
     cancel.classList.add('cancel');
     cancel.innerText = 'Cancel';
-    const currentPage = listTitle.innerText.toLowerCase();
     if (position === 'hidden') {
         cancel.addEventListener('click', hideForm);
     } else {
@@ -635,7 +633,7 @@ function createForm(position) {
 
     function cancelForm(event) {
         taskName.required = 'false'
-        refreshPage(currentPage);
+        refreshPage();
         event.preventDefault();
     }
     bottomButtons.appendChild(cancel);
@@ -677,10 +675,6 @@ function insertNewTask(task, form) {
     taskFormDiv.classList.add('hide');
     newTaskButtonDiv.classList.remove('hide');
 }
-
-// function updateOldTask(task, form) {
-//     const index = tasks.
-// }
 
 updateProjects();
 updateSidebar();
