@@ -347,8 +347,8 @@ function showForm() {
     const taskFormDiv = document.getElementById('task-form-div');
     taskFormDiv.classList.remove('hide');
     newTaskButtonDiv.classList.add('hide');
-    document.getElementById('task-name-field').focus();
-    const dueDate = document.getElementById('task-date-field');
+    document.querySelector('input[name="task-name"]').focus();
+    const dueDate = document.querySelector('input[name="due-date"]');
     const today = new Date().toISOString().slice(0, 10);
     dueDate.value = today;
 }
@@ -379,7 +379,7 @@ function completeTask(event) {
 function editTask(event) {
     const taskIndex = event.currentTarget.dataset.index;
     const currentTask = document.getElementById(`task-${taskIndex}`);
-    const editForm = createForm();
+    const editForm = createForm(`edit-${taskIndex}`);
     editForm.setAttribute('id', `edit-form-${taskIndex}`);
     currentTask.innerText = '';
     currentTask.appendChild(editForm);
@@ -444,11 +444,11 @@ taskFormDiv.classList.add('hide');
 taskList.appendChild(taskFormDiv);
 
 // Create form for inputing task
-function createForm() { 
+function createForm(position) { 
 
     // Create actual form
     const taskForm = document.createElement('form');
-    taskForm.setAttribute('id', 'new-task');
+    taskForm.setAttribute('id', `new-task-${position}`);
     taskForm.setAttribute('action', '');
 
     // Create task name field
@@ -456,17 +456,17 @@ function createForm() {
     nameFieldDiv.classList.add('form-field');
     taskForm.appendChild(nameFieldDiv);
     const taskNameLabel = document.createElement('label');
-    taskNameLabel.setAttribute('for', 'task-name-field');
+    taskNameLabel.setAttribute('for', `task-name-field-${position}`);
     taskNameLabel.innerText = 'Task name';
     taskNameLabel.classList.add('hide');
     nameFieldDiv.appendChild(taskNameLabel);
     const taskName = document.createElement('input');
-    taskName.setAttribute('id', 'task-name-field');
+    taskName.setAttribute('id', `task-name-field-${position}`);
     taskName.setAttribute('name', 'task-name');
     taskName.setAttribute('type', 'input');
     taskName.setAttribute('placeholder', 'Task name');
     taskName.setAttribute('autocomplete', 'off');
-    taskName.classList.add('borderless-field');
+    taskName.classList.add('borderless-field', 'task-name-field');
     taskName.required = 'true';
     nameFieldDiv.appendChild(taskName);
 
@@ -475,12 +475,12 @@ function createForm() {
     descFieldDiv.classList.add('form-field');
     taskForm.appendChild(descFieldDiv);
     const taskDescLabel = document.createElement('label');
-    taskDescLabel.setAttribute('for', 'task-desc-field');
+    taskDescLabel.setAttribute('for', `task-desc-field-${position}`);
     taskDescLabel.innerText = 'Task description';
     taskDescLabel.classList.add('hide');
     descFieldDiv.appendChild(taskDescLabel);
     const taskDesc = document.createElement('input');
-    taskDesc.setAttribute('id', 'task-desc-field');
+    taskDesc.setAttribute('id', `task-desc-field-${position}`);
     taskDesc.setAttribute('name', 'task-desc');
     taskDesc.setAttribute('type', 'input');
     taskDesc.setAttribute('placeholder', 'Description');
@@ -490,7 +490,7 @@ function createForm() {
 
     // Create div for date and priority buttons
     const buttonDiv = document.createElement('div');
-    buttonDiv.setAttribute('id', 'form-button-div');
+    buttonDiv.classList.add('form-button-div');
     taskForm.appendChild(buttonDiv);
 
     // Date field
@@ -498,32 +498,34 @@ function createForm() {
     buttonDiv.appendChild(dateFieldDiv);
 
     const dateFieldLabel = document.createElement('label');
-    dateFieldLabel.setAttribute('for', 'task-date-field');
+    dateFieldLabel.setAttribute('for', `task-date-field-${position}`);
     dateFieldLabel.innerText = 'Due date';
     dateFieldLabel.classList.add('hide');
     dateFieldDiv.appendChild(dateFieldLabel);
 
     const taskDueDate = document.createElement('input');
     taskDueDate.setAttribute('type', 'date');
-    taskDueDate.setAttribute('id', 'task-date-field');
+    taskDueDate.setAttribute('id', `task-date-field-${position}`);
     taskDueDate.setAttribute('name', 'due-date');
+    taskDueDate.classList.add('task-date-field');
     const today = new Date().toISOString().slice(0, 10);
     taskDueDate.value = `${today}`;
     dateFieldDiv.appendChild(taskDueDate);
 
     // Priority field
     const priorityFieldDiv = document.createElement('div');
-    priorityFieldDiv.setAttribute('id', 'task-priority-div');
+    priorityFieldDiv.classList.add('task-priority-div');
 
     const taskPriorityLabel = document.createElement('label');
-    taskPriorityLabel.setAttribute('for', 'task-priority-field');
+    taskPriorityLabel.setAttribute('for', `task-priority-field-${position}`);
     taskPriorityLabel.innerText = 'Task priority';
     taskPriorityLabel.classList.add('hide');
     priorityFieldDiv.appendChild(taskPriorityLabel);
 
     const taskPriority = document.createElement('select');
-    taskPriority.setAttribute('id', 'task-priority-field');
+    taskPriority.setAttribute('id', `task-priority-field-${position}`);
     taskPriority.setAttribute('name', 'priority');
+    taskPriority.classList.add('task-priority-field');
 
     const priorityDefault = document.createElement('option');
     priorityDefault.innerText = 'Priority';
@@ -542,7 +544,7 @@ function createForm() {
 
     // Create div for project, submit, and cancel buttons
     const formBottom = document.createElement('div');
-    formBottom.setAttribute('id', 'form-bottom');
+    formBottom.classList.add('form-bottom');
     taskForm.appendChild(formBottom);
 
     // Project field
@@ -550,21 +552,22 @@ function createForm() {
     formBottom.appendChild(projectFieldDiv);
 
     const projectFieldLabel = document.createElement('label');
-    projectFieldLabel.setAttribute('for', 'task-project-field');
+    projectFieldLabel.setAttribute('for', `task-project-field-${position}`);
     projectFieldLabel.classList.add('hide');
     projectFieldLabel.innerText = 'Task project';
     projectFieldDiv.appendChild(projectFieldLabel);
 
     const taskProject = document.createElement('input');
-    taskProject.setAttribute('id', 'task-project-field');
+    taskProject.setAttribute('id', `task-project-field-${position}`);
     taskProject.setAttribute('name', 'project');
     taskProject.setAttribute('type', 'text');
-    taskProject.setAttribute('list', 'projects');
+    taskProject.setAttribute('list', `projects-${position}`);
     taskProject.setAttribute('autocomplete', 'off');
     taskProject.setAttribute('placeholder', 'Project');
+    taskProject.classList.add('task-project-field');
 
     const projectList = document.createElement('datalist');
-    projectList.setAttribute('id', 'projects');
+    projectList.setAttribute('id', `projects-${position}`);
     projects.forEach(project => {
         const option = document.createElement('option');
         option.innerText = startCase(project);
@@ -576,28 +579,36 @@ function createForm() {
 
     // Cancel and Submit Buttons
     const bottomButtons = document.createElement('div');
-    bottomButtons.setAttribute('id', 'bottom-buttons');
+    bottomButtons.classList.add('bottom-buttons');
     formBottom.appendChild(bottomButtons);    
 
     const submit = document.createElement('button');
-    submit.setAttribute('id', 'new-task-submit');
+    submit.setAttribute('id', `new-task-submit-${position}`);
     submit.setAttribute('type', 'submit');
     submit.classList.add('form-button');
-    submit.innerText = 'Add Task';
+    if (position === 'hidden') {
+        submit.innerText = 'Add Task';
+    } else {
+        submit.innerText = 'Edit Task';
+    }
     bottomButtons.appendChild(submit);
     taskForm.addEventListener('submit', getTaskData);
 
     const cancel = document.createElement('button');
-    cancel.setAttribute('id', 'new-task-cancel');
+    cancel.setAttribute('id', `new-task-cancel-${position}`);
     cancel.classList.add('cancel');
     cancel.innerText = 'Cancel';
     const currentPage = listTitle.innerText.toLowerCase();
-    console.log(currentPage);
-    cancel.addEventListener('click', cancelForm);
+    if (position === 'hidden') {
+        cancel.addEventListener('click', hideForm);
+    } else {
+        cancel.addEventListener('click', cancelForm);
+    }
 
-    function cancelForm() {
+    function cancelForm(event) {
         taskName.required = 'false'
         refreshPage(currentPage);
+        event.preventDefault();
     }
     bottomButtons.appendChild(cancel);
 
@@ -606,7 +617,7 @@ function createForm() {
 
 // Get form data
 function getTaskData(event) {
-    const taskData = document.getElementById('new-task');
+    const taskData = document.querySelector('form');
     const formData = new FormData(taskData);
     const taskName = formData.get('task-name');
     const taskDesc = formData.get('description');
@@ -638,6 +649,6 @@ function getTaskData(event) {
 updateProjects();
 updateSidebar();
 updateTaskList(tasks, 'inbox');
-const newTaskForm = createForm();
+const newTaskForm = createForm('hidden');
 taskFormDiv.appendChild(newTaskForm);
 
