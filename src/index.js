@@ -1,7 +1,8 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-use-before-define */
 import './style.css';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { includes, startCase } from 'lodash';
+import collect from 'collect.js';
 import format from 'date-fns/format';
 import Task from './modules/task';
 import { isIncomplete, numberOfTasks, tasks, todayTasks, updateProject, updateToday } from './arrays';
@@ -278,7 +279,7 @@ function addTaskToUL(task) {
     deleteIconImg.classList.add('task-icon');
     deleteIcon.appendChild(deleteIconImg);
     deleteIcon.setAttribute('data-index', `${tasks.indexOf(task)}`);
-    // deleteIcon.addEventListener('click', deleteTask);
+    deleteIcon.addEventListener('click', deleteTask);
     deleteIcon.classList.add('hide');
 
     taskItem.addEventListener('mouseenter', () => deleteIcon.classList.remove('hide'));
@@ -333,9 +334,13 @@ function addTaskToUL(task) {
 }
 
 // Create button for adding a new task
+const hiddenFormDiv = document.createElement('div');
+hiddenFormDiv.setAttribute('id', 'hidden-form-div');
+taskList.appendChild(hiddenFormDiv);
 const newTaskButtonDiv = document.createElement('div');
 newTaskButtonDiv.setAttribute('id', 'new-task-button-div');
-taskList.appendChild(newTaskButtonDiv);
+newTaskButtonDiv.classList.add('modal');
+hiddenFormDiv.appendChild(newTaskButtonDiv);
 const newTaskButton = document.createElement('button');
 newTaskButton.setAttribute('id', 'new-task-button');
 newTaskButton.classList.add('form-button');
@@ -344,16 +349,34 @@ newTaskButton.addEventListener('click', showForm);
 newTaskButtonDiv.appendChild(newTaskButton);
 
 function showForm() {
+    refreshPage();
     const taskFormDiv = document.getElementById('task-form-div');
     taskFormDiv.classList.remove('hide');
     newTaskButtonDiv.classList.add('hide');
-    document.querySelector('input[name="task-name"]').focus();
+    const taskName = document.querySelector('input[name="task-name"]');
+    taskName.focus();
+    taskName.require = 'true';
     const dueDate = document.querySelector('input[name="due-date"]');
     const today = new Date().toISOString().slice(0, 10);
     dueDate.value = today;
+
+    // Event listener for closing form on outside click
+    document.addEventListener('click', (event) => {
+        const clickInside = document.getElementById('hidden-form-div').contains(event.target);
+        if (!clickInside) hideForm();
+    });
 }
 
-function hideForm(event) {
+function hideForm() {
+    const taskName = document.querySelector('input[name="task-name"]');
+    taskName.blur();
+    taskName.require = 'false';
+    const taskFormDiv = document.getElementById('task-form-div');
+    taskFormDiv.classList.add('hide');
+    newTaskButtonDiv.classList.remove('hide');    
+}
+
+function cancelNewTask(event) {
     const taskFormDiv = document.getElementById('task-form-div');
     taskFormDiv.classList.add('hide');
     newTaskButtonDiv.classList.remove('hide');
@@ -375,6 +398,7 @@ function completeTask(event) {
 
 // Edit task function
 function editTask(event) {
+    refreshPage();
     const taskIndex = event.currentTarget.dataset.index;
     const currentTask = document.getElementById(`task-${taskIndex}`);
     const editForm = createForm(`edit-${taskIndex}`);
@@ -398,34 +422,17 @@ function editTask(event) {
         }
         if (task.project) inputArray[4].value = startCase(task.project);
     }
-
-    // function updateTask() {
-    //     const updatedTask = getTaskData();
-    //     console.log(updatedTask);
-    //     // if (taskIndex > -1) {
-    //     //     tasks[taskIndex] = updatedTask;
-    //     // }
-    //     // refreshPage();
-    //     // updateProjects();
-    //     // updateSidebar();
-    //     event.preventDefault();
-    // }
 }
 
-
-
-// // Delete task function
-// function deleteTask(event) {
-//     const taskIndex = event.currentTarget.dataset.index;
-//     console.log(taskIndex);
-//     const deletedTask = tasks[taskIndex];
-//     const {project} = deletedTask;
-//     console.log(project);
-//     if (taskIndex > -1) {
-//         tasks.splice(taskIndex, 1);
-//     };
-//     refreshPage(project);
-// }
+// Delete task function
+function deleteTask(event) {
+    const taskIndex = event.currentTarget.dataset.index;
+    if (taskIndex > -1) {
+        tasks.splice(taskIndex, 1);
+    };
+    refreshPage();
+    event.preventDefault();
+}
 
 // Refresh page function
 function refreshPage() {
@@ -450,8 +457,8 @@ function refreshPage() {
 
 const taskFormDiv = document.createElement('div');
 taskFormDiv.setAttribute('id', 'task-form-div');
-taskFormDiv.classList.add('hide');
-taskList.appendChild(taskFormDiv);
+taskFormDiv.classList.add('hide', 'modal');
+hiddenFormDiv.appendChild(taskFormDiv);
 
 // Create form for inputing task
 function createForm(position) { 
@@ -477,7 +484,6 @@ function createForm(position) {
     taskName.setAttribute('placeholder', 'Task name');
     taskName.setAttribute('autocomplete', 'off');
     taskName.classList.add('borderless-field', 'task-name-field');
-    taskName.required = 'true';
     nameFieldDiv.appendChild(taskName);
 
     // Create description field
@@ -626,7 +632,7 @@ function createForm(position) {
     cancel.classList.add('cancel');
     cancel.innerText = 'Cancel';
     if (position === 'hidden') {
-        cancel.addEventListener('click', hideForm);
+        cancel.addEventListener('click', cancelNewTask);
     } else {
         cancel.addEventListener('click', cancelForm);
     }
@@ -676,6 +682,7 @@ function insertNewTask(task, form) {
     newTaskButtonDiv.classList.remove('hide');
 }
 
+// Initiate Website
 updateProjects();
 updateSidebar();
 updateTaskList(tasks, 'inbox');

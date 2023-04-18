@@ -9,6 +9,1425 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./node_modules/collect.js/dist/helpers/clone.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/collect.js/dist/helpers/clone.js ***!
+  \*******************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n/**\n * Clone helper\n *\n * Clone an array or object\n *\n * @param items\n * @returns {*}\n */\n\nfunction _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }\n\nfunction _nonIterableSpread() { throw new TypeError(\"Invalid attempt to spread non-iterable instance.\\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.\"); }\n\nfunction _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === \"string\") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === \"Object\" && o.constructor) n = o.constructor.name; if (n === \"Map\" || n === \"Set\") return Array.from(o); if (n === \"Arguments\" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }\n\nfunction _iterableToArray(iter) { if (typeof Symbol !== \"undefined\" && iter[Symbol.iterator] != null || iter[\"@@iterator\"] != null) return Array.from(iter); }\n\nfunction _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }\n\nfunction _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }\n\nmodule.exports = function clone(items) {\n  var cloned;\n\n  if (Array.isArray(items)) {\n    var _cloned;\n\n    cloned = [];\n\n    (_cloned = cloned).push.apply(_cloned, _toConsumableArray(items));\n  } else {\n    cloned = {};\n    Object.keys(items).forEach(function (prop) {\n      cloned[prop] = items[prop];\n    });\n  }\n\n  return cloned;\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/helpers/clone.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/helpers/deleteKeys.js":
+/*!************************************************************!*\
+  !*** ./node_modules/collect.js/dist/helpers/deleteKeys.js ***!
+  \************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+eval("\n\nvar variadic = __webpack_require__(/*! ./variadic */ \"./node_modules/collect.js/dist/helpers/variadic.js\");\n/**\n * Delete keys helper\n *\n * Delete one or multiple keys from an object\n *\n * @param obj\n * @param keys\n * @returns {void}\n */\n\n\nmodule.exports = function deleteKeys(obj) {\n  for (var _len = arguments.length, keys = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {\n    keys[_key - 1] = arguments[_key];\n  }\n\n  variadic(keys).forEach(function (key) {\n    // eslint-disable-next-line\n    delete obj[key];\n  });\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/helpers/deleteKeys.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/helpers/is.js":
+/*!****************************************************!*\
+  !*** ./node_modules/collect.js/dist/helpers/is.js ***!
+  \****************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nfunction _typeof(obj) { \"@babel/helpers - typeof\"; return _typeof = \"function\" == typeof Symbol && \"symbol\" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && \"function\" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? \"symbol\" : typeof obj; }, _typeof(obj); }\n\nmodule.exports = {\n  /**\n   * @returns {boolean}\n   */\n  isArray: function isArray(item) {\n    return Array.isArray(item);\n  },\n\n  /**\n   * @returns {boolean}\n   */\n  isObject: function isObject(item) {\n    return _typeof(item) === 'object' && Array.isArray(item) === false && item !== null;\n  },\n\n  /**\n   * @returns {boolean}\n   */\n  isFunction: function isFunction(item) {\n    return typeof item === 'function';\n  }\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/helpers/is.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/helpers/nestedValue.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/collect.js/dist/helpers/nestedValue.js ***!
+  \*************************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n/**\n * Get value of a nested property\n *\n * @param mainObject\n * @param key\n * @returns {*}\n */\n\nmodule.exports = function nestedValue(mainObject, key) {\n  try {\n    return key.split('.').reduce(function (obj, property) {\n      return obj[property];\n    }, mainObject);\n  } catch (err) {\n    // If we end up here, we're not working with an object, and @var mainObject is the value itself\n    return mainObject;\n  }\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/helpers/nestedValue.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/helpers/values.js":
+/*!********************************************************!*\
+  !*** ./node_modules/collect.js/dist/helpers/values.js ***!
+  \********************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n/**\n * Values helper\n *\n * Retrieve values from [this.items] when it is an array, object or Collection\n *\n * @param items\n * @returns {*}\n */\n\nfunction _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }\n\nfunction _nonIterableSpread() { throw new TypeError(\"Invalid attempt to spread non-iterable instance.\\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.\"); }\n\nfunction _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === \"string\") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === \"Object\" && o.constructor) n = o.constructor.name; if (n === \"Map\" || n === \"Set\") return Array.from(o); if (n === \"Arguments\" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }\n\nfunction _iterableToArray(iter) { if (typeof Symbol !== \"undefined\" && iter[Symbol.iterator] != null || iter[\"@@iterator\"] != null) return Array.from(iter); }\n\nfunction _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }\n\nfunction _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }\n\nmodule.exports = function values(items) {\n  var valuesArray = [];\n\n  if (Array.isArray(items)) {\n    valuesArray.push.apply(valuesArray, _toConsumableArray(items));\n  } else if (items.constructor.name === 'Collection') {\n    valuesArray.push.apply(valuesArray, _toConsumableArray(items.all()));\n  } else {\n    Object.keys(items).forEach(function (prop) {\n      return valuesArray.push(items[prop]);\n    });\n  }\n\n  return valuesArray;\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/helpers/values.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/helpers/variadic.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/collect.js/dist/helpers/variadic.js ***!
+  \**********************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n/**\n * Variadic helper function\n *\n * @param args\n * @returns {Array}\n */\n\nmodule.exports = function variadic(args) {\n  if (Array.isArray(args[0])) {\n    return args[0];\n  }\n\n  return args;\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/helpers/variadic.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/index.js":
+/*!***********************************************!*\
+  !*** ./node_modules/collect.js/dist/index.js ***!
+  \***********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+eval("\n\nfunction _typeof(obj) { \"@babel/helpers - typeof\"; return _typeof = \"function\" == typeof Symbol && \"symbol\" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && \"function\" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? \"symbol\" : typeof obj; }, _typeof(obj); }\n\nfunction Collection(collection) {\n  if (collection !== undefined && !Array.isArray(collection) && _typeof(collection) !== 'object') {\n    this.items = [collection];\n  } else if (collection instanceof this.constructor) {\n    this.items = collection.all();\n  } else {\n    this.items = collection || [];\n  }\n}\n/**\n * Symbol.iterator\n * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol/iterator\n */\n\n\nvar SymbolIterator = __webpack_require__(/*! ./methods/symbol.iterator */ \"./node_modules/collect.js/dist/methods/symbol.iterator.js\");\n\nif (typeof Symbol !== 'undefined') {\n  Collection.prototype[Symbol.iterator] = SymbolIterator;\n}\n/**\n * Support JSON.stringify\n * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify\n */\n\n\nCollection.prototype.toJSON = function toJSON() {\n  return this.items;\n};\n\nCollection.prototype.all = __webpack_require__(/*! ./methods/all */ \"./node_modules/collect.js/dist/methods/all.js\");\nCollection.prototype.average = __webpack_require__(/*! ./methods/average */ \"./node_modules/collect.js/dist/methods/average.js\");\nCollection.prototype.avg = __webpack_require__(/*! ./methods/avg */ \"./node_modules/collect.js/dist/methods/avg.js\");\nCollection.prototype.chunk = __webpack_require__(/*! ./methods/chunk */ \"./node_modules/collect.js/dist/methods/chunk.js\");\nCollection.prototype.collapse = __webpack_require__(/*! ./methods/collapse */ \"./node_modules/collect.js/dist/methods/collapse.js\");\nCollection.prototype.combine = __webpack_require__(/*! ./methods/combine */ \"./node_modules/collect.js/dist/methods/combine.js\");\nCollection.prototype.concat = __webpack_require__(/*! ./methods/concat */ \"./node_modules/collect.js/dist/methods/concat.js\");\nCollection.prototype.contains = __webpack_require__(/*! ./methods/contains */ \"./node_modules/collect.js/dist/methods/contains.js\");\nCollection.prototype.containsOneItem = __webpack_require__(/*! ./methods/containsOneItem */ \"./node_modules/collect.js/dist/methods/containsOneItem.js\");\nCollection.prototype.count = __webpack_require__(/*! ./methods/count */ \"./node_modules/collect.js/dist/methods/count.js\");\nCollection.prototype.countBy = __webpack_require__(/*! ./methods/countBy */ \"./node_modules/collect.js/dist/methods/countBy.js\");\nCollection.prototype.crossJoin = __webpack_require__(/*! ./methods/crossJoin */ \"./node_modules/collect.js/dist/methods/crossJoin.js\");\nCollection.prototype.dd = __webpack_require__(/*! ./methods/dd */ \"./node_modules/collect.js/dist/methods/dd.js\");\nCollection.prototype.diff = __webpack_require__(/*! ./methods/diff */ \"./node_modules/collect.js/dist/methods/diff.js\");\nCollection.prototype.diffAssoc = __webpack_require__(/*! ./methods/diffAssoc */ \"./node_modules/collect.js/dist/methods/diffAssoc.js\");\nCollection.prototype.diffKeys = __webpack_require__(/*! ./methods/diffKeys */ \"./node_modules/collect.js/dist/methods/diffKeys.js\");\nCollection.prototype.diffUsing = __webpack_require__(/*! ./methods/diffUsing */ \"./node_modules/collect.js/dist/methods/diffUsing.js\");\nCollection.prototype.doesntContain = __webpack_require__(/*! ./methods/doesntContain */ \"./node_modules/collect.js/dist/methods/doesntContain.js\");\nCollection.prototype.dump = __webpack_require__(/*! ./methods/dump */ \"./node_modules/collect.js/dist/methods/dump.js\");\nCollection.prototype.duplicates = __webpack_require__(/*! ./methods/duplicates */ \"./node_modules/collect.js/dist/methods/duplicates.js\");\nCollection.prototype.each = __webpack_require__(/*! ./methods/each */ \"./node_modules/collect.js/dist/methods/each.js\");\nCollection.prototype.eachSpread = __webpack_require__(/*! ./methods/eachSpread */ \"./node_modules/collect.js/dist/methods/eachSpread.js\");\nCollection.prototype.every = __webpack_require__(/*! ./methods/every */ \"./node_modules/collect.js/dist/methods/every.js\");\nCollection.prototype.except = __webpack_require__(/*! ./methods/except */ \"./node_modules/collect.js/dist/methods/except.js\");\nCollection.prototype.filter = __webpack_require__(/*! ./methods/filter */ \"./node_modules/collect.js/dist/methods/filter.js\");\nCollection.prototype.first = __webpack_require__(/*! ./methods/first */ \"./node_modules/collect.js/dist/methods/first.js\");\nCollection.prototype.firstOrFail = __webpack_require__(/*! ./methods/firstOrFail */ \"./node_modules/collect.js/dist/methods/firstOrFail.js\");\nCollection.prototype.firstWhere = __webpack_require__(/*! ./methods/firstWhere */ \"./node_modules/collect.js/dist/methods/firstWhere.js\");\nCollection.prototype.flatMap = __webpack_require__(/*! ./methods/flatMap */ \"./node_modules/collect.js/dist/methods/flatMap.js\");\nCollection.prototype.flatten = __webpack_require__(/*! ./methods/flatten */ \"./node_modules/collect.js/dist/methods/flatten.js\");\nCollection.prototype.flip = __webpack_require__(/*! ./methods/flip */ \"./node_modules/collect.js/dist/methods/flip.js\");\nCollection.prototype.forPage = __webpack_require__(/*! ./methods/forPage */ \"./node_modules/collect.js/dist/methods/forPage.js\");\nCollection.prototype.forget = __webpack_require__(/*! ./methods/forget */ \"./node_modules/collect.js/dist/methods/forget.js\");\nCollection.prototype.get = __webpack_require__(/*! ./methods/get */ \"./node_modules/collect.js/dist/methods/get.js\");\nCollection.prototype.groupBy = __webpack_require__(/*! ./methods/groupBy */ \"./node_modules/collect.js/dist/methods/groupBy.js\");\nCollection.prototype.has = __webpack_require__(/*! ./methods/has */ \"./node_modules/collect.js/dist/methods/has.js\");\nCollection.prototype.implode = __webpack_require__(/*! ./methods/implode */ \"./node_modules/collect.js/dist/methods/implode.js\");\nCollection.prototype.intersect = __webpack_require__(/*! ./methods/intersect */ \"./node_modules/collect.js/dist/methods/intersect.js\");\nCollection.prototype.intersectByKeys = __webpack_require__(/*! ./methods/intersectByKeys */ \"./node_modules/collect.js/dist/methods/intersectByKeys.js\");\nCollection.prototype.isEmpty = __webpack_require__(/*! ./methods/isEmpty */ \"./node_modules/collect.js/dist/methods/isEmpty.js\");\nCollection.prototype.isNotEmpty = __webpack_require__(/*! ./methods/isNotEmpty */ \"./node_modules/collect.js/dist/methods/isNotEmpty.js\");\nCollection.prototype.join = __webpack_require__(/*! ./methods/join */ \"./node_modules/collect.js/dist/methods/join.js\");\nCollection.prototype.keyBy = __webpack_require__(/*! ./methods/keyBy */ \"./node_modules/collect.js/dist/methods/keyBy.js\");\nCollection.prototype.keys = __webpack_require__(/*! ./methods/keys */ \"./node_modules/collect.js/dist/methods/keys.js\");\nCollection.prototype.last = __webpack_require__(/*! ./methods/last */ \"./node_modules/collect.js/dist/methods/last.js\");\nCollection.prototype.macro = __webpack_require__(/*! ./methods/macro */ \"./node_modules/collect.js/dist/methods/macro.js\");\nCollection.prototype.make = __webpack_require__(/*! ./methods/make */ \"./node_modules/collect.js/dist/methods/make.js\");\nCollection.prototype.map = __webpack_require__(/*! ./methods/map */ \"./node_modules/collect.js/dist/methods/map.js\");\nCollection.prototype.mapSpread = __webpack_require__(/*! ./methods/mapSpread */ \"./node_modules/collect.js/dist/methods/mapSpread.js\");\nCollection.prototype.mapToDictionary = __webpack_require__(/*! ./methods/mapToDictionary */ \"./node_modules/collect.js/dist/methods/mapToDictionary.js\");\nCollection.prototype.mapInto = __webpack_require__(/*! ./methods/mapInto */ \"./node_modules/collect.js/dist/methods/mapInto.js\");\nCollection.prototype.mapToGroups = __webpack_require__(/*! ./methods/mapToGroups */ \"./node_modules/collect.js/dist/methods/mapToGroups.js\");\nCollection.prototype.mapWithKeys = __webpack_require__(/*! ./methods/mapWithKeys */ \"./node_modules/collect.js/dist/methods/mapWithKeys.js\");\nCollection.prototype.max = __webpack_require__(/*! ./methods/max */ \"./node_modules/collect.js/dist/methods/max.js\");\nCollection.prototype.median = __webpack_require__(/*! ./methods/median */ \"./node_modules/collect.js/dist/methods/median.js\");\nCollection.prototype.merge = __webpack_require__(/*! ./methods/merge */ \"./node_modules/collect.js/dist/methods/merge.js\");\nCollection.prototype.mergeRecursive = __webpack_require__(/*! ./methods/mergeRecursive */ \"./node_modules/collect.js/dist/methods/mergeRecursive.js\");\nCollection.prototype.min = __webpack_require__(/*! ./methods/min */ \"./node_modules/collect.js/dist/methods/min.js\");\nCollection.prototype.mode = __webpack_require__(/*! ./methods/mode */ \"./node_modules/collect.js/dist/methods/mode.js\");\nCollection.prototype.nth = __webpack_require__(/*! ./methods/nth */ \"./node_modules/collect.js/dist/methods/nth.js\");\nCollection.prototype.only = __webpack_require__(/*! ./methods/only */ \"./node_modules/collect.js/dist/methods/only.js\");\nCollection.prototype.pad = __webpack_require__(/*! ./methods/pad */ \"./node_modules/collect.js/dist/methods/pad.js\");\nCollection.prototype.partition = __webpack_require__(/*! ./methods/partition */ \"./node_modules/collect.js/dist/methods/partition.js\");\nCollection.prototype.pipe = __webpack_require__(/*! ./methods/pipe */ \"./node_modules/collect.js/dist/methods/pipe.js\");\nCollection.prototype.pluck = __webpack_require__(/*! ./methods/pluck */ \"./node_modules/collect.js/dist/methods/pluck.js\");\nCollection.prototype.pop = __webpack_require__(/*! ./methods/pop */ \"./node_modules/collect.js/dist/methods/pop.js\");\nCollection.prototype.prepend = __webpack_require__(/*! ./methods/prepend */ \"./node_modules/collect.js/dist/methods/prepend.js\");\nCollection.prototype.pull = __webpack_require__(/*! ./methods/pull */ \"./node_modules/collect.js/dist/methods/pull.js\");\nCollection.prototype.push = __webpack_require__(/*! ./methods/push */ \"./node_modules/collect.js/dist/methods/push.js\");\nCollection.prototype.put = __webpack_require__(/*! ./methods/put */ \"./node_modules/collect.js/dist/methods/put.js\");\nCollection.prototype.random = __webpack_require__(/*! ./methods/random */ \"./node_modules/collect.js/dist/methods/random.js\");\nCollection.prototype.reduce = __webpack_require__(/*! ./methods/reduce */ \"./node_modules/collect.js/dist/methods/reduce.js\");\nCollection.prototype.reject = __webpack_require__(/*! ./methods/reject */ \"./node_modules/collect.js/dist/methods/reject.js\");\nCollection.prototype.replace = __webpack_require__(/*! ./methods/replace */ \"./node_modules/collect.js/dist/methods/replace.js\");\nCollection.prototype.replaceRecursive = __webpack_require__(/*! ./methods/replaceRecursive */ \"./node_modules/collect.js/dist/methods/replaceRecursive.js\");\nCollection.prototype.reverse = __webpack_require__(/*! ./methods/reverse */ \"./node_modules/collect.js/dist/methods/reverse.js\");\nCollection.prototype.search = __webpack_require__(/*! ./methods/search */ \"./node_modules/collect.js/dist/methods/search.js\");\nCollection.prototype.shift = __webpack_require__(/*! ./methods/shift */ \"./node_modules/collect.js/dist/methods/shift.js\");\nCollection.prototype.shuffle = __webpack_require__(/*! ./methods/shuffle */ \"./node_modules/collect.js/dist/methods/shuffle.js\");\nCollection.prototype.skip = __webpack_require__(/*! ./methods/skip */ \"./node_modules/collect.js/dist/methods/skip.js\");\nCollection.prototype.skipUntil = __webpack_require__(/*! ./methods/skipUntil */ \"./node_modules/collect.js/dist/methods/skipUntil.js\");\nCollection.prototype.skipWhile = __webpack_require__(/*! ./methods/skipWhile */ \"./node_modules/collect.js/dist/methods/skipWhile.js\");\nCollection.prototype.slice = __webpack_require__(/*! ./methods/slice */ \"./node_modules/collect.js/dist/methods/slice.js\");\nCollection.prototype.sole = __webpack_require__(/*! ./methods/sole */ \"./node_modules/collect.js/dist/methods/sole.js\");\nCollection.prototype.some = __webpack_require__(/*! ./methods/some */ \"./node_modules/collect.js/dist/methods/some.js\");\nCollection.prototype.sort = __webpack_require__(/*! ./methods/sort */ \"./node_modules/collect.js/dist/methods/sort.js\");\nCollection.prototype.sortDesc = __webpack_require__(/*! ./methods/sortDesc */ \"./node_modules/collect.js/dist/methods/sortDesc.js\");\nCollection.prototype.sortBy = __webpack_require__(/*! ./methods/sortBy */ \"./node_modules/collect.js/dist/methods/sortBy.js\");\nCollection.prototype.sortByDesc = __webpack_require__(/*! ./methods/sortByDesc */ \"./node_modules/collect.js/dist/methods/sortByDesc.js\");\nCollection.prototype.sortKeys = __webpack_require__(/*! ./methods/sortKeys */ \"./node_modules/collect.js/dist/methods/sortKeys.js\");\nCollection.prototype.sortKeysDesc = __webpack_require__(/*! ./methods/sortKeysDesc */ \"./node_modules/collect.js/dist/methods/sortKeysDesc.js\");\nCollection.prototype.splice = __webpack_require__(/*! ./methods/splice */ \"./node_modules/collect.js/dist/methods/splice.js\");\nCollection.prototype.split = __webpack_require__(/*! ./methods/split */ \"./node_modules/collect.js/dist/methods/split.js\");\nCollection.prototype.sum = __webpack_require__(/*! ./methods/sum */ \"./node_modules/collect.js/dist/methods/sum.js\");\nCollection.prototype.take = __webpack_require__(/*! ./methods/take */ \"./node_modules/collect.js/dist/methods/take.js\");\nCollection.prototype.takeUntil = __webpack_require__(/*! ./methods/takeUntil */ \"./node_modules/collect.js/dist/methods/takeUntil.js\");\nCollection.prototype.takeWhile = __webpack_require__(/*! ./methods/takeWhile */ \"./node_modules/collect.js/dist/methods/takeWhile.js\");\nCollection.prototype.tap = __webpack_require__(/*! ./methods/tap */ \"./node_modules/collect.js/dist/methods/tap.js\");\nCollection.prototype.times = __webpack_require__(/*! ./methods/times */ \"./node_modules/collect.js/dist/methods/times.js\");\nCollection.prototype.toArray = __webpack_require__(/*! ./methods/toArray */ \"./node_modules/collect.js/dist/methods/toArray.js\");\nCollection.prototype.toJson = __webpack_require__(/*! ./methods/toJson */ \"./node_modules/collect.js/dist/methods/toJson.js\");\nCollection.prototype.transform = __webpack_require__(/*! ./methods/transform */ \"./node_modules/collect.js/dist/methods/transform.js\");\nCollection.prototype.undot = __webpack_require__(/*! ./methods/undot */ \"./node_modules/collect.js/dist/methods/undot.js\");\nCollection.prototype.unless = __webpack_require__(/*! ./methods/unless */ \"./node_modules/collect.js/dist/methods/unless.js\");\nCollection.prototype.unlessEmpty = __webpack_require__(/*! ./methods/whenNotEmpty */ \"./node_modules/collect.js/dist/methods/whenNotEmpty.js\");\nCollection.prototype.unlessNotEmpty = __webpack_require__(/*! ./methods/whenEmpty */ \"./node_modules/collect.js/dist/methods/whenEmpty.js\");\nCollection.prototype.union = __webpack_require__(/*! ./methods/union */ \"./node_modules/collect.js/dist/methods/union.js\");\nCollection.prototype.unique = __webpack_require__(/*! ./methods/unique */ \"./node_modules/collect.js/dist/methods/unique.js\");\nCollection.prototype.unwrap = __webpack_require__(/*! ./methods/unwrap */ \"./node_modules/collect.js/dist/methods/unwrap.js\");\nCollection.prototype.values = __webpack_require__(/*! ./methods/values */ \"./node_modules/collect.js/dist/methods/values.js\");\nCollection.prototype.when = __webpack_require__(/*! ./methods/when */ \"./node_modules/collect.js/dist/methods/when.js\");\nCollection.prototype.whenEmpty = __webpack_require__(/*! ./methods/whenEmpty */ \"./node_modules/collect.js/dist/methods/whenEmpty.js\");\nCollection.prototype.whenNotEmpty = __webpack_require__(/*! ./methods/whenNotEmpty */ \"./node_modules/collect.js/dist/methods/whenNotEmpty.js\");\nCollection.prototype.where = __webpack_require__(/*! ./methods/where */ \"./node_modules/collect.js/dist/methods/where.js\");\nCollection.prototype.whereBetween = __webpack_require__(/*! ./methods/whereBetween */ \"./node_modules/collect.js/dist/methods/whereBetween.js\");\nCollection.prototype.whereIn = __webpack_require__(/*! ./methods/whereIn */ \"./node_modules/collect.js/dist/methods/whereIn.js\");\nCollection.prototype.whereInstanceOf = __webpack_require__(/*! ./methods/whereInstanceOf */ \"./node_modules/collect.js/dist/methods/whereInstanceOf.js\");\nCollection.prototype.whereNotBetween = __webpack_require__(/*! ./methods/whereNotBetween */ \"./node_modules/collect.js/dist/methods/whereNotBetween.js\");\nCollection.prototype.whereNotIn = __webpack_require__(/*! ./methods/whereNotIn */ \"./node_modules/collect.js/dist/methods/whereNotIn.js\");\nCollection.prototype.whereNull = __webpack_require__(/*! ./methods/whereNull */ \"./node_modules/collect.js/dist/methods/whereNull.js\");\nCollection.prototype.whereNotNull = __webpack_require__(/*! ./methods/whereNotNull */ \"./node_modules/collect.js/dist/methods/whereNotNull.js\");\nCollection.prototype.wrap = __webpack_require__(/*! ./methods/wrap */ \"./node_modules/collect.js/dist/methods/wrap.js\");\nCollection.prototype.zip = __webpack_require__(/*! ./methods/zip */ \"./node_modules/collect.js/dist/methods/zip.js\");\n\nvar collect = function collect(collection) {\n  return new Collection(collection);\n};\n\nmodule.exports = collect;\nmodule.exports.collect = collect;\nmodule.exports[\"default\"] = collect;\nmodule.exports.Collection = Collection;\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/index.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/all.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/all.js ***!
+  \*****************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nmodule.exports = function all() {\n  return this.items;\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/all.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/average.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/average.js ***!
+  \*********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+eval("\n\nvar _require = __webpack_require__(/*! ../helpers/is */ \"./node_modules/collect.js/dist/helpers/is.js\"),\n    isFunction = _require.isFunction;\n\nmodule.exports = function average(key) {\n  if (key === undefined) {\n    return this.sum() / this.items.length;\n  }\n\n  if (isFunction(key)) {\n    return new this.constructor(this.items).sum(key) / this.items.length;\n  }\n\n  return new this.constructor(this.items).pluck(key).sum() / this.items.length;\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/average.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/avg.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/avg.js ***!
+  \*****************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+eval("\n\nvar average = __webpack_require__(/*! ./average */ \"./node_modules/collect.js/dist/methods/average.js\");\n\nmodule.exports = average;\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/avg.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/chunk.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/chunk.js ***!
+  \*******************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nfunction _typeof(obj) { \"@babel/helpers - typeof\"; return _typeof = \"function\" == typeof Symbol && \"symbol\" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && \"function\" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? \"symbol\" : typeof obj; }, _typeof(obj); }\n\nmodule.exports = function chunk(size) {\n  var _this = this;\n\n  var chunks = [];\n  var index = 0;\n\n  if (Array.isArray(this.items)) {\n    do {\n      var items = this.items.slice(index, index + size);\n      var collection = new this.constructor(items);\n      chunks.push(collection);\n      index += size;\n    } while (index < this.items.length);\n  } else if (_typeof(this.items) === 'object') {\n    var keys = Object.keys(this.items);\n\n    var _loop = function _loop() {\n      var keysOfChunk = keys.slice(index, index + size);\n      var collection = new _this.constructor({});\n      keysOfChunk.forEach(function (key) {\n        return collection.put(key, _this.items[key]);\n      });\n      chunks.push(collection);\n      index += size;\n    };\n\n    do {\n      _loop();\n    } while (index < keys.length);\n  } else {\n    chunks.push(new this.constructor([this.items]));\n  }\n\n  return new this.constructor(chunks);\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/chunk.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/collapse.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/collapse.js ***!
+  \**********************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nfunction _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }\n\nfunction _nonIterableSpread() { throw new TypeError(\"Invalid attempt to spread non-iterable instance.\\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.\"); }\n\nfunction _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === \"string\") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === \"Object\" && o.constructor) n = o.constructor.name; if (n === \"Map\" || n === \"Set\") return Array.from(o); if (n === \"Arguments\" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }\n\nfunction _iterableToArray(iter) { if (typeof Symbol !== \"undefined\" && iter[Symbol.iterator] != null || iter[\"@@iterator\"] != null) return Array.from(iter); }\n\nfunction _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }\n\nfunction _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }\n\nmodule.exports = function collapse() {\n  var _ref;\n\n  return new this.constructor((_ref = []).concat.apply(_ref, _toConsumableArray(this.items)));\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/collapse.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/combine.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/combine.js ***!
+  \*********************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nfunction _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }\n\nfunction _nonIterableRest() { throw new TypeError(\"Invalid attempt to destructure non-iterable instance.\\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.\"); }\n\nfunction _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === \"string\") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === \"Object\" && o.constructor) n = o.constructor.name; if (n === \"Map\" || n === \"Set\") return Array.from(o); if (n === \"Arguments\" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }\n\nfunction _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }\n\nfunction _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== \"undefined\" && arr[Symbol.iterator] || arr[\"@@iterator\"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i[\"return\"] != null) _i[\"return\"](); } finally { if (_d) throw _e; } } return _arr; }\n\nfunction _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }\n\nfunction _typeof(obj) { \"@babel/helpers - typeof\"; return _typeof = \"function\" == typeof Symbol && \"symbol\" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && \"function\" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? \"symbol\" : typeof obj; }, _typeof(obj); }\n\nmodule.exports = function combine(array) {\n  var _this = this;\n\n  var values = array;\n\n  if (values instanceof this.constructor) {\n    values = array.all();\n  }\n\n  var collection = {};\n\n  if (Array.isArray(this.items) && Array.isArray(values)) {\n    this.items.forEach(function (key, iterator) {\n      collection[key] = values[iterator];\n    });\n  } else if (_typeof(this.items) === 'object' && _typeof(values) === 'object') {\n    Object.keys(this.items).forEach(function (key, index) {\n      collection[_this.items[key]] = values[Object.keys(values)[index]];\n    });\n  } else if (Array.isArray(this.items)) {\n    collection[this.items[0]] = values;\n  } else if (typeof this.items === 'string' && Array.isArray(values)) {\n    var _values = values;\n\n    var _values2 = _slicedToArray(_values, 1);\n\n    collection[this.items] = _values2[0];\n  } else if (typeof this.items === 'string') {\n    collection[this.items] = values;\n  }\n\n  return new this.constructor(collection);\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/combine.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/concat.js":
+/*!********************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/concat.js ***!
+  \********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+eval("\n\nfunction _typeof(obj) { \"@babel/helpers - typeof\"; return _typeof = \"function\" == typeof Symbol && \"symbol\" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && \"function\" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? \"symbol\" : typeof obj; }, _typeof(obj); }\n\nvar clone = __webpack_require__(/*! ../helpers/clone */ \"./node_modules/collect.js/dist/helpers/clone.js\");\n\nmodule.exports = function concat(collectionOrArrayOrObject) {\n  var list = collectionOrArrayOrObject;\n\n  if (collectionOrArrayOrObject instanceof this.constructor) {\n    list = collectionOrArrayOrObject.all();\n  } else if (_typeof(collectionOrArrayOrObject) === 'object') {\n    list = [];\n    Object.keys(collectionOrArrayOrObject).forEach(function (property) {\n      list.push(collectionOrArrayOrObject[property]);\n    });\n  }\n\n  var collection = clone(this.items);\n  list.forEach(function (item) {\n    if (_typeof(item) === 'object') {\n      Object.keys(item).forEach(function (key) {\n        return collection.push(item[key]);\n      });\n    } else {\n      collection.push(item);\n    }\n  });\n  return new this.constructor(collection);\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/concat.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/contains.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/contains.js ***!
+  \**********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+eval("\n\nfunction _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }\n\nfunction _nonIterableSpread() { throw new TypeError(\"Invalid attempt to spread non-iterable instance.\\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.\"); }\n\nfunction _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === \"string\") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === \"Object\" && o.constructor) n = o.constructor.name; if (n === \"Map\" || n === \"Set\") return Array.from(o); if (n === \"Arguments\" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }\n\nfunction _iterableToArray(iter) { if (typeof Symbol !== \"undefined\" && iter[Symbol.iterator] != null || iter[\"@@iterator\"] != null) return Array.from(iter); }\n\nfunction _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }\n\nfunction _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }\n\nvar values = __webpack_require__(/*! ../helpers/values */ \"./node_modules/collect.js/dist/helpers/values.js\");\n\nvar _require = __webpack_require__(/*! ../helpers/is */ \"./node_modules/collect.js/dist/helpers/is.js\"),\n    isFunction = _require.isFunction;\n\nmodule.exports = function contains(key, value) {\n  if (value !== undefined) {\n    if (Array.isArray(this.items)) {\n      return this.items.filter(function (items) {\n        return items[key] !== undefined && items[key] === value;\n      }).length > 0;\n    }\n\n    return this.items[key] !== undefined && this.items[key] === value;\n  }\n\n  if (isFunction(key)) {\n    return this.items.filter(function (item, index) {\n      return key(item, index);\n    }).length > 0;\n  }\n\n  if (Array.isArray(this.items)) {\n    return this.items.indexOf(key) !== -1;\n  }\n\n  var keysAndValues = values(this.items);\n  keysAndValues.push.apply(keysAndValues, _toConsumableArray(Object.keys(this.items)));\n  return keysAndValues.indexOf(key) !== -1;\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/contains.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/containsOneItem.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/containsOneItem.js ***!
+  \*****************************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nmodule.exports = function containsOneItem() {\n  return this.count() === 1;\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/containsOneItem.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/count.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/count.js ***!
+  \*******************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nmodule.exports = function count() {\n  var arrayLength = 0;\n\n  if (Array.isArray(this.items)) {\n    arrayLength = this.items.length;\n  }\n\n  return Math.max(Object.keys(this.items).length, arrayLength);\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/count.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/countBy.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/countBy.js ***!
+  \*********************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nmodule.exports = function countBy() {\n  var fn = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : function (value) {\n    return value;\n  };\n  return new this.constructor(this.items).groupBy(fn).map(function (value) {\n    return value.count();\n  });\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/countBy.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/crossJoin.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/crossJoin.js ***!
+  \***********************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nmodule.exports = function crossJoin() {\n  function join(collection, constructor, args) {\n    var current = args[0];\n\n    if (current instanceof constructor) {\n      current = current.all();\n    }\n\n    var rest = args.slice(1);\n    var last = !rest.length;\n    var result = [];\n\n    for (var i = 0; i < current.length; i += 1) {\n      var collectionCopy = collection.slice();\n      collectionCopy.push(current[i]);\n\n      if (last) {\n        result.push(collectionCopy);\n      } else {\n        result = result.concat(join(collectionCopy, constructor, rest));\n      }\n    }\n\n    return result;\n  }\n\n  for (var _len = arguments.length, values = new Array(_len), _key = 0; _key < _len; _key++) {\n    values[_key] = arguments[_key];\n  }\n\n  return new this.constructor(join([], this.constructor, [].concat([this.items], values)));\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/crossJoin.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/dd.js":
+/*!****************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/dd.js ***!
+  \****************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nmodule.exports = function dd() {\n  this.dump();\n\n  if (typeof process !== 'undefined') {\n    process.exit(1);\n  }\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/dd.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/diff.js":
+/*!******************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/diff.js ***!
+  \******************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nmodule.exports = function diff(values) {\n  var valuesToDiff;\n\n  if (values instanceof this.constructor) {\n    valuesToDiff = values.all();\n  } else {\n    valuesToDiff = values;\n  }\n\n  var collection = this.items.filter(function (item) {\n    return valuesToDiff.indexOf(item) === -1;\n  });\n  return new this.constructor(collection);\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/diff.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/diffAssoc.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/diffAssoc.js ***!
+  \***********************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nmodule.exports = function diffAssoc(values) {\n  var _this = this;\n\n  var diffValues = values;\n\n  if (values instanceof this.constructor) {\n    diffValues = values.all();\n  }\n\n  var collection = {};\n  Object.keys(this.items).forEach(function (key) {\n    if (diffValues[key] === undefined || diffValues[key] !== _this.items[key]) {\n      collection[key] = _this.items[key];\n    }\n  });\n  return new this.constructor(collection);\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/diffAssoc.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/diffKeys.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/diffKeys.js ***!
+  \**********************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nmodule.exports = function diffKeys(object) {\n  var objectToDiff;\n\n  if (object instanceof this.constructor) {\n    objectToDiff = object.all();\n  } else {\n    objectToDiff = object;\n  }\n\n  var objectKeys = Object.keys(objectToDiff);\n  var remainingKeys = Object.keys(this.items).filter(function (item) {\n    return objectKeys.indexOf(item) === -1;\n  });\n  return new this.constructor(this.items).only(remainingKeys);\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/diffKeys.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/diffUsing.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/diffUsing.js ***!
+  \***********************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nmodule.exports = function diffUsing(values, callback) {\n  var collection = this.items.filter(function (item) {\n    return !(values && values.some(function (otherItem) {\n      return callback(item, otherItem) === 0;\n    }));\n  });\n  return new this.constructor(collection);\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/diffUsing.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/doesntContain.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/doesntContain.js ***!
+  \***************************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nmodule.exports = function contains(key, value) {\n  return !this.contains(key, value);\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/doesntContain.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/dump.js":
+/*!******************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/dump.js ***!
+  \******************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nmodule.exports = function dump() {\n  // eslint-disable-next-line\n  console.log(this);\n  return this;\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/dump.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/duplicates.js":
+/*!************************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/duplicates.js ***!
+  \************************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nfunction _typeof(obj) { \"@babel/helpers - typeof\"; return _typeof = \"function\" == typeof Symbol && \"symbol\" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && \"function\" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? \"symbol\" : typeof obj; }, _typeof(obj); }\n\nmodule.exports = function duplicates() {\n  var _this = this;\n\n  var occuredValues = [];\n  var duplicateValues = {};\n\n  var stringifiedValue = function stringifiedValue(value) {\n    if (Array.isArray(value) || _typeof(value) === 'object') {\n      return JSON.stringify(value);\n    }\n\n    return value;\n  };\n\n  if (Array.isArray(this.items)) {\n    this.items.forEach(function (value, index) {\n      var valueAsString = stringifiedValue(value);\n\n      if (occuredValues.indexOf(valueAsString) === -1) {\n        occuredValues.push(valueAsString);\n      } else {\n        duplicateValues[index] = value;\n      }\n    });\n  } else if (_typeof(this.items) === 'object') {\n    Object.keys(this.items).forEach(function (key) {\n      var valueAsString = stringifiedValue(_this.items[key]);\n\n      if (occuredValues.indexOf(valueAsString) === -1) {\n        occuredValues.push(valueAsString);\n      } else {\n        duplicateValues[key] = _this.items[key];\n      }\n    });\n  }\n\n  return new this.constructor(duplicateValues);\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/duplicates.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/each.js":
+/*!******************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/each.js ***!
+  \******************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nmodule.exports = function each(fn) {\n  var stop = false;\n\n  if (Array.isArray(this.items)) {\n    var length = this.items.length;\n\n    for (var index = 0; index < length && !stop; index += 1) {\n      stop = fn(this.items[index], index, this.items) === false;\n    }\n  } else {\n    var keys = Object.keys(this.items);\n    var _length = keys.length;\n\n    for (var _index = 0; _index < _length && !stop; _index += 1) {\n      var key = keys[_index];\n      stop = fn(this.items[key], key, this.items) === false;\n    }\n  }\n\n  return this;\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/each.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/eachSpread.js":
+/*!************************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/eachSpread.js ***!
+  \************************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nfunction _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }\n\nfunction _nonIterableSpread() { throw new TypeError(\"Invalid attempt to spread non-iterable instance.\\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.\"); }\n\nfunction _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === \"string\") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === \"Object\" && o.constructor) n = o.constructor.name; if (n === \"Map\" || n === \"Set\") return Array.from(o); if (n === \"Arguments\" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }\n\nfunction _iterableToArray(iter) { if (typeof Symbol !== \"undefined\" && iter[Symbol.iterator] != null || iter[\"@@iterator\"] != null) return Array.from(iter); }\n\nfunction _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }\n\nfunction _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }\n\nmodule.exports = function eachSpread(fn) {\n  this.each(function (values, key) {\n    fn.apply(void 0, _toConsumableArray(values).concat([key]));\n  });\n  return this;\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/eachSpread.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/every.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/every.js ***!
+  \*******************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+eval("\n\nvar values = __webpack_require__(/*! ../helpers/values */ \"./node_modules/collect.js/dist/helpers/values.js\");\n\nmodule.exports = function every(fn) {\n  var items = values(this.items);\n  return items.every(fn);\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/every.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/except.js":
+/*!********************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/except.js ***!
+  \********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+eval("\n\nvar variadic = __webpack_require__(/*! ../helpers/variadic */ \"./node_modules/collect.js/dist/helpers/variadic.js\");\n\nmodule.exports = function except() {\n  var _this = this;\n\n  for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {\n    args[_key] = arguments[_key];\n  }\n\n  var properties = variadic(args);\n\n  if (Array.isArray(this.items)) {\n    var _collection = this.items.filter(function (item) {\n      return properties.indexOf(item) === -1;\n    });\n\n    return new this.constructor(_collection);\n  }\n\n  var collection = {};\n  Object.keys(this.items).forEach(function (property) {\n    if (properties.indexOf(property) === -1) {\n      collection[property] = _this.items[property];\n    }\n  });\n  return new this.constructor(collection);\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/except.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/filter.js":
+/*!********************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/filter.js ***!
+  \********************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nfunction _typeof(obj) { \"@babel/helpers - typeof\"; return _typeof = \"function\" == typeof Symbol && \"symbol\" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && \"function\" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? \"symbol\" : typeof obj; }, _typeof(obj); }\n\nfunction falsyValue(item) {\n  if (Array.isArray(item)) {\n    if (item.length) {\n      return false;\n    }\n  } else if (item !== undefined && item !== null && _typeof(item) === 'object') {\n    if (Object.keys(item).length) {\n      return false;\n    }\n  } else if (item) {\n    return false;\n  }\n\n  return true;\n}\n\nfunction filterObject(func, items) {\n  var result = {};\n  Object.keys(items).forEach(function (key) {\n    if (func) {\n      if (func(items[key], key)) {\n        result[key] = items[key];\n      }\n    } else if (!falsyValue(items[key])) {\n      result[key] = items[key];\n    }\n  });\n  return result;\n}\n\nfunction filterArray(func, items) {\n  if (func) {\n    return items.filter(func);\n  }\n\n  var result = [];\n\n  for (var i = 0; i < items.length; i += 1) {\n    var item = items[i];\n\n    if (!falsyValue(item)) {\n      result.push(item);\n    }\n  }\n\n  return result;\n}\n\nmodule.exports = function filter(fn) {\n  var func = fn || false;\n  var filteredItems = null;\n\n  if (Array.isArray(this.items)) {\n    filteredItems = filterArray(func, this.items);\n  } else {\n    filteredItems = filterObject(func, this.items);\n  }\n\n  return new this.constructor(filteredItems);\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/filter.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/first.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/first.js ***!
+  \*******************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+eval("\n\nvar _require = __webpack_require__(/*! ../helpers/is */ \"./node_modules/collect.js/dist/helpers/is.js\"),\n    isFunction = _require.isFunction;\n\nmodule.exports = function first(fn, defaultValue) {\n  if (isFunction(fn)) {\n    var keys = Object.keys(this.items);\n\n    for (var i = 0; i < keys.length; i += 1) {\n      var key = keys[i];\n      var item = this.items[key];\n\n      if (fn(item, key)) {\n        return item;\n      }\n    }\n\n    if (isFunction(defaultValue)) {\n      return defaultValue();\n    }\n\n    return defaultValue;\n  }\n\n  if (Array.isArray(this.items) && this.items.length || Object.keys(this.items).length) {\n    if (Array.isArray(this.items)) {\n      return this.items[0];\n    }\n\n    var firstKey = Object.keys(this.items)[0];\n    return this.items[firstKey];\n  }\n\n  if (isFunction(defaultValue)) {\n    return defaultValue();\n  }\n\n  return defaultValue;\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/first.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/firstOrFail.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/firstOrFail.js ***!
+  \*************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+eval("\n\nvar _require = __webpack_require__(/*! ../helpers/is */ \"./node_modules/collect.js/dist/helpers/is.js\"),\n    isFunction = _require.isFunction;\n\nmodule.exports = function firstOrFail(key, operator, value) {\n  if (isFunction(key)) {\n    return this.first(key, function () {\n      throw new Error('Item not found.');\n    });\n  }\n\n  var collection = this.where(key, operator, value);\n\n  if (collection.isEmpty()) {\n    throw new Error('Item not found.');\n  }\n\n  return collection.first();\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/firstOrFail.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/firstWhere.js":
+/*!************************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/firstWhere.js ***!
+  \************************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nmodule.exports = function firstWhere(key, operator, value) {\n  return this.where(key, operator, value).first() || null;\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/firstWhere.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/flatMap.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/flatMap.js ***!
+  \*********************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nmodule.exports = function flatMap(fn) {\n  return this.map(fn).collapse();\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/flatMap.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/flatten.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/flatten.js ***!
+  \*********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+eval("\n\nvar _require = __webpack_require__(/*! ../helpers/is */ \"./node_modules/collect.js/dist/helpers/is.js\"),\n    isArray = _require.isArray,\n    isObject = _require.isObject;\n\nmodule.exports = function flatten(depth) {\n  var flattenDepth = depth || Infinity;\n  var fullyFlattened = false;\n  var collection = [];\n\n  var flat = function flat(items) {\n    collection = [];\n\n    if (isArray(items)) {\n      items.forEach(function (item) {\n        if (isArray(item)) {\n          collection = collection.concat(item);\n        } else if (isObject(item)) {\n          Object.keys(item).forEach(function (property) {\n            collection = collection.concat(item[property]);\n          });\n        } else {\n          collection.push(item);\n        }\n      });\n    } else {\n      Object.keys(items).forEach(function (property) {\n        if (isArray(items[property])) {\n          collection = collection.concat(items[property]);\n        } else if (isObject(items[property])) {\n          Object.keys(items[property]).forEach(function (prop) {\n            collection = collection.concat(items[property][prop]);\n          });\n        } else {\n          collection.push(items[property]);\n        }\n      });\n    }\n\n    fullyFlattened = collection.filter(function (item) {\n      return isObject(item);\n    });\n    fullyFlattened = fullyFlattened.length === 0;\n    flattenDepth -= 1;\n  };\n\n  flat(this.items);\n\n  while (!fullyFlattened && flattenDepth > 0) {\n    flat(collection);\n  }\n\n  return new this.constructor(collection);\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/flatten.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/flip.js":
+/*!******************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/flip.js ***!
+  \******************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nmodule.exports = function flip() {\n  var _this = this;\n\n  var collection = {};\n\n  if (Array.isArray(this.items)) {\n    Object.keys(this.items).forEach(function (key) {\n      collection[_this.items[key]] = Number(key);\n    });\n  } else {\n    Object.keys(this.items).forEach(function (key) {\n      collection[_this.items[key]] = key;\n    });\n  }\n\n  return new this.constructor(collection);\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/flip.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/forPage.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/forPage.js ***!
+  \*********************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nmodule.exports = function forPage(page, chunk) {\n  var _this = this;\n\n  var collection = {};\n\n  if (Array.isArray(this.items)) {\n    collection = this.items.slice(page * chunk - chunk, page * chunk);\n  } else {\n    Object.keys(this.items).slice(page * chunk - chunk, page * chunk).forEach(function (key) {\n      collection[key] = _this.items[key];\n    });\n  }\n\n  return new this.constructor(collection);\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/forPage.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/forget.js":
+/*!********************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/forget.js ***!
+  \********************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nmodule.exports = function forget(key) {\n  if (Array.isArray(this.items)) {\n    this.items.splice(key, 1);\n  } else {\n    delete this.items[key];\n  }\n\n  return this;\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/forget.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/get.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/get.js ***!
+  \*****************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+eval("\n\nvar _require = __webpack_require__(/*! ../helpers/is */ \"./node_modules/collect.js/dist/helpers/is.js\"),\n    isFunction = _require.isFunction;\n\nmodule.exports = function get(key) {\n  var defaultValue = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;\n\n  if (this.items[key] !== undefined) {\n    return this.items[key];\n  }\n\n  if (isFunction(defaultValue)) {\n    return defaultValue();\n  }\n\n  if (defaultValue !== null) {\n    return defaultValue;\n  }\n\n  return null;\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/get.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/groupBy.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/groupBy.js ***!
+  \*********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+eval("\n\nvar nestedValue = __webpack_require__(/*! ../helpers/nestedValue */ \"./node_modules/collect.js/dist/helpers/nestedValue.js\");\n\nvar _require = __webpack_require__(/*! ../helpers/is */ \"./node_modules/collect.js/dist/helpers/is.js\"),\n    isFunction = _require.isFunction;\n\nmodule.exports = function groupBy(key) {\n  var _this = this;\n\n  var collection = {};\n  this.items.forEach(function (item, index) {\n    var resolvedKey;\n\n    if (isFunction(key)) {\n      resolvedKey = key(item, index);\n    } else if (nestedValue(item, key) || nestedValue(item, key) === 0) {\n      resolvedKey = nestedValue(item, key);\n    } else {\n      resolvedKey = '';\n    }\n\n    if (collection[resolvedKey] === undefined) {\n      collection[resolvedKey] = new _this.constructor([]);\n    }\n\n    collection[resolvedKey].push(item);\n  });\n  return new this.constructor(collection);\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/groupBy.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/has.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/has.js ***!
+  \*****************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+eval("\n\nvar variadic = __webpack_require__(/*! ../helpers/variadic */ \"./node_modules/collect.js/dist/helpers/variadic.js\");\n\nmodule.exports = function has() {\n  var _this = this;\n\n  for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {\n    args[_key] = arguments[_key];\n  }\n\n  var properties = variadic(args);\n  return properties.filter(function (key) {\n    return Object.hasOwnProperty.call(_this.items, key);\n  }).length === properties.length;\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/has.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/implode.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/implode.js ***!
+  \*********************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nmodule.exports = function implode(key, glue) {\n  if (glue === undefined) {\n    return this.items.join(key);\n  }\n\n  return new this.constructor(this.items).pluck(key).all().join(glue);\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/implode.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/intersect.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/intersect.js ***!
+  \***********************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nmodule.exports = function intersect(values) {\n  var intersectValues = values;\n\n  if (values instanceof this.constructor) {\n    intersectValues = values.all();\n  }\n\n  var collection = this.items.filter(function (item) {\n    return intersectValues.indexOf(item) !== -1;\n  });\n  return new this.constructor(collection);\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/intersect.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/intersectByKeys.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/intersectByKeys.js ***!
+  \*****************************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nmodule.exports = function intersectByKeys(values) {\n  var _this = this;\n\n  var intersectKeys = Object.keys(values);\n\n  if (values instanceof this.constructor) {\n    intersectKeys = Object.keys(values.all());\n  }\n\n  var collection = {};\n  Object.keys(this.items).forEach(function (key) {\n    if (intersectKeys.indexOf(key) !== -1) {\n      collection[key] = _this.items[key];\n    }\n  });\n  return new this.constructor(collection);\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/intersectByKeys.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/isEmpty.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/isEmpty.js ***!
+  \*********************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nmodule.exports = function isEmpty() {\n  if (Array.isArray(this.items)) {\n    return !this.items.length;\n  }\n\n  return !Object.keys(this.items).length;\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/isEmpty.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/isNotEmpty.js":
+/*!************************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/isNotEmpty.js ***!
+  \************************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nmodule.exports = function isNotEmpty() {\n  return !this.isEmpty();\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/isNotEmpty.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/join.js":
+/*!******************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/join.js ***!
+  \******************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nmodule.exports = function join(glue, finalGlue) {\n  var collection = this.values();\n\n  if (finalGlue === undefined) {\n    return collection.implode(glue);\n  }\n\n  var count = collection.count();\n\n  if (count === 0) {\n    return '';\n  }\n\n  if (count === 1) {\n    return collection.last();\n  }\n\n  var finalItem = collection.pop();\n  return collection.implode(glue) + finalGlue + finalItem;\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/join.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/keyBy.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/keyBy.js ***!
+  \*******************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+eval("\n\nvar nestedValue = __webpack_require__(/*! ../helpers/nestedValue */ \"./node_modules/collect.js/dist/helpers/nestedValue.js\");\n\nvar _require = __webpack_require__(/*! ../helpers/is */ \"./node_modules/collect.js/dist/helpers/is.js\"),\n    isFunction = _require.isFunction;\n\nmodule.exports = function keyBy(key) {\n  var collection = {};\n\n  if (isFunction(key)) {\n    this.items.forEach(function (item) {\n      collection[key(item)] = item;\n    });\n  } else {\n    this.items.forEach(function (item) {\n      var keyValue = nestedValue(item, key);\n      collection[keyValue || ''] = item;\n    });\n  }\n\n  return new this.constructor(collection);\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/keyBy.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/keys.js":
+/*!******************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/keys.js ***!
+  \******************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nmodule.exports = function keys() {\n  var collection = Object.keys(this.items);\n\n  if (Array.isArray(this.items)) {\n    collection = collection.map(Number);\n  }\n\n  return new this.constructor(collection);\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/keys.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/last.js":
+/*!******************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/last.js ***!
+  \******************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+eval("\n\nvar _require = __webpack_require__(/*! ../helpers/is */ \"./node_modules/collect.js/dist/helpers/is.js\"),\n    isFunction = _require.isFunction;\n\nmodule.exports = function last(fn, defaultValue) {\n  var items = this.items;\n\n  if (isFunction(fn)) {\n    items = this.filter(fn).all();\n  }\n\n  if (Array.isArray(items) && !items.length || !Object.keys(items).length) {\n    if (isFunction(defaultValue)) {\n      return defaultValue();\n    }\n\n    return defaultValue;\n  }\n\n  if (Array.isArray(items)) {\n    return items[items.length - 1];\n  }\n\n  var keys = Object.keys(items);\n  return items[keys[keys.length - 1]];\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/last.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/macro.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/macro.js ***!
+  \*******************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nmodule.exports = function macro(name, fn) {\n  this.constructor.prototype[name] = fn;\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/macro.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/make.js":
+/*!******************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/make.js ***!
+  \******************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nmodule.exports = function make() {\n  var items = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];\n  return new this.constructor(items);\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/make.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/map.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/map.js ***!
+  \*****************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nmodule.exports = function map(fn) {\n  var _this = this;\n\n  if (Array.isArray(this.items)) {\n    return new this.constructor(this.items.map(fn));\n  }\n\n  var collection = {};\n  Object.keys(this.items).forEach(function (key) {\n    collection[key] = fn(_this.items[key], key);\n  });\n  return new this.constructor(collection);\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/map.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/mapInto.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/mapInto.js ***!
+  \*********************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nmodule.exports = function mapInto(ClassName) {\n  return this.map(function (value, key) {\n    return new ClassName(value, key);\n  });\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/mapInto.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/mapSpread.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/mapSpread.js ***!
+  \***********************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nfunction _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }\n\nfunction _nonIterableSpread() { throw new TypeError(\"Invalid attempt to spread non-iterable instance.\\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.\"); }\n\nfunction _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === \"string\") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === \"Object\" && o.constructor) n = o.constructor.name; if (n === \"Map\" || n === \"Set\") return Array.from(o); if (n === \"Arguments\" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }\n\nfunction _iterableToArray(iter) { if (typeof Symbol !== \"undefined\" && iter[Symbol.iterator] != null || iter[\"@@iterator\"] != null) return Array.from(iter); }\n\nfunction _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }\n\nfunction _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }\n\nmodule.exports = function mapSpread(fn) {\n  return this.map(function (values, key) {\n    return fn.apply(void 0, _toConsumableArray(values).concat([key]));\n  });\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/mapSpread.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/mapToDictionary.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/mapToDictionary.js ***!
+  \*****************************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nfunction _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }\n\nfunction _nonIterableRest() { throw new TypeError(\"Invalid attempt to destructure non-iterable instance.\\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.\"); }\n\nfunction _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === \"string\") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === \"Object\" && o.constructor) n = o.constructor.name; if (n === \"Map\" || n === \"Set\") return Array.from(o); if (n === \"Arguments\" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }\n\nfunction _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }\n\nfunction _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== \"undefined\" && arr[Symbol.iterator] || arr[\"@@iterator\"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i[\"return\"] != null) _i[\"return\"](); } finally { if (_d) throw _e; } } return _arr; }\n\nfunction _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }\n\nmodule.exports = function mapToDictionary(fn) {\n  var collection = {};\n  this.items.forEach(function (item, k) {\n    var _fn = fn(item, k),\n        _fn2 = _slicedToArray(_fn, 2),\n        key = _fn2[0],\n        value = _fn2[1];\n\n    if (collection[key] === undefined) {\n      collection[key] = [value];\n    } else {\n      collection[key].push(value);\n    }\n  });\n  return new this.constructor(collection);\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/mapToDictionary.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/mapToGroups.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/mapToGroups.js ***!
+  \*************************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nfunction _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }\n\nfunction _nonIterableRest() { throw new TypeError(\"Invalid attempt to destructure non-iterable instance.\\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.\"); }\n\nfunction _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === \"string\") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === \"Object\" && o.constructor) n = o.constructor.name; if (n === \"Map\" || n === \"Set\") return Array.from(o); if (n === \"Arguments\" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }\n\nfunction _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }\n\nfunction _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== \"undefined\" && arr[Symbol.iterator] || arr[\"@@iterator\"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i[\"return\"] != null) _i[\"return\"](); } finally { if (_d) throw _e; } } return _arr; }\n\nfunction _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }\n\nmodule.exports = function mapToGroups(fn) {\n  var collection = {};\n  this.items.forEach(function (item, key) {\n    var _fn = fn(item, key),\n        _fn2 = _slicedToArray(_fn, 2),\n        keyed = _fn2[0],\n        value = _fn2[1];\n\n    if (collection[keyed] === undefined) {\n      collection[keyed] = [value];\n    } else {\n      collection[keyed].push(value);\n    }\n  });\n  return new this.constructor(collection);\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/mapToGroups.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/mapWithKeys.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/mapWithKeys.js ***!
+  \*************************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nfunction _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }\n\nfunction _nonIterableRest() { throw new TypeError(\"Invalid attempt to destructure non-iterable instance.\\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.\"); }\n\nfunction _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === \"string\") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === \"Object\" && o.constructor) n = o.constructor.name; if (n === \"Map\" || n === \"Set\") return Array.from(o); if (n === \"Arguments\" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }\n\nfunction _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }\n\nfunction _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== \"undefined\" && arr[Symbol.iterator] || arr[\"@@iterator\"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i[\"return\"] != null) _i[\"return\"](); } finally { if (_d) throw _e; } } return _arr; }\n\nfunction _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }\n\nmodule.exports = function mapWithKeys(fn) {\n  var _this = this;\n\n  var collection = {};\n\n  if (Array.isArray(this.items)) {\n    this.items.forEach(function (item, index) {\n      var _fn = fn(item, index),\n          _fn2 = _slicedToArray(_fn, 2),\n          keyed = _fn2[0],\n          value = _fn2[1];\n\n      collection[keyed] = value;\n    });\n  } else {\n    Object.keys(this.items).forEach(function (key) {\n      var _fn3 = fn(_this.items[key], key),\n          _fn4 = _slicedToArray(_fn3, 2),\n          keyed = _fn4[0],\n          value = _fn4[1];\n\n      collection[keyed] = value;\n    });\n  }\n\n  return new this.constructor(collection);\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/mapWithKeys.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/max.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/max.js ***!
+  \*****************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nfunction _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }\n\nfunction _nonIterableSpread() { throw new TypeError(\"Invalid attempt to spread non-iterable instance.\\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.\"); }\n\nfunction _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === \"string\") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === \"Object\" && o.constructor) n = o.constructor.name; if (n === \"Map\" || n === \"Set\") return Array.from(o); if (n === \"Arguments\" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }\n\nfunction _iterableToArray(iter) { if (typeof Symbol !== \"undefined\" && iter[Symbol.iterator] != null || iter[\"@@iterator\"] != null) return Array.from(iter); }\n\nfunction _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }\n\nfunction _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }\n\nmodule.exports = function max(key) {\n  if (typeof key === 'string') {\n    var filtered = this.items.filter(function (item) {\n      return item[key] !== undefined;\n    });\n    return Math.max.apply(Math, _toConsumableArray(filtered.map(function (item) {\n      return item[key];\n    })));\n  }\n\n  return Math.max.apply(Math, _toConsumableArray(this.items));\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/max.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/median.js":
+/*!********************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/median.js ***!
+  \********************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nmodule.exports = function median(key) {\n  var length = this.items.length;\n\n  if (key === undefined) {\n    if (length % 2 === 0) {\n      return (this.items[length / 2 - 1] + this.items[length / 2]) / 2;\n    }\n\n    return this.items[Math.floor(length / 2)];\n  }\n\n  if (length % 2 === 0) {\n    return (this.items[length / 2 - 1][key] + this.items[length / 2][key]) / 2;\n  }\n\n  return this.items[Math.floor(length / 2)][key];\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/median.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/merge.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/merge.js ***!
+  \*******************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nmodule.exports = function merge(value) {\n  var arrayOrObject = value;\n\n  if (typeof arrayOrObject === 'string') {\n    arrayOrObject = [arrayOrObject];\n  }\n\n  if (Array.isArray(this.items) && Array.isArray(arrayOrObject)) {\n    return new this.constructor(this.items.concat(arrayOrObject));\n  }\n\n  var collection = JSON.parse(JSON.stringify(this.items));\n  Object.keys(arrayOrObject).forEach(function (key) {\n    collection[key] = arrayOrObject[key];\n  });\n  return new this.constructor(collection);\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/merge.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/mergeRecursive.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/mergeRecursive.js ***!
+  \****************************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nfunction _typeof(obj) { \"@babel/helpers - typeof\"; return _typeof = \"function\" == typeof Symbol && \"symbol\" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && \"function\" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? \"symbol\" : typeof obj; }, _typeof(obj); }\n\nfunction ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }\n\nfunction _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }\n\nfunction _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }\n\nmodule.exports = function mergeRecursive(items) {\n  var merge = function merge(target, source) {\n    var merged = {};\n    var mergedKeys = Object.keys(_objectSpread(_objectSpread({}, target), source));\n    mergedKeys.forEach(function (key) {\n      if (target[key] === undefined && source[key] !== undefined) {\n        merged[key] = source[key];\n      } else if (target[key] !== undefined && source[key] === undefined) {\n        merged[key] = target[key];\n      } else if (target[key] !== undefined && source[key] !== undefined) {\n        if (target[key] === source[key]) {\n          merged[key] = target[key];\n        } else if (!Array.isArray(target[key]) && _typeof(target[key]) === 'object' && !Array.isArray(source[key]) && _typeof(source[key]) === 'object') {\n          merged[key] = merge(target[key], source[key]);\n        } else {\n          merged[key] = [].concat(target[key], source[key]);\n        }\n      }\n    });\n    return merged;\n  };\n\n  if (!items) {\n    return this;\n  }\n\n  if (items.constructor.name === 'Collection') {\n    return new this.constructor(merge(this.items, items.all()));\n  }\n\n  return new this.constructor(merge(this.items, items));\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/mergeRecursive.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/min.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/min.js ***!
+  \*****************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nfunction _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }\n\nfunction _nonIterableSpread() { throw new TypeError(\"Invalid attempt to spread non-iterable instance.\\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.\"); }\n\nfunction _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === \"string\") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === \"Object\" && o.constructor) n = o.constructor.name; if (n === \"Map\" || n === \"Set\") return Array.from(o); if (n === \"Arguments\" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }\n\nfunction _iterableToArray(iter) { if (typeof Symbol !== \"undefined\" && iter[Symbol.iterator] != null || iter[\"@@iterator\"] != null) return Array.from(iter); }\n\nfunction _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }\n\nfunction _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }\n\nmodule.exports = function min(key) {\n  if (key !== undefined) {\n    var filtered = this.items.filter(function (item) {\n      return item[key] !== undefined;\n    });\n    return Math.min.apply(Math, _toConsumableArray(filtered.map(function (item) {\n      return item[key];\n    })));\n  }\n\n  return Math.min.apply(Math, _toConsumableArray(this.items));\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/min.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/mode.js":
+/*!******************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/mode.js ***!
+  \******************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nmodule.exports = function mode(key) {\n  var values = [];\n  var highestCount = 1;\n\n  if (!this.items.length) {\n    return null;\n  }\n\n  this.items.forEach(function (item) {\n    var tempValues = values.filter(function (value) {\n      if (key !== undefined) {\n        return value.key === item[key];\n      }\n\n      return value.key === item;\n    });\n\n    if (!tempValues.length) {\n      if (key !== undefined) {\n        values.push({\n          key: item[key],\n          count: 1\n        });\n      } else {\n        values.push({\n          key: item,\n          count: 1\n        });\n      }\n    } else {\n      tempValues[0].count += 1;\n      var count = tempValues[0].count;\n\n      if (count > highestCount) {\n        highestCount = count;\n      }\n    }\n  });\n  return values.filter(function (value) {\n    return value.count === highestCount;\n  }).map(function (value) {\n    return value.key;\n  });\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/mode.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/nth.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/nth.js ***!
+  \*****************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+eval("\n\nvar values = __webpack_require__(/*! ../helpers/values */ \"./node_modules/collect.js/dist/helpers/values.js\");\n\nmodule.exports = function nth(n) {\n  var offset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;\n  var items = values(this.items);\n  var collection = items.slice(offset).filter(function (item, index) {\n    return index % n === 0;\n  });\n  return new this.constructor(collection);\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/nth.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/only.js":
+/*!******************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/only.js ***!
+  \******************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+eval("\n\nvar variadic = __webpack_require__(/*! ../helpers/variadic */ \"./node_modules/collect.js/dist/helpers/variadic.js\");\n\nmodule.exports = function only() {\n  var _this = this;\n\n  for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {\n    args[_key] = arguments[_key];\n  }\n\n  var properties = variadic(args);\n\n  if (Array.isArray(this.items)) {\n    var _collection = this.items.filter(function (item) {\n      return properties.indexOf(item) !== -1;\n    });\n\n    return new this.constructor(_collection);\n  }\n\n  var collection = {};\n  Object.keys(this.items).forEach(function (prop) {\n    if (properties.indexOf(prop) !== -1) {\n      collection[prop] = _this.items[prop];\n    }\n  });\n  return new this.constructor(collection);\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/only.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/pad.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/pad.js ***!
+  \*****************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+eval("\n\nvar clone = __webpack_require__(/*! ../helpers/clone */ \"./node_modules/collect.js/dist/helpers/clone.js\");\n\nmodule.exports = function pad(size, value) {\n  var abs = Math.abs(size);\n  var count = this.count();\n\n  if (abs <= count) {\n    return this;\n  }\n\n  var diff = abs - count;\n  var items = clone(this.items);\n  var isArray = Array.isArray(this.items);\n  var prepend = size < 0;\n\n  for (var iterator = 0; iterator < diff;) {\n    if (!isArray) {\n      if (items[iterator] !== undefined) {\n        diff += 1;\n      } else {\n        items[iterator] = value;\n      }\n    } else if (prepend) {\n      items.unshift(value);\n    } else {\n      items.push(value);\n    }\n\n    iterator += 1;\n  }\n\n  return new this.constructor(items);\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/pad.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/partition.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/partition.js ***!
+  \***********************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nmodule.exports = function partition(fn) {\n  var _this = this;\n\n  var arrays;\n\n  if (Array.isArray(this.items)) {\n    arrays = [new this.constructor([]), new this.constructor([])];\n    this.items.forEach(function (item) {\n      if (fn(item) === true) {\n        arrays[0].push(item);\n      } else {\n        arrays[1].push(item);\n      }\n    });\n  } else {\n    arrays = [new this.constructor({}), new this.constructor({})];\n    Object.keys(this.items).forEach(function (prop) {\n      var value = _this.items[prop];\n\n      if (fn(value) === true) {\n        arrays[0].put(prop, value);\n      } else {\n        arrays[1].put(prop, value);\n      }\n    });\n  }\n\n  return new this.constructor(arrays);\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/partition.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/pipe.js":
+/*!******************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/pipe.js ***!
+  \******************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nmodule.exports = function pipe(fn) {\n  return fn(this);\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/pipe.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/pluck.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/pluck.js ***!
+  \*******************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+eval("\n\nvar _require = __webpack_require__(/*! ../helpers/is */ \"./node_modules/collect.js/dist/helpers/is.js\"),\n    isArray = _require.isArray,\n    isObject = _require.isObject;\n\nvar nestedValue = __webpack_require__(/*! ../helpers/nestedValue */ \"./node_modules/collect.js/dist/helpers/nestedValue.js\");\n\nvar buildKeyPathMap = function buildKeyPathMap(items) {\n  var keyPaths = {};\n  items.forEach(function (item, index) {\n    function buildKeyPath(val, keyPath) {\n      if (isObject(val)) {\n        Object.keys(val).forEach(function (prop) {\n          buildKeyPath(val[prop], \"\".concat(keyPath, \".\").concat(prop));\n        });\n      } else if (isArray(val)) {\n        val.forEach(function (v, i) {\n          buildKeyPath(v, \"\".concat(keyPath, \".\").concat(i));\n        });\n      }\n\n      keyPaths[keyPath] = val;\n    }\n\n    buildKeyPath(item, index);\n  });\n  return keyPaths;\n};\n\nmodule.exports = function pluck(value, key) {\n  if (value.indexOf('*') !== -1) {\n    var keyPathMap = buildKeyPathMap(this.items);\n    var keyMatches = [];\n\n    if (key !== undefined) {\n      var keyRegex = new RegExp(\"0.\".concat(key), 'g');\n      var keyNumberOfLevels = \"0.\".concat(key).split('.').length;\n      Object.keys(keyPathMap).forEach(function (k) {\n        var matchingKey = k.match(keyRegex);\n\n        if (matchingKey) {\n          var match = matchingKey[0];\n\n          if (match.split('.').length === keyNumberOfLevels) {\n            keyMatches.push(keyPathMap[match]);\n          }\n        }\n      });\n    }\n\n    var valueMatches = [];\n    var valueRegex = new RegExp(\"0.\".concat(value), 'g');\n    var valueNumberOfLevels = \"0.\".concat(value).split('.').length;\n    Object.keys(keyPathMap).forEach(function (k) {\n      var matchingValue = k.match(valueRegex);\n\n      if (matchingValue) {\n        var match = matchingValue[0];\n\n        if (match.split('.').length === valueNumberOfLevels) {\n          valueMatches.push(keyPathMap[match]);\n        }\n      }\n    });\n\n    if (key !== undefined) {\n      var collection = {};\n      this.items.forEach(function (item, index) {\n        collection[keyMatches[index] || ''] = valueMatches;\n      });\n      return new this.constructor(collection);\n    }\n\n    return new this.constructor([valueMatches]);\n  }\n\n  if (key !== undefined) {\n    var _collection = {};\n    this.items.forEach(function (item) {\n      if (nestedValue(item, value) !== undefined) {\n        _collection[item[key] || ''] = nestedValue(item, value);\n      } else {\n        _collection[item[key] || ''] = null;\n      }\n    });\n    return new this.constructor(_collection);\n  }\n\n  return this.map(function (item) {\n    if (nestedValue(item, value) !== undefined) {\n      return nestedValue(item, value);\n    }\n\n    return null;\n  });\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/pluck.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/pop.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/pop.js ***!
+  \*****************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+eval("\n\nvar _require = __webpack_require__(/*! ../helpers/is */ \"./node_modules/collect.js/dist/helpers/is.js\"),\n    isArray = _require.isArray,\n    isObject = _require.isObject;\n\nvar deleteKeys = __webpack_require__(/*! ../helpers/deleteKeys */ \"./node_modules/collect.js/dist/helpers/deleteKeys.js\");\n\nmodule.exports = function pop() {\n  var _this = this;\n\n  var count = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;\n\n  if (this.isEmpty()) {\n    return null;\n  }\n\n  if (isArray(this.items)) {\n    if (count === 1) {\n      return this.items.pop();\n    }\n\n    return new this.constructor(this.items.splice(-count));\n  }\n\n  if (isObject(this.items)) {\n    var keys = Object.keys(this.items);\n\n    if (count === 1) {\n      var key = keys[keys.length - 1];\n      var last = this.items[key];\n      deleteKeys(this.items, key);\n      return last;\n    }\n\n    var poppedKeys = keys.slice(-count);\n    var newObject = poppedKeys.reduce(function (acc, current) {\n      acc[current] = _this.items[current];\n      return acc;\n    }, {});\n    deleteKeys(this.items, poppedKeys);\n    return new this.constructor(newObject);\n  }\n\n  return null;\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/pop.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/prepend.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/prepend.js ***!
+  \*********************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nmodule.exports = function prepend(value, key) {\n  if (key !== undefined) {\n    return this.put(key, value);\n  }\n\n  this.items.unshift(value);\n  return this;\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/prepend.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/pull.js":
+/*!******************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/pull.js ***!
+  \******************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+eval("\n\nvar _require = __webpack_require__(/*! ../helpers/is */ \"./node_modules/collect.js/dist/helpers/is.js\"),\n    isFunction = _require.isFunction;\n\nmodule.exports = function pull(key, defaultValue) {\n  var returnValue = this.items[key] || null;\n\n  if (!returnValue && defaultValue !== undefined) {\n    if (isFunction(defaultValue)) {\n      returnValue = defaultValue();\n    } else {\n      returnValue = defaultValue;\n    }\n  }\n\n  delete this.items[key];\n  return returnValue;\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/pull.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/push.js":
+/*!******************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/push.js ***!
+  \******************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nmodule.exports = function push() {\n  var _this$items;\n\n  (_this$items = this.items).push.apply(_this$items, arguments);\n\n  return this;\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/push.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/put.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/put.js ***!
+  \*****************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nmodule.exports = function put(key, value) {\n  this.items[key] = value;\n  return this;\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/put.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/random.js":
+/*!********************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/random.js ***!
+  \********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+eval("\n\nvar values = __webpack_require__(/*! ../helpers/values */ \"./node_modules/collect.js/dist/helpers/values.js\");\n\nmodule.exports = function random() {\n  var length = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;\n  var items = values(this.items);\n  var collection = new this.constructor(items).shuffle(); // If not a length was specified\n\n  if (length !== parseInt(length, 10)) {\n    return collection.first();\n  }\n\n  return collection.take(length);\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/random.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/reduce.js":
+/*!********************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/reduce.js ***!
+  \********************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nmodule.exports = function reduce(fn, carry) {\n  var _this = this;\n\n  var reduceCarry = null;\n\n  if (carry !== undefined) {\n    reduceCarry = carry;\n  }\n\n  if (Array.isArray(this.items)) {\n    this.items.forEach(function (item) {\n      reduceCarry = fn(reduceCarry, item);\n    });\n  } else {\n    Object.keys(this.items).forEach(function (key) {\n      reduceCarry = fn(reduceCarry, _this.items[key], key);\n    });\n  }\n\n  return reduceCarry;\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/reduce.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/reject.js":
+/*!********************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/reject.js ***!
+  \********************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nmodule.exports = function reject(fn) {\n  return new this.constructor(this.items).filter(function (item) {\n    return !fn(item);\n  });\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/reject.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/replace.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/replace.js ***!
+  \*********************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nfunction ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }\n\nfunction _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }\n\nfunction _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }\n\nmodule.exports = function replace(items) {\n  if (!items) {\n    return this;\n  }\n\n  if (Array.isArray(items)) {\n    var _replaced = this.items.map(function (value, index) {\n      return items[index] || value;\n    });\n\n    return new this.constructor(_replaced);\n  }\n\n  if (items.constructor.name === 'Collection') {\n    var _replaced2 = _objectSpread(_objectSpread({}, this.items), items.all());\n\n    return new this.constructor(_replaced2);\n  }\n\n  var replaced = _objectSpread(_objectSpread({}, this.items), items);\n\n  return new this.constructor(replaced);\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/replace.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/replaceRecursive.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/replaceRecursive.js ***!
+  \******************************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nfunction _typeof(obj) { \"@babel/helpers - typeof\"; return _typeof = \"function\" == typeof Symbol && \"symbol\" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && \"function\" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? \"symbol\" : typeof obj; }, _typeof(obj); }\n\nfunction ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }\n\nfunction _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }\n\nfunction _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }\n\nmodule.exports = function replaceRecursive(items) {\n  var replace = function replace(target, source) {\n    var replaced = _objectSpread({}, target);\n\n    var mergedKeys = Object.keys(_objectSpread(_objectSpread({}, target), source));\n    mergedKeys.forEach(function (key) {\n      if (!Array.isArray(source[key]) && _typeof(source[key]) === 'object') {\n        replaced[key] = replace(target[key], source[key]);\n      } else if (target[key] === undefined && source[key] !== undefined) {\n        if (_typeof(target[key]) === 'object') {\n          replaced[key] = _objectSpread({}, source[key]);\n        } else {\n          replaced[key] = source[key];\n        }\n      } else if (target[key] !== undefined && source[key] === undefined) {\n        if (_typeof(target[key]) === 'object') {\n          replaced[key] = _objectSpread({}, target[key]);\n        } else {\n          replaced[key] = target[key];\n        }\n      } else if (target[key] !== undefined && source[key] !== undefined) {\n        if (_typeof(source[key]) === 'object') {\n          replaced[key] = _objectSpread({}, source[key]);\n        } else {\n          replaced[key] = source[key];\n        }\n      }\n    });\n    return replaced;\n  };\n\n  if (!items) {\n    return this;\n  }\n\n  if (!Array.isArray(items) && _typeof(items) !== 'object') {\n    return new this.constructor(replace(this.items, [items]));\n  }\n\n  if (items.constructor.name === 'Collection') {\n    return new this.constructor(replace(this.items, items.all()));\n  }\n\n  return new this.constructor(replace(this.items, items));\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/replaceRecursive.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/reverse.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/reverse.js ***!
+  \*********************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nmodule.exports = function reverse() {\n  var collection = [].concat(this.items).reverse();\n  return new this.constructor(collection);\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/reverse.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/search.js":
+/*!********************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/search.js ***!
+  \********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+eval("\n/* eslint-disable eqeqeq */\n\nvar _require = __webpack_require__(/*! ../helpers/is */ \"./node_modules/collect.js/dist/helpers/is.js\"),\n    isArray = _require.isArray,\n    isObject = _require.isObject,\n    isFunction = _require.isFunction;\n\nmodule.exports = function search(valueOrFunction, strict) {\n  var _this = this;\n\n  var result;\n\n  var find = function find(item, key) {\n    if (isFunction(valueOrFunction)) {\n      return valueOrFunction(_this.items[key], key);\n    }\n\n    if (strict) {\n      return _this.items[key] === valueOrFunction;\n    }\n\n    return _this.items[key] == valueOrFunction;\n  };\n\n  if (isArray(this.items)) {\n    result = this.items.findIndex(find);\n  } else if (isObject(this.items)) {\n    result = Object.keys(this.items).find(function (key) {\n      return find(_this.items[key], key);\n    });\n  }\n\n  if (result === undefined || result < 0) {\n    return false;\n  }\n\n  return result;\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/search.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/shift.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/shift.js ***!
+  \*******************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+eval("\n\nvar _require = __webpack_require__(/*! ../helpers/is */ \"./node_modules/collect.js/dist/helpers/is.js\"),\n    isArray = _require.isArray,\n    isObject = _require.isObject;\n\nvar deleteKeys = __webpack_require__(/*! ../helpers/deleteKeys */ \"./node_modules/collect.js/dist/helpers/deleteKeys.js\");\n\nmodule.exports = function shift() {\n  var _this = this;\n\n  var count = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;\n\n  if (this.isEmpty()) {\n    return null;\n  }\n\n  if (isArray(this.items)) {\n    if (count === 1) {\n      return this.items.shift();\n    }\n\n    return new this.constructor(this.items.splice(0, count));\n  }\n\n  if (isObject(this.items)) {\n    if (count === 1) {\n      var key = Object.keys(this.items)[0];\n      var value = this.items[key];\n      delete this.items[key];\n      return value;\n    }\n\n    var keys = Object.keys(this.items);\n    var poppedKeys = keys.slice(0, count);\n    var newObject = poppedKeys.reduce(function (acc, current) {\n      acc[current] = _this.items[current];\n      return acc;\n    }, {});\n    deleteKeys(this.items, poppedKeys);\n    return new this.constructor(newObject);\n  }\n\n  return null;\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/shift.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/shuffle.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/shuffle.js ***!
+  \*********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+eval("\n\nvar values = __webpack_require__(/*! ../helpers/values */ \"./node_modules/collect.js/dist/helpers/values.js\");\n\nmodule.exports = function shuffle() {\n  var items = values(this.items);\n  var j;\n  var x;\n  var i;\n\n  for (i = items.length; i; i -= 1) {\n    j = Math.floor(Math.random() * i);\n    x = items[i - 1];\n    items[i - 1] = items[j];\n    items[j] = x;\n  }\n\n  this.items = items;\n  return this;\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/shuffle.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/skip.js":
+/*!******************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/skip.js ***!
+  \******************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+eval("\n\nvar _require = __webpack_require__(/*! ../helpers/is */ \"./node_modules/collect.js/dist/helpers/is.js\"),\n    isObject = _require.isObject;\n\nmodule.exports = function skip(number) {\n  var _this = this;\n\n  if (isObject(this.items)) {\n    return new this.constructor(Object.keys(this.items).reduce(function (accumulator, key, index) {\n      if (index + 1 > number) {\n        accumulator[key] = _this.items[key];\n      }\n\n      return accumulator;\n    }, {}));\n  }\n\n  return new this.constructor(this.items.slice(number));\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/skip.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/skipUntil.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/skipUntil.js ***!
+  \***********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+eval("\n\nvar _require = __webpack_require__(/*! ../helpers/is */ \"./node_modules/collect.js/dist/helpers/is.js\"),\n    isArray = _require.isArray,\n    isObject = _require.isObject,\n    isFunction = _require.isFunction;\n\nmodule.exports = function skipUntil(valueOrFunction) {\n  var _this = this;\n\n  var previous = null;\n  var items;\n\n  var callback = function callback(value) {\n    return value === valueOrFunction;\n  };\n\n  if (isFunction(valueOrFunction)) {\n    callback = valueOrFunction;\n  }\n\n  if (isArray(this.items)) {\n    items = this.items.filter(function (item) {\n      if (previous !== true) {\n        previous = callback(item);\n      }\n\n      return previous;\n    });\n  }\n\n  if (isObject(this.items)) {\n    items = Object.keys(this.items).reduce(function (acc, key) {\n      if (previous !== true) {\n        previous = callback(_this.items[key]);\n      }\n\n      if (previous !== false) {\n        acc[key] = _this.items[key];\n      }\n\n      return acc;\n    }, {});\n  }\n\n  return new this.constructor(items);\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/skipUntil.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/skipWhile.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/skipWhile.js ***!
+  \***********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+eval("\n\nvar _require = __webpack_require__(/*! ../helpers/is */ \"./node_modules/collect.js/dist/helpers/is.js\"),\n    isArray = _require.isArray,\n    isObject = _require.isObject,\n    isFunction = _require.isFunction;\n\nmodule.exports = function skipWhile(valueOrFunction) {\n  var _this = this;\n\n  var previous = null;\n  var items;\n\n  var callback = function callback(value) {\n    return value === valueOrFunction;\n  };\n\n  if (isFunction(valueOrFunction)) {\n    callback = valueOrFunction;\n  }\n\n  if (isArray(this.items)) {\n    items = this.items.filter(function (item) {\n      if (previous !== true) {\n        previous = !callback(item);\n      }\n\n      return previous;\n    });\n  }\n\n  if (isObject(this.items)) {\n    items = Object.keys(this.items).reduce(function (acc, key) {\n      if (previous !== true) {\n        previous = !callback(_this.items[key]);\n      }\n\n      if (previous !== false) {\n        acc[key] = _this.items[key];\n      }\n\n      return acc;\n    }, {});\n  }\n\n  return new this.constructor(items);\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/skipWhile.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/slice.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/slice.js ***!
+  \*******************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nmodule.exports = function slice(remove, limit) {\n  var collection = this.items.slice(remove);\n\n  if (limit !== undefined) {\n    collection = collection.slice(0, limit);\n  }\n\n  return new this.constructor(collection);\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/slice.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/sole.js":
+/*!******************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/sole.js ***!
+  \******************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+eval("\n\nvar _require = __webpack_require__(/*! ../helpers/is */ \"./node_modules/collect.js/dist/helpers/is.js\"),\n    isFunction = _require.isFunction;\n\nmodule.exports = function sole(key, operator, value) {\n  var collection;\n\n  if (isFunction(key)) {\n    collection = this.filter(key);\n  } else {\n    collection = this.where(key, operator, value);\n  }\n\n  if (collection.isEmpty()) {\n    throw new Error('Item not found.');\n  }\n\n  if (collection.count() > 1) {\n    throw new Error('Multiple items found.');\n  }\n\n  return collection.first();\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/sole.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/some.js":
+/*!******************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/some.js ***!
+  \******************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+eval("\n\nvar contains = __webpack_require__(/*! ./contains */ \"./node_modules/collect.js/dist/methods/contains.js\");\n\nmodule.exports = contains;\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/some.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/sort.js":
+/*!******************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/sort.js ***!
+  \******************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nmodule.exports = function sort(fn) {\n  var collection = [].concat(this.items);\n\n  if (fn === undefined) {\n    if (this.every(function (item) {\n      return typeof item === 'number';\n    })) {\n      collection.sort(function (a, b) {\n        return a - b;\n      });\n    } else {\n      collection.sort();\n    }\n  } else {\n    collection.sort(fn);\n  }\n\n  return new this.constructor(collection);\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/sort.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/sortBy.js":
+/*!********************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/sortBy.js ***!
+  \********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+eval("\n\nvar nestedValue = __webpack_require__(/*! ../helpers/nestedValue */ \"./node_modules/collect.js/dist/helpers/nestedValue.js\");\n\nvar _require = __webpack_require__(/*! ../helpers/is */ \"./node_modules/collect.js/dist/helpers/is.js\"),\n    isFunction = _require.isFunction;\n\nmodule.exports = function sortBy(valueOrFunction) {\n  var collection = [].concat(this.items);\n\n  var getValue = function getValue(item) {\n    if (isFunction(valueOrFunction)) {\n      return valueOrFunction(item);\n    }\n\n    return nestedValue(item, valueOrFunction);\n  };\n\n  collection.sort(function (a, b) {\n    var valueA = getValue(a);\n    var valueB = getValue(b);\n\n    if (valueA === null || valueA === undefined) {\n      return 1;\n    }\n\n    if (valueB === null || valueB === undefined) {\n      return -1;\n    }\n\n    if (valueA < valueB) {\n      return -1;\n    }\n\n    if (valueA > valueB) {\n      return 1;\n    }\n\n    return 0;\n  });\n  return new this.constructor(collection);\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/sortBy.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/sortByDesc.js":
+/*!************************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/sortByDesc.js ***!
+  \************************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nmodule.exports = function sortByDesc(valueOrFunction) {\n  return this.sortBy(valueOrFunction).reverse();\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/sortByDesc.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/sortDesc.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/sortDesc.js ***!
+  \**********************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nmodule.exports = function sortDesc() {\n  return this.sort().reverse();\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/sortDesc.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/sortKeys.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/sortKeys.js ***!
+  \**********************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nmodule.exports = function sortKeys() {\n  var _this = this;\n\n  var ordered = {};\n  Object.keys(this.items).sort().forEach(function (key) {\n    ordered[key] = _this.items[key];\n  });\n  return new this.constructor(ordered);\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/sortKeys.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/sortKeysDesc.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/sortKeysDesc.js ***!
+  \**************************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nmodule.exports = function sortKeysDesc() {\n  var _this = this;\n\n  var ordered = {};\n  Object.keys(this.items).sort().reverse().forEach(function (key) {\n    ordered[key] = _this.items[key];\n  });\n  return new this.constructor(ordered);\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/sortKeysDesc.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/splice.js":
+/*!********************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/splice.js ***!
+  \********************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nmodule.exports = function splice(index, limit, replace) {\n  var slicedCollection = this.slice(index, limit);\n  this.items = this.diff(slicedCollection.all()).all();\n\n  if (Array.isArray(replace)) {\n    for (var iterator = 0, length = replace.length; iterator < length; iterator += 1) {\n      this.items.splice(index + iterator, 0, replace[iterator]);\n    }\n  }\n\n  return slicedCollection;\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/splice.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/split.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/split.js ***!
+  \*******************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nmodule.exports = function split(numberOfGroups) {\n  var itemsPerGroup = Math.round(this.items.length / numberOfGroups);\n  var items = JSON.parse(JSON.stringify(this.items));\n  var collection = [];\n\n  for (var iterator = 0; iterator < numberOfGroups; iterator += 1) {\n    collection.push(new this.constructor(items.splice(0, itemsPerGroup)));\n  }\n\n  return new this.constructor(collection);\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/split.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/sum.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/sum.js ***!
+  \*****************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+eval("\n\nvar values = __webpack_require__(/*! ../helpers/values */ \"./node_modules/collect.js/dist/helpers/values.js\");\n\nvar _require = __webpack_require__(/*! ../helpers/is */ \"./node_modules/collect.js/dist/helpers/is.js\"),\n    isFunction = _require.isFunction;\n\nmodule.exports = function sum(key) {\n  var items = values(this.items);\n  var total = 0;\n\n  if (key === undefined) {\n    for (var i = 0, length = items.length; i < length; i += 1) {\n      total += parseFloat(items[i]);\n    }\n  } else if (isFunction(key)) {\n    for (var _i = 0, _length = items.length; _i < _length; _i += 1) {\n      total += parseFloat(key(items[_i]));\n    }\n  } else {\n    for (var _i2 = 0, _length2 = items.length; _i2 < _length2; _i2 += 1) {\n      total += parseFloat(items[_i2][key]);\n    }\n  }\n\n  return parseFloat(total.toPrecision(12));\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/sum.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/symbol.iterator.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/symbol.iterator.js ***!
+  \*****************************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nmodule.exports = function SymbolIterator() {\n  var _this = this;\n\n  var index = -1;\n  return {\n    next: function next() {\n      index += 1;\n      return {\n        value: _this.items[index],\n        done: index >= _this.items.length\n      };\n    }\n  };\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/symbol.iterator.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/take.js":
+/*!******************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/take.js ***!
+  \******************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nfunction _typeof(obj) { \"@babel/helpers - typeof\"; return _typeof = \"function\" == typeof Symbol && \"symbol\" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && \"function\" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? \"symbol\" : typeof obj; }, _typeof(obj); }\n\nmodule.exports = function take(length) {\n  var _this = this;\n\n  if (!Array.isArray(this.items) && _typeof(this.items) === 'object') {\n    var keys = Object.keys(this.items);\n    var slicedKeys;\n\n    if (length < 0) {\n      slicedKeys = keys.slice(length);\n    } else {\n      slicedKeys = keys.slice(0, length);\n    }\n\n    var collection = {};\n    keys.forEach(function (prop) {\n      if (slicedKeys.indexOf(prop) !== -1) {\n        collection[prop] = _this.items[prop];\n      }\n    });\n    return new this.constructor(collection);\n  }\n\n  if (length < 0) {\n    return new this.constructor(this.items.slice(length));\n  }\n\n  return new this.constructor(this.items.slice(0, length));\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/take.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/takeUntil.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/takeUntil.js ***!
+  \***********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+eval("\n\nvar _require = __webpack_require__(/*! ../helpers/is */ \"./node_modules/collect.js/dist/helpers/is.js\"),\n    isArray = _require.isArray,\n    isObject = _require.isObject,\n    isFunction = _require.isFunction;\n\nmodule.exports = function takeUntil(valueOrFunction) {\n  var _this = this;\n\n  var previous = null;\n  var items;\n\n  var callback = function callback(value) {\n    return value === valueOrFunction;\n  };\n\n  if (isFunction(valueOrFunction)) {\n    callback = valueOrFunction;\n  }\n\n  if (isArray(this.items)) {\n    items = this.items.filter(function (item) {\n      if (previous !== false) {\n        previous = !callback(item);\n      }\n\n      return previous;\n    });\n  }\n\n  if (isObject(this.items)) {\n    items = Object.keys(this.items).reduce(function (acc, key) {\n      if (previous !== false) {\n        previous = !callback(_this.items[key]);\n      }\n\n      if (previous !== false) {\n        acc[key] = _this.items[key];\n      }\n\n      return acc;\n    }, {});\n  }\n\n  return new this.constructor(items);\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/takeUntil.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/takeWhile.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/takeWhile.js ***!
+  \***********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+eval("\n\nvar _require = __webpack_require__(/*! ../helpers/is */ \"./node_modules/collect.js/dist/helpers/is.js\"),\n    isArray = _require.isArray,\n    isObject = _require.isObject,\n    isFunction = _require.isFunction;\n\nmodule.exports = function takeWhile(valueOrFunction) {\n  var _this = this;\n\n  var previous = null;\n  var items;\n\n  var callback = function callback(value) {\n    return value === valueOrFunction;\n  };\n\n  if (isFunction(valueOrFunction)) {\n    callback = valueOrFunction;\n  }\n\n  if (isArray(this.items)) {\n    items = this.items.filter(function (item) {\n      if (previous !== false) {\n        previous = callback(item);\n      }\n\n      return previous;\n    });\n  }\n\n  if (isObject(this.items)) {\n    items = Object.keys(this.items).reduce(function (acc, key) {\n      if (previous !== false) {\n        previous = callback(_this.items[key]);\n      }\n\n      if (previous !== false) {\n        acc[key] = _this.items[key];\n      }\n\n      return acc;\n    }, {});\n  }\n\n  return new this.constructor(items);\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/takeWhile.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/tap.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/tap.js ***!
+  \*****************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nmodule.exports = function tap(fn) {\n  fn(this);\n  return this;\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/tap.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/times.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/times.js ***!
+  \*******************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nmodule.exports = function times(n, fn) {\n  for (var iterator = 1; iterator <= n; iterator += 1) {\n    this.items.push(fn(iterator));\n  }\n\n  return this;\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/times.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/toArray.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/toArray.js ***!
+  \*********************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nmodule.exports = function toArray() {\n  var collectionInstance = this.constructor;\n\n  function iterate(list, collection) {\n    var childCollection = [];\n\n    if (list instanceof collectionInstance) {\n      list.items.forEach(function (i) {\n        return iterate(i, childCollection);\n      });\n      collection.push(childCollection);\n    } else if (Array.isArray(list)) {\n      list.forEach(function (i) {\n        return iterate(i, childCollection);\n      });\n      collection.push(childCollection);\n    } else {\n      collection.push(list);\n    }\n  }\n\n  if (Array.isArray(this.items)) {\n    var collection = [];\n    this.items.forEach(function (items) {\n      iterate(items, collection);\n    });\n    return collection;\n  }\n\n  return this.values().all();\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/toArray.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/toJson.js":
+/*!********************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/toJson.js ***!
+  \********************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nfunction _typeof(obj) { \"@babel/helpers - typeof\"; return _typeof = \"function\" == typeof Symbol && \"symbol\" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && \"function\" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? \"symbol\" : typeof obj; }, _typeof(obj); }\n\nmodule.exports = function toJson() {\n  if (_typeof(this.items) === 'object' && !Array.isArray(this.items)) {\n    return JSON.stringify(this.all());\n  }\n\n  return JSON.stringify(this.toArray());\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/toJson.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/transform.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/transform.js ***!
+  \***********************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nmodule.exports = function transform(fn) {\n  var _this = this;\n\n  if (Array.isArray(this.items)) {\n    this.items = this.items.map(fn);\n  } else {\n    var collection = {};\n    Object.keys(this.items).forEach(function (key) {\n      collection[key] = fn(_this.items[key], key);\n    });\n    this.items = collection;\n  }\n\n  return this;\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/transform.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/undot.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/undot.js ***!
+  \*******************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nfunction ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }\n\nfunction _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }\n\nfunction _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }\n\nmodule.exports = function undot() {\n  var _this = this;\n\n  if (Array.isArray(this.items)) {\n    return this;\n  }\n\n  var collection = {};\n  Object.keys(this.items).forEach(function (key) {\n    if (key.indexOf('.') !== -1) {\n      var obj = collection;\n      key.split('.').reduce(function (acc, current, index, array) {\n        if (!acc[current]) {\n          acc[current] = {};\n        }\n\n        if (index === array.length - 1) {\n          acc[current] = _this.items[key];\n        }\n\n        return acc[current];\n      }, obj);\n      collection = _objectSpread(_objectSpread({}, collection), obj);\n    } else {\n      collection[key] = _this.items[key];\n    }\n  });\n  return new this.constructor(collection);\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/undot.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/union.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/union.js ***!
+  \*******************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nmodule.exports = function union(object) {\n  var _this = this;\n\n  var collection = JSON.parse(JSON.stringify(this.items));\n  Object.keys(object).forEach(function (prop) {\n    if (_this.items[prop] === undefined) {\n      collection[prop] = object[prop];\n    }\n  });\n  return new this.constructor(collection);\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/union.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/unique.js":
+/*!********************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/unique.js ***!
+  \********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+eval("\n\nvar _require = __webpack_require__(/*! ../helpers/is */ \"./node_modules/collect.js/dist/helpers/is.js\"),\n    isFunction = _require.isFunction;\n\nmodule.exports = function unique(key) {\n  var collection;\n\n  if (key === undefined) {\n    collection = this.items.filter(function (element, index, self) {\n      return self.indexOf(element) === index;\n    });\n  } else {\n    collection = [];\n    var usedKeys = [];\n\n    for (var iterator = 0, length = this.items.length; iterator < length; iterator += 1) {\n      var uniqueKey = void 0;\n\n      if (isFunction(key)) {\n        uniqueKey = key(this.items[iterator]);\n      } else {\n        uniqueKey = this.items[iterator][key];\n      }\n\n      if (usedKeys.indexOf(uniqueKey) === -1) {\n        collection.push(this.items[iterator]);\n        usedKeys.push(uniqueKey);\n      }\n    }\n  }\n\n  return new this.constructor(collection);\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/unique.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/unless.js":
+/*!********************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/unless.js ***!
+  \********************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nmodule.exports = function when(value, fn, defaultFn) {\n  if (!value) {\n    fn(this);\n  } else {\n    defaultFn(this);\n  }\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/unless.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/unwrap.js":
+/*!********************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/unwrap.js ***!
+  \********************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nmodule.exports = function unwrap(value) {\n  if (value instanceof this.constructor) {\n    return value.all();\n  }\n\n  return value;\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/unwrap.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/values.js":
+/*!********************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/values.js ***!
+  \********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+eval("\n\nvar getValues = __webpack_require__(/*! ../helpers/values */ \"./node_modules/collect.js/dist/helpers/values.js\");\n\nmodule.exports = function values() {\n  return new this.constructor(getValues(this.items));\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/values.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/when.js":
+/*!******************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/when.js ***!
+  \******************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nmodule.exports = function when(value, fn, defaultFn) {\n  if (value) {\n    return fn(this, value);\n  }\n\n  if (defaultFn) {\n    return defaultFn(this, value);\n  }\n\n  return this;\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/when.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/whenEmpty.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/whenEmpty.js ***!
+  \***********************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nmodule.exports = function whenEmpty(fn, defaultFn) {\n  if (Array.isArray(this.items) && !this.items.length) {\n    return fn(this);\n  }\n\n  if (!Object.keys(this.items).length) {\n    return fn(this);\n  }\n\n  if (defaultFn !== undefined) {\n    if (Array.isArray(this.items) && this.items.length) {\n      return defaultFn(this);\n    }\n\n    if (Object.keys(this.items).length) {\n      return defaultFn(this);\n    }\n  }\n\n  return this;\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/whenEmpty.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/whenNotEmpty.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/whenNotEmpty.js ***!
+  \**************************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nmodule.exports = function whenNotEmpty(fn, defaultFn) {\n  if (Array.isArray(this.items) && this.items.length) {\n    return fn(this);\n  }\n\n  if (Object.keys(this.items).length) {\n    return fn(this);\n  }\n\n  if (defaultFn !== undefined) {\n    if (Array.isArray(this.items) && !this.items.length) {\n      return defaultFn(this);\n    }\n\n    if (!Object.keys(this.items).length) {\n      return defaultFn(this);\n    }\n  }\n\n  return this;\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/whenNotEmpty.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/where.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/where.js ***!
+  \*******************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+eval("\n\nvar values = __webpack_require__(/*! ../helpers/values */ \"./node_modules/collect.js/dist/helpers/values.js\");\n\nvar nestedValue = __webpack_require__(/*! ../helpers/nestedValue */ \"./node_modules/collect.js/dist/helpers/nestedValue.js\");\n\nmodule.exports = function where(key, operator, value) {\n  var comparisonOperator = operator;\n  var comparisonValue = value;\n  var items = values(this.items);\n\n  if (operator === undefined || operator === true) {\n    return new this.constructor(items.filter(function (item) {\n      return nestedValue(item, key);\n    }));\n  }\n\n  if (operator === false) {\n    return new this.constructor(items.filter(function (item) {\n      return !nestedValue(item, key);\n    }));\n  }\n\n  if (value === undefined) {\n    comparisonValue = operator;\n    comparisonOperator = '===';\n  }\n\n  var collection = items.filter(function (item) {\n    switch (comparisonOperator) {\n      case '==':\n        return nestedValue(item, key) === Number(comparisonValue) || nestedValue(item, key) === comparisonValue.toString();\n\n      default:\n      case '===':\n        return nestedValue(item, key) === comparisonValue;\n\n      case '!=':\n      case '<>':\n        return nestedValue(item, key) !== Number(comparisonValue) && nestedValue(item, key) !== comparisonValue.toString();\n\n      case '!==':\n        return nestedValue(item, key) !== comparisonValue;\n\n      case '<':\n        return nestedValue(item, key) < comparisonValue;\n\n      case '<=':\n        return nestedValue(item, key) <= comparisonValue;\n\n      case '>':\n        return nestedValue(item, key) > comparisonValue;\n\n      case '>=':\n        return nestedValue(item, key) >= comparisonValue;\n    }\n  });\n  return new this.constructor(collection);\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/where.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/whereBetween.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/whereBetween.js ***!
+  \**************************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nmodule.exports = function whereBetween(key, values) {\n  return this.where(key, '>=', values[0]).where(key, '<=', values[values.length - 1]);\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/whereBetween.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/whereIn.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/whereIn.js ***!
+  \*********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+eval("\n\nvar extractValues = __webpack_require__(/*! ../helpers/values */ \"./node_modules/collect.js/dist/helpers/values.js\");\n\nvar nestedValue = __webpack_require__(/*! ../helpers/nestedValue */ \"./node_modules/collect.js/dist/helpers/nestedValue.js\");\n\nmodule.exports = function whereIn(key, values) {\n  var items = extractValues(values);\n  var collection = this.items.filter(function (item) {\n    return items.indexOf(nestedValue(item, key)) !== -1;\n  });\n  return new this.constructor(collection);\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/whereIn.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/whereInstanceOf.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/whereInstanceOf.js ***!
+  \*****************************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nmodule.exports = function whereInstanceOf(type) {\n  return this.filter(function (item) {\n    return item instanceof type;\n  });\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/whereInstanceOf.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/whereNotBetween.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/whereNotBetween.js ***!
+  \*****************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+eval("\n\nvar nestedValue = __webpack_require__(/*! ../helpers/nestedValue */ \"./node_modules/collect.js/dist/helpers/nestedValue.js\");\n\nmodule.exports = function whereNotBetween(key, values) {\n  return this.filter(function (item) {\n    return nestedValue(item, key) < values[0] || nestedValue(item, key) > values[values.length - 1];\n  });\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/whereNotBetween.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/whereNotIn.js":
+/*!************************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/whereNotIn.js ***!
+  \************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+eval("\n\nvar extractValues = __webpack_require__(/*! ../helpers/values */ \"./node_modules/collect.js/dist/helpers/values.js\");\n\nvar nestedValue = __webpack_require__(/*! ../helpers/nestedValue */ \"./node_modules/collect.js/dist/helpers/nestedValue.js\");\n\nmodule.exports = function whereNotIn(key, values) {\n  var items = extractValues(values);\n  var collection = this.items.filter(function (item) {\n    return items.indexOf(nestedValue(item, key)) === -1;\n  });\n  return new this.constructor(collection);\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/whereNotIn.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/whereNotNull.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/whereNotNull.js ***!
+  \**************************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nmodule.exports = function whereNotNull() {\n  var key = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;\n  return this.where(key, '!==', null);\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/whereNotNull.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/whereNull.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/whereNull.js ***!
+  \***********************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nmodule.exports = function whereNull() {\n  var key = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;\n  return this.where(key, '===', null);\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/whereNull.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/wrap.js":
+/*!******************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/wrap.js ***!
+  \******************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nfunction _typeof(obj) { \"@babel/helpers - typeof\"; return _typeof = \"function\" == typeof Symbol && \"symbol\" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && \"function\" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? \"symbol\" : typeof obj; }, _typeof(obj); }\n\nmodule.exports = function wrap(value) {\n  if (value instanceof this.constructor) {\n    return value;\n  }\n\n  if (_typeof(value) === 'object') {\n    return new this.constructor(value);\n  }\n\n  return new this.constructor([value]);\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/wrap.js?");
+
+/***/ }),
+
+/***/ "./node_modules/collect.js/dist/methods/zip.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/collect.js/dist/methods/zip.js ***!
+  \*****************************************************/
+/***/ ((module) => {
+
+"use strict";
+eval("\n\nmodule.exports = function zip(array) {\n  var _this = this;\n\n  var values = array;\n\n  if (values instanceof this.constructor) {\n    values = values.all();\n  }\n\n  var collection = this.items.map(function (item, index) {\n    return new _this.constructor([item, values[index]]);\n  });\n  return new this.constructor(collection);\n};\n\n//# sourceURL=webpack://todoapp/./node_modules/collect.js/dist/methods/zip.js?");
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/dist/cjs.js!./src/style.css":
 /*!*************************************************************!*\
   !*** ./node_modules/css-loader/dist/cjs.js!./src/style.css ***!
@@ -543,7 +1962,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./style.css */ \"./src/style.css\");\n/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lodash */ \"./node_modules/lodash/lodash.js\");\n/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var date_fns_format__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! date-fns/format */ \"./node_modules/date-fns/esm/format/index.js\");\n/* harmony import */ var _modules_task__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/task */ \"./src/modules/task.js\");\n/* harmony import */ var _arrays__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./arrays */ \"./src/arrays.js\");\n/* eslint-disable no-use-before-define */\n\n// eslint-disable-next-line import/no-extraneous-dependencies\n\n\n\n\n\n\n// Create task and project arrays\nconst projects = [];\nconst priorities = [1, 2, 3, 4];\nconst staticPages = ['inbox', 'today'];\n\n// Update project array\nfunction updateProjects() {\n    _arrays__WEBPACK_IMPORTED_MODULE_3__.tasks.forEach(task => {\n        if (task.project) {\n            if (!projects.includes(`${task.project.toLowerCase()}`)) {\n                projects.push(`${task.project.toLowerCase()}`);\n            }\n        }\n    });\n}\n\n// Prepopulate with test tasks\nconst taskOne = new _modules_task__WEBPACK_IMPORTED_MODULE_2__[\"default\"]('To Do App', 'code for Odin Project', '2023-04-23', '1', 'odin project', 'no');\n_arrays__WEBPACK_IMPORTED_MODULE_3__.tasks.push(taskOne);\nconst taskTwo = new _modules_task__WEBPACK_IMPORTED_MODULE_2__[\"default\"]('Lunch', 'eat some healthy food', '2023-04-07', 'low', 'life', 'no');\n_arrays__WEBPACK_IMPORTED_MODULE_3__.tasks.push(taskTwo);\n\n// Create main\nfunction main() {\n    const element = document.createElement('main');\n    element.setAttribute('id', 'main');\n    return element;\n}\n\n// Load page main\ndocument.body.appendChild(main());\nconst mainDiv = document.getElementById('main');\n\n// Create header\nconst header = document.createElement('div');\nheader.setAttribute('id', 'header');\nmainDiv.appendChild(header);\n\n// Header content\nconst sidebarCollapse = document.createElement('div');\nheader.appendChild(sidebarCollapse);\nsidebarCollapse.classList.add('header-icon');\nconst menuImage = document.createElement('img');\nmenuImage.setAttribute('src', './images/menu.svg');\nsidebarCollapse.appendChild(menuImage);\n\nconst appName = document.createElement('div');\nheader.appendChild(appName);\nappName.classList.add('brand-name');\nappName.innerText = 'Todoish';\n\n// Create sidebar\nconst sidebar = document.createElement('div');\nsidebar.setAttribute('id', 'sidebar');\nsidebar.classList.add('flex-column');\nmainDiv.appendChild(sidebar);\n\n// Sidebar collapse\nsidebarCollapse.addEventListener('click', toggleSidebar);\nfunction toggleSidebar() {\n    sidebar.classList.toggle('flex-column');\n    sidebar.classList.toggle('hide');\n};\n\nfunction updateSidebar() {\n    // Static sidebar categories\n    sidebar.innerText = '';\n    const sidebarStatic = document.createElement('div');\n    sidebarStatic.setAttribute('id', 'sidebar-static');\n    sidebar.appendChild(sidebarStatic);\n\n    // Inbox\n    const inboxSide = document.createElement('div');\n    inboxSide.setAttribute('id', 'inbox-sidebar');\n    sidebarStatic.appendChild(inboxSide);\n    const inboxButton = document.createElement('button');\n    inboxButton.classList.add('project-button');\n\n    const inboxButtonTitle = document.createElement('div');\n    inboxButtonTitle.innerText = 'Inbox';\n    inboxButton.appendChild(inboxButtonTitle);\n\n    const inboxButtonNumber = document.createElement('div');\n    const activeInbox = (0,_arrays__WEBPACK_IMPORTED_MODULE_3__.numberOfTasks)(_arrays__WEBPACK_IMPORTED_MODULE_3__.tasks);\n    inboxButtonNumber.innerText = activeInbox;\n    inboxButtonNumber.classList.add('project-button-number');\n    inboxButton.appendChild(inboxButtonNumber);\n\n    inboxButton.addEventListener('click', () => {updateTaskList(_arrays__WEBPACK_IMPORTED_MODULE_3__.tasks, 'inbox')});\n    inboxSide.appendChild(inboxButton);\n\n    const todaySide = document.createElement('div');\n    todaySide.setAttribute('id', 'today-sidebar');\n    sidebarStatic.appendChild(todaySide);\n    const todayButton = document.createElement('button');\n    todayButton.classList.add('project-button');\n\n    (0,_arrays__WEBPACK_IMPORTED_MODULE_3__.updateToday)();\n\n    const todayButtonTitle = document.createElement('div');\n    todayButtonTitle.innerText = 'Today';\n    todayButton.appendChild(todayButtonTitle);\n\n    const todayButtonNumber = document.createElement('div')\n    const activeToday = (0,_arrays__WEBPACK_IMPORTED_MODULE_3__.numberOfTasks)(_arrays__WEBPACK_IMPORTED_MODULE_3__.todayTasks);\n    todayButtonNumber.classList.add('project-button-number');\n    todayButtonNumber.innerText = activeToday;\n    todayButton.appendChild(todayButtonNumber);\n\n    todayButton.addEventListener('click', () => { updateTaskList(_arrays__WEBPACK_IMPORTED_MODULE_3__.todayTasks, 'today') });\n    todaySide.appendChild(todayButton);\n\n    // Add projects to sidebar\n    const sidebarProjects = document.createElement('div');\n    sidebarProjects.setAttribute('id', 'sidebar-projects');\n    sidebar.appendChild(sidebarProjects);\n\n    const projectsTitle = document.createElement('div');\n    projectsTitle.setAttribute('id', 'projects-title');\n    sidebarProjects.appendChild(projectsTitle);\n    projectsTitle.innerText = 'Projects';\n\n    const projectsUL = document.createElement('ul');\n    projectsUL.setAttribute('id', 'projects-ul');\n    sidebarProjects.appendChild(projectsUL);\n\n    function updateSidebarProjects() {\n        projectsUL.innerText = '';\n        projects.forEach(project => addToSidebar(project));\n\n        function addToSidebar(project) {\n            const projectNameLI = document.createElement('li')\n            projectNameLI.setAttribute('id', `${project}`);\n            projectsUL.appendChild(projectNameLI);\n            const projectButton = document.createElement('button');\n            projectButton.classList.add('project-button');\n            const projectButtonName = document.createElement('div');\n            projectButtonName.innerText = (0,lodash__WEBPACK_IMPORTED_MODULE_1__.startCase)(`${project}`);\n            projectButton.appendChild(projectButtonName);\n\n            const projectList = (0,_arrays__WEBPACK_IMPORTED_MODULE_3__.updateProject)(project);\n\n            const projectButtonNumber = document.createElement('div');\n            projectButtonNumber.innerText = (0,_arrays__WEBPACK_IMPORTED_MODULE_3__.numberOfTasks)(projectList);\n            projectButton.appendChild(projectButtonNumber);\n\n            projectButton.addEventListener('click', () => { updateTaskList(projectList, project) });\n            projectNameLI.appendChild(projectButton);\n        }    \n    };\n    updateSidebarProjects();\n};\n\n\n// Create task section\nconst taskSection = document.createElement('div');\ntaskSection.setAttribute('id', 'task-section');\nmainDiv.appendChild(taskSection);\n\n// Wrap task section\nconst taskWrapper = document.createElement('div');\ntaskWrapper.setAttribute('id', 'task-wrapper');\ntaskSection.appendChild(taskWrapper);\n\n// Set up task wrapper\nconst rightBumper = document.createElement('div');\ntaskWrapper.appendChild(rightBumper);\nconst taskList = document.createElement('div');\ntaskList.setAttribute('id', 'task-list');\ntaskWrapper.appendChild(taskList);\nconst leftBumper = document.createElement('div');\ntaskWrapper.appendChild(leftBumper);\n\n// Global list elements\nconst listTitle = document.createElement('div');\nlistTitle.setAttribute('id', 'list-title');\ntaskList.appendChild(listTitle);\n\n// Display task list\nconst taskUL = document.createElement('ul');\ntaskUL.setAttribute('id', 'task-ul');\ntaskUL.classList.add('task-ul');\nlistTitle.after(taskUL);\n\n// Add items to task list\nfunction updateTaskList(taskArray, project) {\n    if (taskArray && taskArray.length !== 0) {\n        const incomplete = taskArray.filter(_arrays__WEBPACK_IMPORTED_MODULE_3__.isIncomplete);\n        taskUL.innerText = '';\n        if (incomplete.length !== 0) {\n            incomplete.forEach(task => addTaskToUL(task));\n        } else {\n            taskUL.innerText = 'All caught up!'\n        };\n    } else {\n        taskUL.innerText = 'Add some new tasks!'\n    };\n\n    listTitle.innerText = (0,lodash__WEBPACK_IMPORTED_MODULE_1__.startCase)(project);  \n};\n\nfunction addTaskToUL(task) {\n    const taskItem = document.createElement('li');\n    taskItem.classList.add('task-item');\n    taskItem.classList.add('task-li');\n    taskItem.setAttribute('id', `task-${_arrays__WEBPACK_IMPORTED_MODULE_3__.tasks.indexOf(task)}`);\n    \n    // Top row\n    const itemTop = document.createElement('div');\n    itemTop.classList.add('item-top');\n    taskItem.appendChild(itemTop);\n\n    const itemTopLeft = document.createElement('div');\n    itemTopLeft.classList.add('item-top-div');\n    itemTop.appendChild(itemTopLeft);\n\n    const itemTopName = document.createElement('div');\n    itemTopName.innerText = `${task.name}`;\n    itemTopLeft.appendChild(itemTopName);\n\n    const expandIconDiv = document.createElement('div');\n    itemTopLeft.appendChild(expandIconDiv);\n\n    const expandIcon = document.createElement('button');\n    expandIcon.classList.add('task-button');\n    expandIconDiv.appendChild(expandIcon);\n\n    const expandIconImg = document.createElement('img');\n    expandIconImg.setAttribute('src', './images/arrow-expand-down.svg');\n    expandIconImg.setAttribute('alt', 'Expand icon');\n    expandIconImg.classList.add('task-icon');\n    expandIcon.appendChild(expandIconImg);\n    expandIcon.classList.add('hide');\n    \n    taskItem.addEventListener('mouseenter', () => expandIcon.classList.remove('hide'));\n    taskItem.addEventListener('mouseleave', () => expandIcon.classList.add('hide'));\n\n    // Edit Button\n    const editIconDiv = document.createElement('div');\n    itemTopLeft.appendChild(editIconDiv);\n\n    const editIcon = document.createElement('button');\n    editIcon.classList.add('task-button');\n    editIcon.setAttribute('data-index', `${_arrays__WEBPACK_IMPORTED_MODULE_3__.tasks.indexOf(task)}`);\n    editIconDiv.appendChild(editIcon);\n\n    const editIconImg = document.createElement('img');\n    editIconImg.setAttribute('src', './images/pencil.svg');\n    editIconImg.setAttribute('alt', 'Edit icon');\n    editIconImg.classList.add('task-icon');\n    editIcon.appendChild(editIconImg);\n    editIcon.classList.add('hide');\n    \n    taskItem.addEventListener('mouseenter', () => editIcon.classList.remove('hide'));\n    taskItem.addEventListener('mouseleave', () => editIcon.classList.add('hide'));\n\n    // Delete button\n    const deleteIconDiv = document.createElement('div');\n    itemTopLeft.appendChild(deleteIconDiv);\n\n    const deleteIcon = document.createElement('button');\n    deleteIcon.classList.add('task-button');\n    deleteIcon.classList.add('cancel');\n    deleteIconDiv.appendChild(deleteIcon);\n    \n    const deleteIconImg = document.createElement('img');\n    deleteIconImg.setAttribute('src', './images/trash-can-outline.svg');\n    deleteIconImg.setAttribute('alt', 'Delete icon');\n    deleteIconImg.classList.add('task-icon');\n    deleteIcon.appendChild(deleteIconImg);\n    deleteIcon.setAttribute('data-index', `${_arrays__WEBPACK_IMPORTED_MODULE_3__.tasks.indexOf(task)}`);\n    // deleteIcon.addEventListener('click', deleteTask);\n    deleteIcon.classList.add('hide');\n\n    taskItem.addEventListener('mouseenter', () => deleteIcon.classList.remove('hide'));\n    taskItem.addEventListener('mouseleave', () => deleteIcon.classList.add('hide'));\n\n    const completeButton = document.createElement('button');\n    completeButton.setAttribute('data-index', `${_arrays__WEBPACK_IMPORTED_MODULE_3__.tasks.indexOf(task)}`);\n    completeButton.classList.add('complete-button');\n    completeButton.innerText = 'Complete';\n    completeButton.addEventListener('click', completeTask);\n    itemTop.appendChild(completeButton);\n\n    // Bottom row\n    const itemBottom = document.createElement('div');\n    itemBottom.classList.add('item-bottom');\n    const dueDateDiv = document.createElement('div');\n    if (task.dueDate) {      \n        const [year, month, day] = task.dueDate.substr(0, 10).split('-');\n        dueDateDiv.innerText = (0,date_fns_format__WEBPACK_IMPORTED_MODULE_4__[\"default\"])(new Date(\n            year,\n            (month - 1),\n            day,\n        ), 'P');               \n    };\n\n    itemBottom.appendChild(dueDateDiv);\n    const projectDiv = document.createElement('div');\n    if (!task.project || task.project === 'inbox') {\n        projectDiv.innerText = 'Inbox';\n    } else {\n        projectDiv.innerText = `Project: ${(0,lodash__WEBPACK_IMPORTED_MODULE_1__.startCase)(task.project)}`;\n    };\n    itemBottom.appendChild(projectDiv);\n    taskItem.appendChild(itemBottom);\n\n    // Hidden description row\n    const hiddenDesc = document.createElement('div');\n    hiddenDesc.setAttribute('id', `${task.name}-${task.description}`);\n    if (task.description) {\n        hiddenDesc.innerText = `${task.description}`;\n    } else {\n        hiddenDesc.innerText = 'Description';\n    };    \n    hiddenDesc.classList.add('hide');\n    taskItem.appendChild(hiddenDesc);\n\n    expandIcon.addEventListener('click', () => hiddenDesc.classList.toggle('hide'));\n    editIcon.addEventListener('click', editTask);\n    \n    // Append to ul\n    taskUL.appendChild(taskItem);\n}\n\n// Create button for adding a new task\nconst newTaskButtonDiv = document.createElement('div');\nnewTaskButtonDiv.setAttribute('id', 'new-task-button-div');\ntaskList.appendChild(newTaskButtonDiv);\nconst newTaskButton = document.createElement('button');\nnewTaskButton.setAttribute('id', 'new-task-button');\nnewTaskButton.classList.add('form-button');\nnewTaskButton.innerText = 'New Task';\nnewTaskButton.addEventListener('click', showForm);\nnewTaskButtonDiv.appendChild(newTaskButton);\n\nfunction showForm() {\n    const taskFormDiv = document.getElementById('task-form-div');\n    taskFormDiv.classList.remove('hide');\n    newTaskButtonDiv.classList.add('hide');\n    document.querySelector('input[name=\"task-name\"]').focus();\n    const dueDate = document.querySelector('input[name=\"due-date\"]');\n    const today = new Date().toISOString().slice(0, 10);\n    dueDate.value = today;\n}\n\nfunction hideForm(event) {\n    const taskFormDiv = document.getElementById('task-form-div');\n    taskFormDiv.classList.add('hide');\n    newTaskButtonDiv.classList.remove('hide');\n    event.preventDefault();\n}\n\n// Create task function\nfunction addTask(task) {\n    _arrays__WEBPACK_IMPORTED_MODULE_3__.tasks.push(task);\n}\n\n// Complete task function\nfunction completeTask(event) {\n    const taskIndex = event.currentTarget.dataset.index;\n    const completedTask = _arrays__WEBPACK_IMPORTED_MODULE_3__.tasks[taskIndex];\n    completedTask.complete = 'yes';\n    refreshPage();\n}\n\n// Edit task function\nfunction editTask(event) {\n    const taskIndex = event.currentTarget.dataset.index;\n    const currentTask = document.getElementById(`task-${taskIndex}`);\n    const editForm = createForm(`edit-${taskIndex}`);\n    editForm.setAttribute('id', `edit-form-${taskIndex}`);\n    editForm.setAttribute('data-index', `${taskIndex}`);\n    currentTask.innerText = '';\n    currentTask.appendChild(editForm);\n    preFillForm(taskIndex);\n\n    function preFillForm(index) {\n        const inputs = document.getElementById(`edit-form-${index}`).elements;\n        const inputArray = Array.from(inputs);\n        const task = _arrays__WEBPACK_IMPORTED_MODULE_3__.tasks[index];\n        inputArray[0].value = task.name;\n        if (task.description) inputArray[1].value = task.description;\n        if (task.dueDate) inputArray[2].value = task.dueDate;\n        const editPriorty = editForm.querySelector('select');\n        const editOptions = Array.from(editPriorty.options);\n        if (task.priority && priorities.includes(+`${task.priority}`)) {\n            editOptions[task.priority].selected = 'true';\n        }\n        if (task.project) inputArray[4].value = (0,lodash__WEBPACK_IMPORTED_MODULE_1__.startCase)(task.project);\n    }\n\n    // function updateTask() {\n    //     const updatedTask = getTaskData();\n    //     console.log(updatedTask);\n    //     // if (taskIndex > -1) {\n    //     //     tasks[taskIndex] = updatedTask;\n    //     // }\n    //     // refreshPage();\n    //     // updateProjects();\n    //     // updateSidebar();\n    //     event.preventDefault();\n    // }\n}\n\n\n\n// // Delete task function\n// function deleteTask(event) {\n//     const taskIndex = event.currentTarget.dataset.index;\n//     console.log(taskIndex);\n//     const deletedTask = tasks[taskIndex];\n//     const {project} = deletedTask;\n//     console.log(project);\n//     if (taskIndex > -1) {\n//         tasks.splice(taskIndex, 1);\n//     };\n//     refreshPage(project);\n// }\n\n// Refresh page function\nfunction refreshPage() {\n    const currentPage = listTitle.innerText.toLowerCase();  \n    if (currentPage && !staticPages.includes(currentPage)) {\n        const newList = (0,_arrays__WEBPACK_IMPORTED_MODULE_3__.updateProject)(currentPage);\n        if (newList) {updateTaskList(newList, currentPage);\n        } else {\n        updateTaskList(_arrays__WEBPACK_IMPORTED_MODULE_3__.tasks, 'inbox');\n        };\n    } else if (currentPage === 'inbox') {\n        updateTaskList(_arrays__WEBPACK_IMPORTED_MODULE_3__.tasks, 'inbox');\n    } else if (currentPage === 'today') {\n        (0,_arrays__WEBPACK_IMPORTED_MODULE_3__.updateToday)();\n        updateTaskList(_arrays__WEBPACK_IMPORTED_MODULE_3__.todayTasks, 'today');\n    } else {\n        updateTaskList(_arrays__WEBPACK_IMPORTED_MODULE_3__.tasks, 'inbox');\n    };\n    taskFormDiv.classList.add('hide');\n    updateSidebar();\n};\n\nconst taskFormDiv = document.createElement('div');\ntaskFormDiv.setAttribute('id', 'task-form-div');\ntaskFormDiv.classList.add('hide');\ntaskList.appendChild(taskFormDiv);\n\n// Create form for inputing task\nfunction createForm(position) { \n\n    // Create actual form\n    const taskForm = document.createElement('form');\n    taskForm.setAttribute('id', `new-task-${position}`);\n    taskForm.setAttribute('action', '');\n\n    // Create task name field\n    const nameFieldDiv = document.createElement('div');\n    nameFieldDiv.classList.add('form-field');\n    taskForm.appendChild(nameFieldDiv);\n    const taskNameLabel = document.createElement('label');\n    taskNameLabel.setAttribute('for', `task-name-field-${position}`);\n    taskNameLabel.innerText = 'Task name';\n    taskNameLabel.classList.add('hide');\n    nameFieldDiv.appendChild(taskNameLabel);\n    const taskName = document.createElement('input');\n    taskName.setAttribute('id', `task-name-field-${position}`);\n    taskName.setAttribute('name', 'task-name');\n    taskName.setAttribute('type', 'input');\n    taskName.setAttribute('placeholder', 'Task name');\n    taskName.setAttribute('autocomplete', 'off');\n    taskName.classList.add('borderless-field', 'task-name-field');\n    taskName.required = 'true';\n    nameFieldDiv.appendChild(taskName);\n\n    // Create description field\n    const descFieldDiv = document.createElement('div');\n    descFieldDiv.classList.add('form-field');\n    taskForm.appendChild(descFieldDiv);\n    const taskDescLabel = document.createElement('label');\n    taskDescLabel.setAttribute('for', `task-desc-field-${position}`);\n    taskDescLabel.innerText = 'Task description';\n    taskDescLabel.classList.add('hide');\n    descFieldDiv.appendChild(taskDescLabel);\n    const taskDesc = document.createElement('input');\n    taskDesc.setAttribute('id', `task-desc-field-${position}`);\n    taskDesc.setAttribute('name', 'task-desc');\n    taskDesc.setAttribute('type', 'input');\n    taskDesc.setAttribute('placeholder', 'Description');\n    taskDesc.setAttribute('autocomplete', 'off');\n    taskDesc.classList.add('borderless-field');\n    descFieldDiv.appendChild(taskDesc);\n\n    // Create div for date and priority buttons\n    const buttonDiv = document.createElement('div');\n    buttonDiv.classList.add('form-button-div');\n    taskForm.appendChild(buttonDiv);\n\n    // Date field\n    const dateFieldDiv = document.createElement('div');\n    buttonDiv.appendChild(dateFieldDiv);\n\n    const dateFieldLabel = document.createElement('label');\n    dateFieldLabel.setAttribute('for', `task-date-field-${position}`);\n    dateFieldLabel.innerText = 'Due date';\n    dateFieldLabel.classList.add('hide');\n    dateFieldDiv.appendChild(dateFieldLabel);\n\n    const taskDueDate = document.createElement('input');\n    taskDueDate.setAttribute('type', 'date');\n    taskDueDate.setAttribute('id', `task-date-field-${position}`);\n    taskDueDate.setAttribute('name', 'due-date');\n    taskDueDate.classList.add('task-date-field');\n    const today = new Date().toISOString().slice(0, 10);\n    taskDueDate.value = `${today}`;\n    dateFieldDiv.appendChild(taskDueDate);\n\n    // Priority field\n    const priorityFieldDiv = document.createElement('div');\n    priorityFieldDiv.classList.add('task-priority-div');\n\n    const taskPriorityLabel = document.createElement('label');\n    taskPriorityLabel.setAttribute('for', `task-priority-field-${position}`);\n    taskPriorityLabel.innerText = 'Task priority';\n    taskPriorityLabel.classList.add('hide');\n    priorityFieldDiv.appendChild(taskPriorityLabel);\n\n    const taskPriority = document.createElement('select');\n    taskPriority.setAttribute('id', `task-priority-field-${position}`);\n    taskPriority.setAttribute('name', 'priority');\n    taskPriority.classList.add('task-priority-field');\n\n    const priorityDefault = document.createElement('option');\n    priorityDefault.innerText = 'Priority';\n    priorityDefault.setAttribute('value', '');\n    priorityDefault.selected = 'true';\n    priorityDefault.disabled = 'true';\n    taskPriority.appendChild(priorityDefault);\n    priorities.forEach(priority => {\n        const option = document.createElement('option');\n        option.setAttribute('value', `${priority}`);\n        option.innerText = `Priority ${priority}`;\n        taskPriority.appendChild(option);\n    });\n    priorityFieldDiv.appendChild(taskPriority);\n    buttonDiv.appendChild(priorityFieldDiv);\n\n    // Create div for project, submit, and cancel buttons\n    const formBottom = document.createElement('div');\n    formBottom.classList.add('form-bottom');\n    taskForm.appendChild(formBottom);\n\n    // Project field\n    const projectFieldDiv = document.createElement('div');\n    formBottom.appendChild(projectFieldDiv);\n\n    const projectFieldLabel = document.createElement('label');\n    projectFieldLabel.setAttribute('for', `task-project-field-${position}`);\n    projectFieldLabel.classList.add('hide');\n    projectFieldLabel.innerText = 'Task project';\n    projectFieldDiv.appendChild(projectFieldLabel);\n\n    const taskProject = document.createElement('input');\n    taskProject.setAttribute('id', `task-project-field-${position}`);\n    taskProject.setAttribute('name', 'project');\n    taskProject.setAttribute('type', 'text');\n    taskProject.setAttribute('list', `projects-${position}`);\n    taskProject.setAttribute('autocomplete', 'off');\n    taskProject.setAttribute('placeholder', 'Project');\n    taskProject.classList.add('task-project-field');\n\n    const projectList = document.createElement('datalist');\n    projectList.setAttribute('id', `projects-${position}`);\n    projects.forEach(project => {\n        const option = document.createElement('option');\n        option.innerText = (0,lodash__WEBPACK_IMPORTED_MODULE_1__.startCase)(project);\n        projectList.appendChild(option);\n    });\n    taskProject.appendChild(projectList);\n\n    projectFieldDiv.appendChild(taskProject);\n\n    // Cancel and Submit Buttons\n    const bottomButtons = document.createElement('div');\n    bottomButtons.classList.add('bottom-buttons');\n    formBottom.appendChild(bottomButtons);    \n\n    const submit = document.createElement('button');\n    submit.setAttribute('id', `new-task-submit-${position}`);\n    submit.setAttribute('type', 'submit');\n    submit.classList.add('form-button');\n    if (position === 'hidden') {\n        submit.innerText = 'Add Task';\n        taskForm.addEventListener('submit', insertTask);\n    } else {\n        submit.innerText = 'Update Task';\n        taskForm.addEventListener('submit', updateTask);\n    }\n    bottomButtons.appendChild(submit);    \n\n    function insertTask(event) {\n        const testTask = getTaskData();\n        insertNewTask(testTask, taskForm);\n        event.preventDefault();\n    }\n\n    function updateTask(event) {\n        const testTask = getTaskData();\n        const {index} = this.dataset;\n        _arrays__WEBPACK_IMPORTED_MODULE_3__.tasks[index] = testTask;\n        refreshPage();\n        updateProjects();\n        updateSidebar();\n        event.preventDefault();\n    }\n\n    const cancel = document.createElement('button');\n    cancel.setAttribute('id', `new-task-cancel-${position}`);\n    cancel.classList.add('cancel');\n    cancel.innerText = 'Cancel';\n    if (position === 'hidden') {\n        cancel.addEventListener('click', hideForm);\n    } else {\n        cancel.addEventListener('click', cancelForm);\n    }\n\n    function cancelForm(event) {\n        taskName.required = 'false'\n        refreshPage();\n        event.preventDefault();\n    }\n    bottomButtons.appendChild(cancel);\n\n    return taskForm;\n}\n\n// Get form data\nfunction getTaskData() {\n    const taskData = document.querySelector('form');\n    const formData = new FormData(taskData);\n    const taskName = formData.get('task-name');\n    const taskDesc = formData.get('task-desc');\n    const taskDate = formData.get('due-date');\n    let taskPriority = +formData.get('priority');\n    if (!taskPriority || !priorities.includes(taskPriority)) {\n        taskPriority = null;\n    }\n    let taskProject = formData.get('project').trim().toLowerCase();\n    if (taskProject && taskProject.length !== 0 && !projects.includes(taskProject)) {\n        projects.push(taskProject);\n        updateProjects();\n        updateSidebar();\n    } else if (!taskProject || taskProject.length === 0) {\n        taskProject = null;\n    }\n    const taskComplete = 'no';\n    const newTask = new _modules_task__WEBPACK_IMPORTED_MODULE_2__[\"default\"](taskName, taskDesc, taskDate, taskPriority, taskProject, taskComplete);\n\n    return newTask;\n};\n\nfunction insertNewTask(task, form) {\n    addTask(task);\n    refreshPage();\n    updateProjects();\n    updateSidebar();\n    form.reset();\n    taskFormDiv.classList.add('hide');\n    newTaskButtonDiv.classList.remove('hide');\n}\n\nupdateProjects();\nupdateSidebar();\nupdateTaskList(_arrays__WEBPACK_IMPORTED_MODULE_3__.tasks, 'inbox');\nconst newTaskForm = createForm('hidden');\ntaskFormDiv.appendChild(newTaskForm);\n\n\n\n//# sourceURL=webpack://todoapp/./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _style_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./style.css */ \"./src/style.css\");\n/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lodash */ \"./node_modules/lodash/lodash.js\");\n/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var collect_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! collect.js */ \"./node_modules/collect.js/dist/index.js\");\n/* harmony import */ var collect_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(collect_js__WEBPACK_IMPORTED_MODULE_2__);\n/* harmony import */ var date_fns_format__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! date-fns/format */ \"./node_modules/date-fns/esm/format/index.js\");\n/* harmony import */ var _modules_task__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/task */ \"./src/modules/task.js\");\n/* harmony import */ var _arrays__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./arrays */ \"./src/arrays.js\");\n/* eslint-disable import/no-extraneous-dependencies */\n/* eslint-disable no-use-before-define */\n\n\n\n\n\n\n\n\n// Create task and project arrays\nconst projects = [];\nconst priorities = [1, 2, 3, 4];\nconst staticPages = ['inbox', 'today'];\n\n// Update project array\nfunction updateProjects() {\n    _arrays__WEBPACK_IMPORTED_MODULE_4__.tasks.forEach(task => {\n        if (task.project) {\n            if (!projects.includes(`${task.project.toLowerCase()}`)) {\n                projects.push(`${task.project.toLowerCase()}`);\n            }\n        }\n    });\n}\n\n// Prepopulate with test tasks\nconst taskOne = new _modules_task__WEBPACK_IMPORTED_MODULE_3__[\"default\"]('To Do App', 'code for Odin Project', '2023-04-23', '1', 'odin project', 'no');\n_arrays__WEBPACK_IMPORTED_MODULE_4__.tasks.push(taskOne);\nconst taskTwo = new _modules_task__WEBPACK_IMPORTED_MODULE_3__[\"default\"]('Lunch', 'eat some healthy food', '2023-04-07', 'low', 'life', 'no');\n_arrays__WEBPACK_IMPORTED_MODULE_4__.tasks.push(taskTwo);\n\n// Create main\nfunction main() {\n    const element = document.createElement('main');\n    element.setAttribute('id', 'main');\n    return element;\n}\n\n// Load page main\ndocument.body.appendChild(main());\nconst mainDiv = document.getElementById('main');\n\n// Create header\nconst header = document.createElement('div');\nheader.setAttribute('id', 'header');\nmainDiv.appendChild(header);\n\n// Header content\nconst sidebarCollapse = document.createElement('div');\nheader.appendChild(sidebarCollapse);\nsidebarCollapse.classList.add('header-icon');\nconst menuImage = document.createElement('img');\nmenuImage.setAttribute('src', './images/menu.svg');\nsidebarCollapse.appendChild(menuImage);\n\nconst appName = document.createElement('div');\nheader.appendChild(appName);\nappName.classList.add('brand-name');\nappName.innerText = 'Todoish';\n\n// Create sidebar\nconst sidebar = document.createElement('div');\nsidebar.setAttribute('id', 'sidebar');\nsidebar.classList.add('flex-column');\nmainDiv.appendChild(sidebar);\n\n// Sidebar collapse\nsidebarCollapse.addEventListener('click', toggleSidebar);\nfunction toggleSidebar() {\n    sidebar.classList.toggle('flex-column');\n    sidebar.classList.toggle('hide');\n};\n\nfunction updateSidebar() {\n    // Static sidebar categories\n    sidebar.innerText = '';\n    const sidebarStatic = document.createElement('div');\n    sidebarStatic.setAttribute('id', 'sidebar-static');\n    sidebar.appendChild(sidebarStatic);\n\n    // Inbox\n    const inboxSide = document.createElement('div');\n    inboxSide.setAttribute('id', 'inbox-sidebar');\n    sidebarStatic.appendChild(inboxSide);\n    const inboxButton = document.createElement('button');\n    inboxButton.classList.add('project-button');\n\n    const inboxButtonTitle = document.createElement('div');\n    inboxButtonTitle.innerText = 'Inbox';\n    inboxButton.appendChild(inboxButtonTitle);\n\n    const inboxButtonNumber = document.createElement('div');\n    const activeInbox = (0,_arrays__WEBPACK_IMPORTED_MODULE_4__.numberOfTasks)(_arrays__WEBPACK_IMPORTED_MODULE_4__.tasks);\n    inboxButtonNumber.innerText = activeInbox;\n    inboxButtonNumber.classList.add('project-button-number');\n    inboxButton.appendChild(inboxButtonNumber);\n\n    inboxButton.addEventListener('click', () => {updateTaskList(_arrays__WEBPACK_IMPORTED_MODULE_4__.tasks, 'inbox')});\n    inboxSide.appendChild(inboxButton);\n\n    const todaySide = document.createElement('div');\n    todaySide.setAttribute('id', 'today-sidebar');\n    sidebarStatic.appendChild(todaySide);\n    const todayButton = document.createElement('button');\n    todayButton.classList.add('project-button');\n\n    (0,_arrays__WEBPACK_IMPORTED_MODULE_4__.updateToday)();\n\n    const todayButtonTitle = document.createElement('div');\n    todayButtonTitle.innerText = 'Today';\n    todayButton.appendChild(todayButtonTitle);\n\n    const todayButtonNumber = document.createElement('div')\n    const activeToday = (0,_arrays__WEBPACK_IMPORTED_MODULE_4__.numberOfTasks)(_arrays__WEBPACK_IMPORTED_MODULE_4__.todayTasks);\n    todayButtonNumber.classList.add('project-button-number');\n    todayButtonNumber.innerText = activeToday;\n    todayButton.appendChild(todayButtonNumber);\n\n    todayButton.addEventListener('click', () => { updateTaskList(_arrays__WEBPACK_IMPORTED_MODULE_4__.todayTasks, 'today') });\n    todaySide.appendChild(todayButton);\n\n    // Add projects to sidebar\n    const sidebarProjects = document.createElement('div');\n    sidebarProjects.setAttribute('id', 'sidebar-projects');\n    sidebar.appendChild(sidebarProjects);\n\n    const projectsTitle = document.createElement('div');\n    projectsTitle.setAttribute('id', 'projects-title');\n    sidebarProjects.appendChild(projectsTitle);\n    projectsTitle.innerText = 'Projects';\n\n    const projectsUL = document.createElement('ul');\n    projectsUL.setAttribute('id', 'projects-ul');\n    sidebarProjects.appendChild(projectsUL);\n\n    function updateSidebarProjects() {\n        projectsUL.innerText = '';\n        projects.forEach(project => addToSidebar(project));\n\n        function addToSidebar(project) {\n            const projectNameLI = document.createElement('li')\n            projectNameLI.setAttribute('id', `${project}`);\n            projectsUL.appendChild(projectNameLI);\n            const projectButton = document.createElement('button');\n            projectButton.classList.add('project-button');\n            const projectButtonName = document.createElement('div');\n            projectButtonName.innerText = (0,lodash__WEBPACK_IMPORTED_MODULE_1__.startCase)(`${project}`);\n            projectButton.appendChild(projectButtonName);\n\n            const projectList = (0,_arrays__WEBPACK_IMPORTED_MODULE_4__.updateProject)(project);\n\n            const projectButtonNumber = document.createElement('div');\n            projectButtonNumber.innerText = (0,_arrays__WEBPACK_IMPORTED_MODULE_4__.numberOfTasks)(projectList);\n            projectButton.appendChild(projectButtonNumber);\n\n            projectButton.addEventListener('click', () => { updateTaskList(projectList, project) });\n            projectNameLI.appendChild(projectButton);\n        }    \n    };\n    updateSidebarProjects();\n};\n\n\n// Create task section\nconst taskSection = document.createElement('div');\ntaskSection.setAttribute('id', 'task-section');\nmainDiv.appendChild(taskSection);\n\n// Wrap task section\nconst taskWrapper = document.createElement('div');\ntaskWrapper.setAttribute('id', 'task-wrapper');\ntaskSection.appendChild(taskWrapper);\n\n// Set up task wrapper\nconst rightBumper = document.createElement('div');\ntaskWrapper.appendChild(rightBumper);\nconst taskList = document.createElement('div');\ntaskList.setAttribute('id', 'task-list');\ntaskWrapper.appendChild(taskList);\nconst leftBumper = document.createElement('div');\ntaskWrapper.appendChild(leftBumper);\n\n// Global list elements\nconst listTitle = document.createElement('div');\nlistTitle.setAttribute('id', 'list-title');\ntaskList.appendChild(listTitle);\n\n// Display task list\nconst taskUL = document.createElement('ul');\ntaskUL.setAttribute('id', 'task-ul');\ntaskUL.classList.add('task-ul');\nlistTitle.after(taskUL);\n\n// Add items to task list\nfunction updateTaskList(taskArray, project) {\n    if (taskArray && taskArray.length !== 0) {\n        const incomplete = taskArray.filter(_arrays__WEBPACK_IMPORTED_MODULE_4__.isIncomplete);\n        taskUL.innerText = '';\n        if (incomplete.length !== 0) {\n            incomplete.forEach(task => addTaskToUL(task));\n        } else {\n            taskUL.innerText = 'All caught up!'\n        };\n    } else {\n        taskUL.innerText = 'Add some new tasks!'\n    };\n\n    listTitle.innerText = (0,lodash__WEBPACK_IMPORTED_MODULE_1__.startCase)(project);  \n};\n\nfunction addTaskToUL(task) {\n    const taskItem = document.createElement('li');\n    taskItem.classList.add('task-item');\n    taskItem.classList.add('task-li');\n    taskItem.setAttribute('id', `task-${_arrays__WEBPACK_IMPORTED_MODULE_4__.tasks.indexOf(task)}`);\n    \n    // Top row\n    const itemTop = document.createElement('div');\n    itemTop.classList.add('item-top');\n    taskItem.appendChild(itemTop);\n\n    const itemTopLeft = document.createElement('div');\n    itemTopLeft.classList.add('item-top-div');\n    itemTop.appendChild(itemTopLeft);\n\n    const itemTopName = document.createElement('div');\n    itemTopName.innerText = `${task.name}`;\n    itemTopLeft.appendChild(itemTopName);\n\n    const expandIconDiv = document.createElement('div');\n    itemTopLeft.appendChild(expandIconDiv);\n\n    const expandIcon = document.createElement('button');\n    expandIcon.classList.add('task-button');\n    expandIconDiv.appendChild(expandIcon);\n\n    const expandIconImg = document.createElement('img');\n    expandIconImg.setAttribute('src', './images/arrow-expand-down.svg');\n    expandIconImg.setAttribute('alt', 'Expand icon');\n    expandIconImg.classList.add('task-icon');\n    expandIcon.appendChild(expandIconImg);\n    expandIcon.classList.add('hide');\n    \n    taskItem.addEventListener('mouseenter', () => expandIcon.classList.remove('hide'));\n    taskItem.addEventListener('mouseleave', () => expandIcon.classList.add('hide'));\n\n    // Edit Button\n    const editIconDiv = document.createElement('div');\n    itemTopLeft.appendChild(editIconDiv);\n\n    const editIcon = document.createElement('button');\n    editIcon.classList.add('task-button');\n    editIcon.setAttribute('data-index', `${_arrays__WEBPACK_IMPORTED_MODULE_4__.tasks.indexOf(task)}`);\n    editIconDiv.appendChild(editIcon);\n\n    const editIconImg = document.createElement('img');\n    editIconImg.setAttribute('src', './images/pencil.svg');\n    editIconImg.setAttribute('alt', 'Edit icon');\n    editIconImg.classList.add('task-icon');\n    editIcon.appendChild(editIconImg);\n    editIcon.classList.add('hide');\n    \n    taskItem.addEventListener('mouseenter', () => editIcon.classList.remove('hide'));\n    taskItem.addEventListener('mouseleave', () => editIcon.classList.add('hide'));\n\n    // Delete button\n    const deleteIconDiv = document.createElement('div');\n    itemTopLeft.appendChild(deleteIconDiv);\n\n    const deleteIcon = document.createElement('button');\n    deleteIcon.classList.add('task-button');\n    deleteIcon.classList.add('cancel');\n    deleteIconDiv.appendChild(deleteIcon);\n    \n    const deleteIconImg = document.createElement('img');\n    deleteIconImg.setAttribute('src', './images/trash-can-outline.svg');\n    deleteIconImg.setAttribute('alt', 'Delete icon');\n    deleteIconImg.classList.add('task-icon');\n    deleteIcon.appendChild(deleteIconImg);\n    deleteIcon.setAttribute('data-index', `${_arrays__WEBPACK_IMPORTED_MODULE_4__.tasks.indexOf(task)}`);\n    deleteIcon.addEventListener('click', deleteTask);\n    deleteIcon.classList.add('hide');\n\n    taskItem.addEventListener('mouseenter', () => deleteIcon.classList.remove('hide'));\n    taskItem.addEventListener('mouseleave', () => deleteIcon.classList.add('hide'));\n\n    const completeButton = document.createElement('button');\n    completeButton.setAttribute('data-index', `${_arrays__WEBPACK_IMPORTED_MODULE_4__.tasks.indexOf(task)}`);\n    completeButton.classList.add('complete-button');\n    completeButton.innerText = 'Complete';\n    completeButton.addEventListener('click', completeTask);\n    itemTop.appendChild(completeButton);\n\n    // Bottom row\n    const itemBottom = document.createElement('div');\n    itemBottom.classList.add('item-bottom');\n    const dueDateDiv = document.createElement('div');\n    if (task.dueDate) {      \n        const [year, month, day] = task.dueDate.substr(0, 10).split('-');\n        dueDateDiv.innerText = (0,date_fns_format__WEBPACK_IMPORTED_MODULE_5__[\"default\"])(new Date(\n            year,\n            (month - 1),\n            day,\n        ), 'P');               \n    };\n\n    itemBottom.appendChild(dueDateDiv);\n    const projectDiv = document.createElement('div');\n    if (!task.project || task.project === 'inbox') {\n        projectDiv.innerText = 'Inbox';\n    } else {\n        projectDiv.innerText = `Project: ${(0,lodash__WEBPACK_IMPORTED_MODULE_1__.startCase)(task.project)}`;\n    };\n    itemBottom.appendChild(projectDiv);\n    taskItem.appendChild(itemBottom);\n\n    // Hidden description row\n    const hiddenDesc = document.createElement('div');\n    hiddenDesc.setAttribute('id', `${task.name}-${task.description}`);\n    if (task.description) {\n        hiddenDesc.innerText = `${task.description}`;\n    } else {\n        hiddenDesc.innerText = 'Description';\n    };    \n    hiddenDesc.classList.add('hide');\n    taskItem.appendChild(hiddenDesc);\n\n    expandIcon.addEventListener('click', () => hiddenDesc.classList.toggle('hide'));\n    editIcon.addEventListener('click', editTask);\n    \n    // Append to ul\n    taskUL.appendChild(taskItem);\n}\n\n// Create button for adding a new task\nconst hiddenFormDiv = document.createElement('div');\nhiddenFormDiv.setAttribute('id', 'hidden-form-div');\ntaskList.appendChild(hiddenFormDiv);\nconst newTaskButtonDiv = document.createElement('div');\nnewTaskButtonDiv.setAttribute('id', 'new-task-button-div');\nnewTaskButtonDiv.classList.add('modal');\nhiddenFormDiv.appendChild(newTaskButtonDiv);\nconst newTaskButton = document.createElement('button');\nnewTaskButton.setAttribute('id', 'new-task-button');\nnewTaskButton.classList.add('form-button');\nnewTaskButton.innerText = 'New Task';\nnewTaskButton.addEventListener('click', showForm);\nnewTaskButtonDiv.appendChild(newTaskButton);\n\nfunction showForm() {\n    refreshPage();\n    const taskFormDiv = document.getElementById('task-form-div');\n    taskFormDiv.classList.remove('hide');\n    newTaskButtonDiv.classList.add('hide');\n    const taskName = document.querySelector('input[name=\"task-name\"]');\n    taskName.focus();\n    taskName.require = 'true';\n    const dueDate = document.querySelector('input[name=\"due-date\"]');\n    const today = new Date().toISOString().slice(0, 10);\n    dueDate.value = today;\n\n    // Event listener for closing form on outside click\n    document.addEventListener('click', (event) => {\n        const clickInside = document.getElementById('hidden-form-div').contains(event.target);\n        if (!clickInside) hideForm();\n    });\n}\n\nfunction hideForm() {\n    const taskName = document.querySelector('input[name=\"task-name\"]');\n    taskName.blur();\n    taskName.require = 'false';\n    const taskFormDiv = document.getElementById('task-form-div');\n    taskFormDiv.classList.add('hide');\n    newTaskButtonDiv.classList.remove('hide');    \n}\n\nfunction cancelNewTask(event) {\n    const taskFormDiv = document.getElementById('task-form-div');\n    taskFormDiv.classList.add('hide');\n    newTaskButtonDiv.classList.remove('hide');\n    event.preventDefault();\n}\n\n// Create task function\nfunction addTask(task) {\n    _arrays__WEBPACK_IMPORTED_MODULE_4__.tasks.push(task);\n}\n\n// Complete task function\nfunction completeTask(event) {\n    const taskIndex = event.currentTarget.dataset.index;\n    const completedTask = _arrays__WEBPACK_IMPORTED_MODULE_4__.tasks[taskIndex];\n    completedTask.complete = 'yes';\n    refreshPage();\n}\n\n// Edit task function\nfunction editTask(event) {\n    refreshPage();\n    const taskIndex = event.currentTarget.dataset.index;\n    const currentTask = document.getElementById(`task-${taskIndex}`);\n    const editForm = createForm(`edit-${taskIndex}`);\n    editForm.setAttribute('id', `edit-form-${taskIndex}`);\n    editForm.setAttribute('data-index', `${taskIndex}`);\n    currentTask.innerText = '';\n    currentTask.appendChild(editForm);\n    preFillForm(taskIndex);\n\n    function preFillForm(index) {\n        const inputs = document.getElementById(`edit-form-${index}`).elements;\n        const inputArray = Array.from(inputs);\n        const task = _arrays__WEBPACK_IMPORTED_MODULE_4__.tasks[index];\n        inputArray[0].value = task.name;\n        if (task.description) inputArray[1].value = task.description;\n        if (task.dueDate) inputArray[2].value = task.dueDate;\n        const editPriorty = editForm.querySelector('select');\n        const editOptions = Array.from(editPriorty.options);\n        if (task.priority && priorities.includes(+`${task.priority}`)) {\n            editOptions[task.priority].selected = 'true';\n        }\n        if (task.project) inputArray[4].value = (0,lodash__WEBPACK_IMPORTED_MODULE_1__.startCase)(task.project);\n    }\n}\n\n// Delete task function\nfunction deleteTask(event) {\n    const taskIndex = event.currentTarget.dataset.index;\n    if (taskIndex > -1) {\n        _arrays__WEBPACK_IMPORTED_MODULE_4__.tasks.splice(taskIndex, 1);\n    };\n    refreshPage();\n    event.preventDefault();\n}\n\n// Refresh page function\nfunction refreshPage() {\n    const currentPage = listTitle.innerText.toLowerCase();  \n    if (currentPage && !staticPages.includes(currentPage)) {\n        const newList = (0,_arrays__WEBPACK_IMPORTED_MODULE_4__.updateProject)(currentPage);\n        if (newList) {updateTaskList(newList, currentPage);\n        } else {\n        updateTaskList(_arrays__WEBPACK_IMPORTED_MODULE_4__.tasks, 'inbox');\n        };\n    } else if (currentPage === 'inbox') {\n        updateTaskList(_arrays__WEBPACK_IMPORTED_MODULE_4__.tasks, 'inbox');\n    } else if (currentPage === 'today') {\n        (0,_arrays__WEBPACK_IMPORTED_MODULE_4__.updateToday)();\n        updateTaskList(_arrays__WEBPACK_IMPORTED_MODULE_4__.todayTasks, 'today');\n    } else {\n        updateTaskList(_arrays__WEBPACK_IMPORTED_MODULE_4__.tasks, 'inbox');\n    };\n    taskFormDiv.classList.add('hide');\n    updateSidebar();\n};\n\nconst taskFormDiv = document.createElement('div');\ntaskFormDiv.setAttribute('id', 'task-form-div');\ntaskFormDiv.classList.add('hide', 'modal');\nhiddenFormDiv.appendChild(taskFormDiv);\n\n// Create form for inputing task\nfunction createForm(position) { \n\n    // Create actual form\n    const taskForm = document.createElement('form');\n    taskForm.setAttribute('id', `new-task-${position}`);\n    taskForm.setAttribute('action', '');\n\n    // Create task name field\n    const nameFieldDiv = document.createElement('div');\n    nameFieldDiv.classList.add('form-field');\n    taskForm.appendChild(nameFieldDiv);\n    const taskNameLabel = document.createElement('label');\n    taskNameLabel.setAttribute('for', `task-name-field-${position}`);\n    taskNameLabel.innerText = 'Task name';\n    taskNameLabel.classList.add('hide');\n    nameFieldDiv.appendChild(taskNameLabel);\n    const taskName = document.createElement('input');\n    taskName.setAttribute('id', `task-name-field-${position}`);\n    taskName.setAttribute('name', 'task-name');\n    taskName.setAttribute('type', 'input');\n    taskName.setAttribute('placeholder', 'Task name');\n    taskName.setAttribute('autocomplete', 'off');\n    taskName.classList.add('borderless-field', 'task-name-field');\n    nameFieldDiv.appendChild(taskName);\n\n    // Create description field\n    const descFieldDiv = document.createElement('div');\n    descFieldDiv.classList.add('form-field');\n    taskForm.appendChild(descFieldDiv);\n    const taskDescLabel = document.createElement('label');\n    taskDescLabel.setAttribute('for', `task-desc-field-${position}`);\n    taskDescLabel.innerText = 'Task description';\n    taskDescLabel.classList.add('hide');\n    descFieldDiv.appendChild(taskDescLabel);\n    const taskDesc = document.createElement('input');\n    taskDesc.setAttribute('id', `task-desc-field-${position}`);\n    taskDesc.setAttribute('name', 'task-desc');\n    taskDesc.setAttribute('type', 'input');\n    taskDesc.setAttribute('placeholder', 'Description');\n    taskDesc.setAttribute('autocomplete', 'off');\n    taskDesc.classList.add('borderless-field');\n    descFieldDiv.appendChild(taskDesc);\n\n    // Create div for date and priority buttons\n    const buttonDiv = document.createElement('div');\n    buttonDiv.classList.add('form-button-div');\n    taskForm.appendChild(buttonDiv);\n\n    // Date field\n    const dateFieldDiv = document.createElement('div');\n    buttonDiv.appendChild(dateFieldDiv);\n\n    const dateFieldLabel = document.createElement('label');\n    dateFieldLabel.setAttribute('for', `task-date-field-${position}`);\n    dateFieldLabel.innerText = 'Due date';\n    dateFieldLabel.classList.add('hide');\n    dateFieldDiv.appendChild(dateFieldLabel);\n\n    const taskDueDate = document.createElement('input');\n    taskDueDate.setAttribute('type', 'date');\n    taskDueDate.setAttribute('id', `task-date-field-${position}`);\n    taskDueDate.setAttribute('name', 'due-date');\n    taskDueDate.classList.add('task-date-field');\n    const today = new Date().toISOString().slice(0, 10);\n    taskDueDate.value = `${today}`;\n    dateFieldDiv.appendChild(taskDueDate);\n\n    // Priority field\n    const priorityFieldDiv = document.createElement('div');\n    priorityFieldDiv.classList.add('task-priority-div');\n\n    const taskPriorityLabel = document.createElement('label');\n    taskPriorityLabel.setAttribute('for', `task-priority-field-${position}`);\n    taskPriorityLabel.innerText = 'Task priority';\n    taskPriorityLabel.classList.add('hide');\n    priorityFieldDiv.appendChild(taskPriorityLabel);\n\n    const taskPriority = document.createElement('select');\n    taskPriority.setAttribute('id', `task-priority-field-${position}`);\n    taskPriority.setAttribute('name', 'priority');\n    taskPriority.classList.add('task-priority-field');\n\n    const priorityDefault = document.createElement('option');\n    priorityDefault.innerText = 'Priority';\n    priorityDefault.setAttribute('value', '');\n    priorityDefault.selected = 'true';\n    priorityDefault.disabled = 'true';\n    taskPriority.appendChild(priorityDefault);\n    priorities.forEach(priority => {\n        const option = document.createElement('option');\n        option.setAttribute('value', `${priority}`);\n        option.innerText = `Priority ${priority}`;\n        taskPriority.appendChild(option);\n    });\n    priorityFieldDiv.appendChild(taskPriority);\n    buttonDiv.appendChild(priorityFieldDiv);\n\n    // Create div for project, submit, and cancel buttons\n    const formBottom = document.createElement('div');\n    formBottom.classList.add('form-bottom');\n    taskForm.appendChild(formBottom);\n\n    // Project field\n    const projectFieldDiv = document.createElement('div');\n    formBottom.appendChild(projectFieldDiv);\n\n    const projectFieldLabel = document.createElement('label');\n    projectFieldLabel.setAttribute('for', `task-project-field-${position}`);\n    projectFieldLabel.classList.add('hide');\n    projectFieldLabel.innerText = 'Task project';\n    projectFieldDiv.appendChild(projectFieldLabel);\n\n    const taskProject = document.createElement('input');\n    taskProject.setAttribute('id', `task-project-field-${position}`);\n    taskProject.setAttribute('name', 'project');\n    taskProject.setAttribute('type', 'text');\n    taskProject.setAttribute('list', `projects-${position}`);\n    taskProject.setAttribute('autocomplete', 'off');\n    taskProject.setAttribute('placeholder', 'Project');\n    taskProject.classList.add('task-project-field');\n\n    const projectList = document.createElement('datalist');\n    projectList.setAttribute('id', `projects-${position}`);\n    projects.forEach(project => {\n        const option = document.createElement('option');\n        option.innerText = (0,lodash__WEBPACK_IMPORTED_MODULE_1__.startCase)(project);\n        projectList.appendChild(option);\n    });\n    taskProject.appendChild(projectList);\n\n    projectFieldDiv.appendChild(taskProject);\n\n    // Cancel and Submit Buttons\n    const bottomButtons = document.createElement('div');\n    bottomButtons.classList.add('bottom-buttons');\n    formBottom.appendChild(bottomButtons);    \n\n    const submit = document.createElement('button');\n    submit.setAttribute('id', `new-task-submit-${position}`);\n    submit.setAttribute('type', 'submit');\n    submit.classList.add('form-button');\n    if (position === 'hidden') {\n        submit.innerText = 'Add Task';\n        taskForm.addEventListener('submit', insertTask);\n    } else {\n        submit.innerText = 'Update Task';\n        taskForm.addEventListener('submit', updateTask);\n    }\n    bottomButtons.appendChild(submit);    \n\n    function insertTask(event) {\n        const testTask = getTaskData();\n        insertNewTask(testTask, taskForm);\n        event.preventDefault();\n    }\n\n    function updateTask(event) {\n        const testTask = getTaskData();\n        const {index} = this.dataset;\n        _arrays__WEBPACK_IMPORTED_MODULE_4__.tasks[index] = testTask;\n        refreshPage();\n        updateProjects();\n        updateSidebar();\n        event.preventDefault();\n    }\n\n    const cancel = document.createElement('button');\n    cancel.setAttribute('id', `new-task-cancel-${position}`);\n    cancel.classList.add('cancel');\n    cancel.innerText = 'Cancel';\n    if (position === 'hidden') {\n        cancel.addEventListener('click', cancelNewTask);\n    } else {\n        cancel.addEventListener('click', cancelForm);\n    }\n\n    function cancelForm(event) {\n        taskName.required = 'false'\n        refreshPage();\n        event.preventDefault();\n    }\n    bottomButtons.appendChild(cancel);\n\n    return taskForm;\n}\n\n// Get form data\nfunction getTaskData() {\n    const taskData = document.querySelector('form');\n    const formData = new FormData(taskData);\n    const taskName = formData.get('task-name');\n    const taskDesc = formData.get('task-desc');\n    const taskDate = formData.get('due-date');\n    let taskPriority = +formData.get('priority');\n    if (!taskPriority || !priorities.includes(taskPriority)) {\n        taskPriority = null;\n    }\n    let taskProject = formData.get('project').trim().toLowerCase();\n    if (taskProject && taskProject.length !== 0 && !projects.includes(taskProject)) {\n        projects.push(taskProject);\n        updateProjects();\n        updateSidebar();\n    } else if (!taskProject || taskProject.length === 0) {\n        taskProject = null;\n    }\n    const taskComplete = 'no';\n    const newTask = new _modules_task__WEBPACK_IMPORTED_MODULE_3__[\"default\"](taskName, taskDesc, taskDate, taskPriority, taskProject, taskComplete);\n\n    return newTask;\n};\n\nfunction insertNewTask(task, form) {\n    addTask(task);\n    refreshPage();\n    updateProjects();\n    updateSidebar();\n    form.reset();\n    taskFormDiv.classList.add('hide');\n    newTaskButtonDiv.classList.remove('hide');\n}\n\n// Initiate Website\nupdateProjects();\nupdateSidebar();\nupdateTaskList(_arrays__WEBPACK_IMPORTED_MODULE_4__.tasks, 'inbox');\nconst newTaskForm = createForm('hidden');\ntaskFormDiv.appendChild(newTaskForm);\n\n\n\n//# sourceURL=webpack://todoapp/./src/index.js?");
 
 /***/ }),
 
