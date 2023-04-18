@@ -381,6 +381,7 @@ function editTask(event) {
     const currentTask = document.getElementById(`task-${taskIndex}`);
     const editForm = createForm(`edit-${taskIndex}`);
     editForm.setAttribute('id', `edit-form-${taskIndex}`);
+    editForm.setAttribute('data-index', `${taskIndex}`);
     currentTask.innerText = '';
     currentTask.appendChild(editForm);
     preFillForm(taskIndex);
@@ -389,18 +390,28 @@ function editTask(event) {
         const inputs = document.getElementById(`edit-form-${index}`).elements;
         const inputArray = Array.from(inputs);
         const task = tasks[index];
-        console.log(task);
         inputArray[0].value = task.name;
         if (task.description) inputArray[1].value = task.description;
         if (task.dueDate) inputArray[2].value = task.dueDate;
         const editPriorty = editForm.querySelector('select');
         const editOptions = Array.from(editPriorty.options);
-        console.log(task);
         if (task.priority && priorities.includes(+`${task.priority}`)) {
             editOptions[task.priority].selected = 'true';
         }
         if (task.project) inputArray[4].value = startCase(task.project);
     }
+
+    // function updateTask() {
+    //     const updatedTask = getTaskData();
+    //     console.log(updatedTask);
+    //     // if (taskIndex > -1) {
+    //     //     tasks[taskIndex] = updatedTask;
+    //     // }
+    //     // refreshPage();
+    //     // updateProjects();
+    //     // updateSidebar();
+    //     event.preventDefault();
+    // }
 }
 
 
@@ -588,11 +599,28 @@ function createForm(position) {
     submit.classList.add('form-button');
     if (position === 'hidden') {
         submit.innerText = 'Add Task';
+        taskForm.addEventListener('submit', insertTask);
     } else {
-        submit.innerText = 'Edit Task';
+        submit.innerText = 'Update Task';
+        taskForm.addEventListener('submit', updateTask);
     }
-    bottomButtons.appendChild(submit);
-    taskForm.addEventListener('submit', getTaskData);
+    bottomButtons.appendChild(submit);    
+
+    function insertTask(event) {
+        const testTask = getTaskData();
+        insertNewTask(testTask, taskForm);
+        event.preventDefault();
+    }
+
+    function updateTask(event) {
+        const testTask = getTaskData();
+        const {index} = this.dataset;
+        tasks[index] = testTask;
+        refreshPage();
+        updateProjects();
+        updateSidebar();
+        event.preventDefault();
+    }
 
     const cancel = document.createElement('button');
     cancel.setAttribute('id', `new-task-cancel-${position}`);
@@ -616,13 +644,13 @@ function createForm(position) {
 }
 
 // Get form data
-function getTaskData(event) {
+function getTaskData() {
     const taskData = document.querySelector('form');
     const formData = new FormData(taskData);
     const taskName = formData.get('task-name');
-    const taskDesc = formData.get('description');
+    const taskDesc = formData.get('task-desc');
     const taskDate = formData.get('due-date');
-    let taskPriority = formData.get('priority');
+    let taskPriority = +formData.get('priority');
     if (!taskPriority || !priorities.includes(taskPriority)) {
         taskPriority = null;
     }
@@ -631,20 +659,28 @@ function getTaskData(event) {
         projects.push(taskProject);
         updateProjects();
         updateSidebar();
-    } else {
+    } else if (!taskProject || taskProject.length === 0) {
         taskProject = null;
     }
     const taskComplete = 'no';
     const newTask = new Task(taskName, taskDesc, taskDate, taskPriority, taskProject, taskComplete);
-    addTask(newTask);
+
+    return newTask;
+};
+
+function insertNewTask(task, form) {
+    addTask(task);
     refreshPage();
     updateProjects();
     updateSidebar();
-    taskData.reset();
+    form.reset();
     taskFormDiv.classList.add('hide');
     newTaskButtonDiv.classList.remove('hide');
-    event.preventDefault();
 }
+
+// function updateOldTask(task, form) {
+//     const index = tasks.
+// }
 
 updateProjects();
 updateSidebar();
