@@ -1,11 +1,11 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-use-before-define */
 import './style.css';
-import { includes, startCase } from 'lodash';
-import collect from 'collect.js';
+import { startCase } from 'lodash';
 import format from 'date-fns/format';
+import Storage from './modules/storage';
 import Task from './modules/task';
-import { isIncomplete, numberOfTasks, tasks, todayTasks, updateProject, updateToday } from './arrays';
+import { isIncomplete, numberOfTasks, tasks, todayTasks, updateProject, updateToday } from './modules/arrays';
 
 
 // Create task and project arrays
@@ -408,6 +408,9 @@ function cancelNewTask(event) {
 // Create task function
 function addTask(task) {
     tasks.push(task);
+    const testArray = Storage.saveTasks(tasks);
+    const testRetrieve = Storage.getTasks(testArray);
+    console.log(testRetrieve);
 }
 
 // Complete task function
@@ -711,4 +714,9 @@ updateSidebar();
 updateTaskList(tasks, 'inbox');
 const newTaskForm = createForm('hidden');
 taskFormDiv.appendChild(newTaskForm);
+
+// Storage test
+const testArray = Storage.saveTasks(tasks);
+const testRetrieve = Storage.getTasks(testArray);
+console.log(testRetrieve);
 
