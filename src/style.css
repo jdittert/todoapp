@@ -260,6 +260,16 @@ button {
     gap: 12px;
 }
 
+.priority-flag {
+    display: flex;
+    align-items: center;
+}
+
+.priority-icon {
+    height: 1.2rem;
+    width: auto;
+}
+
 .task-button {
     box-shadow: none;
 }

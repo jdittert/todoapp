@@ -27,7 +27,7 @@ function updateProjects() {
 // Prepopulate with test tasks
 const taskOne = new Task('To Do App', 'code for Odin Project', '2023-04-23', '1', 'odin project', 'no');
 tasks.push(taskOne);
-const taskTwo = new Task('Lunch', 'eat some healthy food', '2023-04-07', 'low', 'life', 'no');
+const taskTwo = new Task('Lunch', 'eat some healthy food', '2023-04-07', '3', 'life', 'no');
 tasks.push(taskTwo);
 
 // Create main
@@ -228,6 +228,15 @@ function addTaskToUL(task) {
     itemTopName.innerText = `${task.name}`;
     itemTopLeft.appendChild(itemTopName);
 
+    const itemTopPriority = document.createElement('div');
+    itemTopPriority.classList.add('priority-flag');
+    const priorityFlag = document.createElement('img');
+    priorityFlag.setAttribute('src', `./images/flag-${task.priority}.svg`);
+    priorityFlag.setAttribute('alt', 'Priority flag');
+    priorityFlag.classList.add('priority-icon');
+    itemTopPriority.appendChild(priorityFlag);
+    itemTopLeft.appendChild(itemTopPriority);
+
     const expandIconDiv = document.createElement('div');
     itemTopLeft.appendChild(expandIconDiv);
 
@@ -359,6 +368,9 @@ function showForm() {
     const dueDate = document.querySelector('input[name="due-date"]');
     const today = new Date().toISOString().slice(0, 10);
     dueDate.value = today;
+    const taskPriority = document.querySelector('select[name="priority"]');
+    const taskOptions = Array.from(taskPriority.options);
+    taskOptions[0].selected = 'true';
     const currentPage = listTitle.innerText.toLowerCase();
     const taskProject = document.querySelector('input[name="project"]');
     if (currentPage !== 'inbox' && currentPage !== 'today') {
@@ -588,7 +600,6 @@ function createForm(position) {
     taskProject.setAttribute('placeholder', 'Project');
     taskProject.classList.add('task-project-field');
     const currentPage = listTitle.innerText.toLowerCase();
-    console.log(currentPage);
     
     const projectList = document.createElement('datalist');
     projectList.setAttribute('id', `projects-${position}`);
@@ -665,7 +676,7 @@ function getTaskData() {
     const taskDate = formData.get('due-date');
     let taskPriority = +formData.get('priority');
     if (!taskPriority || !priorities.includes(taskPriority)) {
-        taskPriority = null;
+        taskPriority = 4;
     }
     let taskProject = formData.get('project').trim().toLowerCase();
     if (taskProject && taskProject.length !== 0 && !projects.includes(taskProject)) {
