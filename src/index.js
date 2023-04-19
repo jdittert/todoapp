@@ -206,7 +206,7 @@ function updateTaskList(taskArray, project) {
         taskUL.innerText = 'Add some new tasks!'
     };
 
-    listTitle.innerText = startCase(project);  
+    listTitle.innerText = startCase(project);
 };
 
 function addTaskToUL(task) {
@@ -359,7 +359,13 @@ function showForm() {
     const dueDate = document.querySelector('input[name="due-date"]');
     const today = new Date().toISOString().slice(0, 10);
     dueDate.value = today;
-
+    const currentPage = listTitle.innerText.toLowerCase();
+    const taskProject = document.querySelector('input[name="project"]');
+    if (currentPage !== 'inbox' && currentPage !== 'today') {
+        taskProject.value = startCase(currentPage);
+    } else {
+        taskProject.value = null;
+    }
     // Event listener for closing form on outside click
     document.addEventListener('click', (event) => {
         const clickInside = document.getElementById('hidden-form-div').contains(event.target);
@@ -581,7 +587,9 @@ function createForm(position) {
     taskProject.setAttribute('autocomplete', 'off');
     taskProject.setAttribute('placeholder', 'Project');
     taskProject.classList.add('task-project-field');
-
+    const currentPage = listTitle.innerText.toLowerCase();
+    console.log(currentPage);
+    
     const projectList = document.createElement('datalist');
     projectList.setAttribute('id', `projects-${position}`);
     projects.forEach(project => {
@@ -589,6 +597,7 @@ function createForm(position) {
         option.innerText = startCase(project);
         projectList.appendChild(option);
     });
+    taskProject.value = startCase(currentPage);
     taskProject.appendChild(projectList);
 
     projectFieldDiv.appendChild(taskProject);
