@@ -235,6 +235,10 @@ function addTaskToUL(task) {
     priorityFlag.setAttribute('alt', 'Priority flag');
     priorityFlag.classList.add('priority-icon');
     itemTopPriority.appendChild(priorityFlag);
+    const priorityNumber = document.createElement('div');
+    priorityNumber.innerText = `P${task.priority}`;
+    priorityNumber.classList.add(`option-p${task.priority}`, 'priority-number');
+    itemTopPriority.appendChild(priorityNumber);
     itemTopLeft.appendChild(itemTopPriority);
 
     const expandIconDiv = document.createElement('div');
@@ -332,7 +336,7 @@ function addTaskToUL(task) {
     } else {
         hiddenDesc.innerText = 'Description';
     };    
-    hiddenDesc.classList.add('hide');
+    hiddenDesc.classList.add('hide', 'task-description-field');
     taskItem.appendChild(hiddenDesc);
 
     expandIcon.addEventListener('click', () => hiddenDesc.classList.toggle('hide'));
@@ -570,6 +574,7 @@ function createForm(position) {
     priorities.forEach(priority => {
         const option = document.createElement('option');
         option.setAttribute('value', `${priority}`);
+        option.classList.add(`option-p${priority}`);
         option.innerText = `Priority ${priority}`;
         taskPriority.appendChild(option);
     });
@@ -608,9 +613,7 @@ function createForm(position) {
         option.innerText = startCase(project);
         projectList.appendChild(option);
     });
-    taskProject.value = startCase(currentPage);
-    taskProject.appendChild(projectList);
-
+    if (projects.includes(currentPage)) taskProject.appendChild(projectList);
     projectFieldDiv.appendChild(taskProject);
 
     // Cancel and Submit Buttons
