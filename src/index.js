@@ -9,11 +9,7 @@ import { isIncomplete, numberOfTasks, todayTasks, updateProject, updateToday } f
 
 
 // Create task and project arrays
-const projects = [];
-const priorities = [1, 2, 3, 4];
-const staticPages = ['inbox', 'today'];
 let tasks = [];
-
 const initialTasks = Storage.getTasks();
 if (!initialTasks) {
     // Prepopulate with test tasks
@@ -23,7 +19,17 @@ if (!initialTasks) {
     tasks.push(taskTwo);
 } else {
     tasks = initialTasks;
-}
+};
+
+let projects = [];
+projects = Storage.getProjects();
+if (!projects || projects.length === 0) {
+    projects = [];
+    updateProjects();
+};
+
+const priorities = [1, 2, 3, 4];
+const staticPages = ['inbox', 'today'];
 
 // Update project array
 function updateProjects() {
@@ -35,8 +41,6 @@ function updateProjects() {
         }
     });
 }
-
-
 
 // Create main
 function main() {
@@ -157,16 +161,93 @@ function updateSidebar() {
             projectButton.appendChild(projectButtonName);
 
             const projectList = updateProject(tasks, project);
-
             const projectButtonNumber = document.createElement('div');
-            projectButtonNumber.innerText = numberOfTasks(projectList);
             projectButton.appendChild(projectButtonNumber);
 
-            projectButton.addEventListener('click', () => { updateTaskList(projectList, project) });
-            projectNameLI.appendChild(projectButton);
-        }    
+            if (projectList) {                
+                projectButtonNumber.innerText = numberOfTasks(projectList);
+                projectButton.addEventListener('click', () => { updateTaskList(projectList, project) });
+                projectNameLI.appendChild(projectButton);
+            } else {
+                projectButtonNumber.innerText = '0';
+            }
+
+            
+        }
     };
     updateSidebarProjects();
+
+    // New project button
+    const newProjectDiv = document.createElement('li');
+    newProjectDiv.setAttribute('id', 'new-project');
+    projectsUL.appendChild(newProjectDiv);
+    const newProjectButton= document.createElement('button');
+    newProjectButton.innerText = 'New Project';
+    newProjectButton.classList.add('project-button');
+    newProjectDiv.appendChild(newProjectButton);
+    newProjectButton.addEventListener('click', showNewProject);
+
+    function showNewProject() {
+        const newProjectTest = document.querySelector('input[name="new-project-input"]');
+        if (!newProjectTest) {
+            const newProjectField = document.createElement('div');
+            const newProjectForm = document.createElement('form');
+            newProjectForm.classList.add('new-project-form');
+            newProjectField.appendChild(newProjectForm);
+            const inputDiv = document.createElement('div')
+            newProjectForm.appendChild(inputDiv);
+            const newProjectInput = document.createElement('input');
+            const newProjectLabel = document.createElement('label');
+            newProjectLabel.setAttribute('for', 'new-project-input');
+            newProjectLabel.setAttribute('display', 'hidden');
+            inputDiv.appendChild(newProjectLabel);
+            newProjectInput.setAttribute('name', 'new-project-input');
+            newProjectInput.setAttribute('id', 'new-project-input');
+            newProjectInput.setAttribute('placeholder', 'Project Name');
+            newProjectInput.setAttribute('autocomplete', 'off');
+            newProjectInput.classList.add('borderless-field');
+            inputDiv.appendChild(newProjectInput);
+            const buttonDiv = document.createElement('div');
+            buttonDiv.classList.add('new-project-buttons');
+            newProjectForm.appendChild(buttonDiv);
+            const addProjectButton = document.createElement('button');
+            addProjectButton.classList.add('form-button', 'new-project-button');
+            addProjectButton.innerText = 'Add Project';
+            addProjectButton.setAttribute('type', 'submit');
+            buttonDiv.appendChild(addProjectButton);  
+            const cancelNewProject = document.createElement('button');
+            cancelNewProject.innerText = 'Cancel';
+            cancelNewProject.classList.add('cancel-project-button');
+            buttonDiv.appendChild(cancelNewProject);  
+            newProjectDiv.appendChild(newProjectField);
+            document.querySelector('input[name="new-project-input"]').focus();
+            newProjectForm.addEventListener('submit', addProject)
+            cancelNewProject.addEventListener('click', closeNewProject)
+        } else {
+            newProjectTest.focus();
+        }
+    }
+
+    function addProject(event) {
+        const project = document.querySelector('input[name="new-project-input"]').value;
+        project.trim().toLowerCase();
+        if (project) {
+            if (!projects.includes(project.toLowerCase())) {
+                projects.push(project.toLowerCase());
+                refreshPage();
+                event.preventDefault();
+            }
+        } else {
+            document.querySelector('input[name="new-project-input"]').focus();
+            event.preventDefault();
+        }
+    }
+
+    function closeNewProject(event) {
+        newProjectDiv.innerText = '';
+        refreshPage();
+        event.preventDefault();
+    }
 };
 
 
@@ -469,6 +550,12 @@ function refreshPage() {
     Storage.saveTasks(tasks);
     const tasksTest = Storage.getTasks();
     if (tasksTest) tasks = tasksTest;
+
+    if (projects.length === 0) updateProjects();
+    Storage.saveProjects(projects);
+    const projectsTest = Storage.getProjects();
+    if (projectsTest) projects = projectsTest;
+
     const currentPage = listTitle.innerText.toLowerCase();  
     if (currentPage && !staticPages.includes(currentPage)) {
         const newList = updateProject(tasks, currentPage);
@@ -500,6 +587,7 @@ function createForm(position) {
     const taskForm = document.createElement('form');
     taskForm.setAttribute('id', `new-task-${position}`);
     taskForm.setAttribute('action', '');
+    taskForm.classList.add('new-task-form');
 
     // Create task name field
     const nameFieldDiv = document.createElement('div');
@@ -516,6 +604,7 @@ function createForm(position) {
     taskName.setAttribute('type', 'input');
     taskName.setAttribute('placeholder', 'Task name');
     taskName.setAttribute('autocomplete', 'off');
+    taskName.required = 'true';
     taskName.classList.add('borderless-field', 'task-name-field');
     nameFieldDiv.appendChild(taskName);
 
@@ -717,9 +806,7 @@ function insertNewTask(task, form) {
 }
 
 // Initiate Website
-updateProjects();
-updateSidebar();
-updateTaskList(tasks, 'inbox');
+refreshPage();
 const newTaskForm = createForm('hidden');
 taskFormDiv.appendChild(newTaskForm);
 

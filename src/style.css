@@ -118,6 +118,36 @@ img {
     font-size: 1rem;
 }
 
+#new-project {
+    list-style: none;
+}
+
+.new-project-form input {
+    margin-top: .25rem;
+    margin-bottom: .25rem;
+    padding: .25rem;
+    border-radius: 6px;
+}
+
+.new-project-buttons {
+    display: flex;
+    justify-content: start;
+    gap: 8px;
+}
+
+.new-project-form button {    
+    box-shadow: 2px 2px 2px var(--dark-accent-color-dark);
+}
+
+.add-project-button {
+    background-color: var(--dark-accent-color-light);
+}
+
+.cancel-project-button {
+    background-color: var(--header-background);
+    color: black;
+}
+
 /* Task list section */
 
 #task-section {
@@ -142,7 +172,7 @@ img {
 
 /* New Task Form Styling */
 
-form {
+.new-task-form {
     border: 2px solid var(--icon-color);
     border-radius: 8px;
     padding: 4px;

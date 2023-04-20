@@ -45,5 +45,5 @@ export function numberOfTasks(array) {
         return '0';
     }
         
-    return '0';
+    return +0;
 };
