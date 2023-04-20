@@ -36,6 +36,8 @@ main {
     min-height: 100vh;
 }
 
+/* Header styling */
+
 #header {
     grid-area: 1 / 1 / 2 / 3;
     background-color: var(--dark-accent-color);
@@ -63,6 +65,8 @@ img {
 .brand-name {
     font-weight: bold;
 }
+
+/* Sidebar styling */
 
 #sidebar {    
     background-color: var(--dark-accent-color);
@@ -114,6 +118,8 @@ img {
     font-size: 1rem;
 }
 
+/* Task list section */
+
 #task-section {
     grid-area: 2 / 2 / 3 / 3;
     background: var(--light-accent-color);
@@ -133,6 +139,8 @@ img {
     border-radius: 8px;
     box-shadow: 2px 2px 2px 2px gray;
 }
+
+/* New Task Form Styling */
 
 form {
     border: 2px solid var(--icon-color);
@@ -226,6 +234,8 @@ button {
     background-color: var(--cancel-color);
 }
 
+/* Task list styling */
+
 .task-ul {
     list-style-type: none;
     margin: 0;
@@ -316,6 +326,8 @@ button {
     border-bottom: 1px solid var(--text-color);
     margin-bottom: .25rem;
 }
+
+/* General purpose styling */
 
 .hide {
     display: none;
