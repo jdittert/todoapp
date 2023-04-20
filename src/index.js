@@ -5,13 +5,25 @@ import { startCase } from 'lodash';
 import format from 'date-fns/format';
 import Storage from './modules/storage';
 import Task from './modules/task';
-import { isIncomplete, numberOfTasks, tasks, todayTasks, updateProject, updateToday } from './modules/arrays';
+import { isIncomplete, numberOfTasks, todayTasks, updateProject, updateToday } from './modules/arrays';
 
 
 // Create task and project arrays
 const projects = [];
 const priorities = [1, 2, 3, 4];
 const staticPages = ['inbox', 'today'];
+let tasks = [];
+
+const initialTasks = Storage.getTasks();
+if (!initialTasks) {
+    // Prepopulate with test tasks
+    const taskOne = new Task('To Do App', 'code for Odin Project', '2023-04-23', '1', 'odin project', 'no');
+    tasks.push(taskOne);
+    const taskTwo = new Task('Lunch', 'eat some healthy food', '2023-04-07', '3', 'life', 'no');
+    tasks.push(taskTwo);
+} else {
+    tasks = initialTasks;
+}
 
 // Update project array
 function updateProjects() {
@@ -24,11 +36,7 @@ function updateProjects() {
     });
 }
 
-// Prepopulate with test tasks
-const taskOne = new Task('To Do App', 'code for Odin Project', '2023-04-23', '1', 'odin project', 'no');
-tasks.push(taskOne);
-const taskTwo = new Task('Lunch', 'eat some healthy food', '2023-04-07', '3', 'life', 'no');
-tasks.push(taskTwo);
+
 
 // Create main
 function main() {
@@ -105,7 +113,7 @@ function updateSidebar() {
     const todayButton = document.createElement('button');
     todayButton.classList.add('project-button');
 
-    updateToday();
+    updateToday(tasks);
 
     const todayButtonTitle = document.createElement('div');
     todayButtonTitle.innerText = 'Today';
@@ -148,7 +156,7 @@ function updateSidebar() {
             projectButtonName.innerText = startCase(`${project}`);
             projectButton.appendChild(projectButtonName);
 
-            const projectList = updateProject(project);
+            const projectList = updateProject(tasks, project);
 
             const projectButtonNumber = document.createElement('div');
             projectButtonNumber.innerText = numberOfTasks(projectList);
@@ -408,9 +416,6 @@ function cancelNewTask(event) {
 // Create task function
 function addTask(task) {
     tasks.push(task);
-    const testArray = Storage.saveTasks(tasks);
-    const testRetrieve = Storage.getTasks(testArray);
-    console.log(testRetrieve);
 }
 
 // Complete task function
@@ -461,9 +466,12 @@ function deleteTask(event) {
 
 // Refresh page function
 function refreshPage() {
+    Storage.saveTasks(tasks);
+    const tasksTest = Storage.getTasks();
+    if (tasksTest) tasks = tasksTest;
     const currentPage = listTitle.innerText.toLowerCase();  
     if (currentPage && !staticPages.includes(currentPage)) {
-        const newList = updateProject(currentPage);
+        const newList = updateProject(tasks, currentPage);
         if (newList) {updateTaskList(newList, currentPage);
         } else {
         updateTaskList(tasks, 'inbox');
@@ -471,7 +479,7 @@ function refreshPage() {
     } else if (currentPage === 'inbox') {
         updateTaskList(tasks, 'inbox');
     } else if (currentPage === 'today') {
-        updateToday();
+        updateToday(tasks);
         updateTaskList(todayTasks, 'today');
     } else {
         updateTaskList(tasks, 'inbox');
@@ -715,8 +723,4 @@ updateTaskList(tasks, 'inbox');
 const newTaskForm = createForm('hidden');
 taskFormDiv.appendChild(newTaskForm);
 
-// Storage test
-const testArray = Storage.saveTasks(tasks);
-const testRetrieve = Storage.getTasks(testArray);
-console.log(testRetrieve);
 

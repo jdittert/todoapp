@@ -1,13 +1,11 @@
 /* eslint-disable no-use-before-define */
 
-export const tasks = [];
-
 export const todayTasks = [];
 
-export function updateToday() {
+export function updateToday(array) {
     todayTasks.length = 0;
     
-    tasks.forEach(task => {
+    array.forEach(task => {
         const today = new Date().toISOString().slice(0, 10);
         if (task.dueDate === today) {
             todayTasks.push(task);
@@ -15,11 +13,11 @@ export function updateToday() {
     });
 };
 
-export function updateProject(project) {
+export function updateProject(array, project) {
     let projectTasks = [];
 
     if (project) {
-        const projectAllTasks = tasks.filter(isProject);
+        const projectAllTasks = array.filter(isProject);
         projectTasks = projectAllTasks.filter(isIncomplete);
     }
 
