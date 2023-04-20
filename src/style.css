@@ -129,6 +129,11 @@ img {
     border-radius: 6px;
 }
 
+.sidebar-alert {
+    margin-bottom: .25rem;
+    font-size: .75rem;
+}
+
 .new-project-buttons {
     display: flex;
     justify-content: start;
@@ -288,8 +293,17 @@ button {
     font-size: 1.5rem;
     font-weight: bold;
     color: black;
+}
+
+#list-title-div {
+    display: flex;
+    justify-content: space-between;
     margin-bottom: .5rem;
     border-bottom: 2px solid black;
+}
+
+.list-title-button {
+    background-color: var(--dark-accent-color);
 }
 
 .item-top, .item-bottom {

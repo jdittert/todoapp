@@ -236,6 +236,19 @@ function updateSidebar() {
                 projects.push(project.toLowerCase());
                 refreshPage();
                 event.preventDefault();
+            } else {
+                const alert = document.querySelector('.sidebar-alert')
+                if (!alert) {
+                    const duplicateAlert = document.createElement('div');
+                    duplicateAlert.classList.add('sidebar-alert');
+                    document.getElementById('new-project-input').after(duplicateAlert);
+                    duplicateAlert.innerText = 'Project names must be unique';
+                    document.querySelector('input[name="new-project-input"]').focus();
+                    event.preventDefault();
+                } else {
+                    document.querySelector('input[name="new-project-input"]').focus();
+                    event.preventDefault();
+                }                
             }
         } else {
             document.querySelector('input[name="new-project-input"]').focus();
@@ -271,15 +284,22 @@ const leftBumper = document.createElement('div');
 taskWrapper.appendChild(leftBumper);
 
 // Global list elements
+const listTitleDiv = document.createElement('div');
+listTitleDiv.setAttribute('id', 'list-title-div');
+taskList.appendChild(listTitleDiv);
 const listTitle = document.createElement('div');
 listTitle.setAttribute('id', 'list-title');
-taskList.appendChild(listTitle);
+listTitleDiv.appendChild(listTitle);
+
+const titleButtonDiv = document.createElement('div');
+titleButtonDiv.setAttribute('id', 'title-button-div');
+listTitleDiv.appendChild(titleButtonDiv);
 
 // Display task list
 const taskUL = document.createElement('ul');
 taskUL.setAttribute('id', 'task-ul');
 taskUL.classList.add('task-ul');
-listTitle.after(taskUL);
+listTitleDiv.after(taskUL);
 
 // Add items to task list
 function updateTaskList(taskArray, project) {
@@ -295,9 +315,39 @@ function updateTaskList(taskArray, project) {
         taskUL.innerText = 'Add some new tasks!'
     };
 
+    // Populate list title and delete button
     listTitle.innerText = startCase(project);
+    titleButtonDiv.innerText = '';  
+
+    // Delete button only on project pages
+    if (projects.includes(project)) {
+        const deleteProjectButton = document.createElement('button');
+        deleteProjectButton.classList.add('list-title-button');
+        deleteProjectButton.innerText = 'Delete';
+        titleButtonDiv.appendChild(deleteProjectButton);
+        deleteProjectButton.addEventListener('click', () => deleteProject(project));
+    }
+    
 };
 
+// Delete an entire project and all tasks related to that project
+function deleteProject(project) {
+    // eslint-disable-next-line no-restricted-globals, no-alert
+    if (confirm('Are you sure you want to delete this project and all related tasks? This can\'t be undone.') === true) {
+    const filteredTasks = tasks.filter(removeProject);
+    tasks = filteredTasks;   
+
+    const filteredProjects = projects.filter(entry => entry !== project);
+    projects = filteredProjects;
+    refreshPage();
+    }  
+    function removeProject(task) {
+        if (task.project === project) return false;
+        return true;
+    }
+}
+
+// Populate the list of tasks
 function addTaskToUL(task) {
     const taskItem = document.createElement('li');
     taskItem.classList.add('task-item');
@@ -330,6 +380,7 @@ function addTaskToUL(task) {
     itemTopPriority.appendChild(priorityNumber);
     itemTopLeft.appendChild(itemTopPriority);
 
+    // Options that appear when user mouseovers a task
     const expandIconDiv = document.createElement('div');
     itemTopLeft.appendChild(expandIconDiv);
 
@@ -394,7 +445,7 @@ function addTaskToUL(task) {
     completeButton.addEventListener('click', completeTask);
     itemTop.appendChild(completeButton);
 
-    // Bottom row
+    // Bottom row of task item
     const itemBottom = document.createElement('div');
     itemBottom.classList.add('item-bottom');
     const dueDateDiv = document.createElement('div');
@@ -450,6 +501,7 @@ newTaskButton.innerText = 'New Task';
 newTaskButton.addEventListener('click', showForm);
 newTaskButtonDiv.appendChild(newTaskButton);
 
+// Make the hidden form for adding a task appear
 function showForm() {
     refreshPage();
     const taskFormDiv = document.getElementById('task-form-div');
@@ -478,6 +530,7 @@ function showForm() {
     });
 }
 
+// Hide the new task form
 function hideForm() {
     const taskName = document.querySelector('input[name="task-name"]');
     taskName.blur();
@@ -487,6 +540,7 @@ function hideForm() {
     newTaskButtonDiv.classList.remove('hide');    
 }
 
+// Cancel adding a new task
 function cancelNewTask(event) {
     const taskFormDiv = document.getElementById('task-form-div');
     taskFormDiv.classList.add('hide');
@@ -519,6 +573,7 @@ function editTask(event) {
     currentTask.appendChild(editForm);
     preFillForm(taskIndex);
 
+    // Fill the edit form with the task's current values
     function preFillForm(index) {
         const inputs = document.getElementById(`edit-form-${index}`).elements;
         const inputArray = Array.from(inputs);
@@ -547,19 +602,22 @@ function deleteTask(event) {
 
 // Refresh page function
 function refreshPage() {
+    // Get task array from local storage
     Storage.saveTasks(tasks);
     const tasksTest = Storage.getTasks();
     if (tasksTest) tasks = tasksTest;
 
+    // Get project array from local storage
     if (projects.length === 0) updateProjects();
     Storage.saveProjects(projects);
     const projectsTest = Storage.getProjects();
     if (projectsTest) projects = projectsTest;
 
+    // Refresh the page with selected project
     const currentPage = listTitle.innerText.toLowerCase();  
     if (currentPage && !staticPages.includes(currentPage)) {
         const newList = updateProject(tasks, currentPage);
-        if (newList) {updateTaskList(newList, currentPage);
+        if (newList && projects.includes(currentPage)) {updateTaskList(newList, currentPage);
         } else {
         updateTaskList(tasks, 'inbox');
         };
@@ -575,12 +633,13 @@ function refreshPage() {
     updateSidebar();
 };
 
+// Create div for hidden new task form
 const taskFormDiv = document.createElement('div');
 taskFormDiv.setAttribute('id', 'task-form-div');
 taskFormDiv.classList.add('hide', 'modal');
 hiddenFormDiv.appendChild(taskFormDiv);
 
-// Create form for inputing task
+// Create form for inputing or editing task
 function createForm(position) { 
 
     // Create actual form
@@ -734,12 +793,14 @@ function createForm(position) {
     }
     bottomButtons.appendChild(submit);    
 
+    // Add a new task to task array
     function insertTask(event) {
         const testTask = getTaskData();
         insertNewTask(testTask, taskForm);
         event.preventDefault();
     }
 
+    // Update a task's values
     function updateTask(event) {
         const testTask = getTaskData();
         const {index} = this.dataset;
@@ -750,6 +811,7 @@ function createForm(position) {
         event.preventDefault();
     }
 
+    // Cancel button for form
     const cancel = document.createElement('button');
     cancel.setAttribute('id', `new-task-cancel-${position}`);
     cancel.classList.add('cancel');
@@ -795,11 +857,10 @@ function getTaskData() {
     return newTask;
 };
 
+// Add a task to the array and refresh the page
 function insertNewTask(task, form) {
     addTask(task);
     refreshPage();
-    updateProjects();
-    updateSidebar();
     form.reset();
     taskFormDiv.classList.add('hide');
     newTaskButtonDiv.classList.remove('hide');
